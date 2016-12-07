@@ -33,7 +33,8 @@
             <form action="{{U('Admin/Goods/add')}}" enctype="multipart/form-data" method="post">
                 <div class="form-group">
                     <label for="textGoodsName">商品名称</label>
-                    <input type="text" class="form-control" id="textGoodsName" name="goodsName" placeholder="商品名称">
+                    <input type="text" class="form-control" id="textGoodsName" name="goodsName" placeholder="商品名称"
+                           required>
                 </div>
                 <div class="form-group">
                     <label for="goodsType">商品类型</label>
@@ -46,7 +47,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-cny fa-fw"></i></span>
                             <input type="text" class="form-control" id="goodsPrice" name="goodsPrice"
-                                   placeholder="商品价格">
+                                   placeholder="商品价格" required>
                         </div>
                     </div>
                     <div class="col-xs-4">
@@ -59,7 +60,7 @@
                     <div class="col-xs-4">
                         <div class="input-group">
                             <input type="number" class="form-control" id="goodsCount" name="goodsCount"
-                                   placeholder="库存量">
+                                   placeholder="库存量" required>
                         </div>
                     </div>
                 </div>

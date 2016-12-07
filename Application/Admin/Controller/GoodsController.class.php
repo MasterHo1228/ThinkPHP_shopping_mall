@@ -24,6 +24,16 @@ class GoodsController extends Controller
         }
     }
 
+    public function getCurrentInfo()
+    {
+        if (IS_GET && session('?salesUID')) {
+            $goodsID = I('get.goodsID/d');
+            $model = M('viewgoodsdetail');
+
+            $this->ajaxReturn($model->where('gID=' . $goodsID)->field('gID,gName,gType,goodsTypeName,gPrice,gOriginPrice,gCount,gSalesSUID,shopName,gPhoto,gDescription,gPubTime,gStatus')->find());
+        }
+    }
+
     public function getTypeList()
     {
         if (session('?admin')) {
@@ -71,16 +81,20 @@ class GoodsController extends Controller
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
             $upload->rootPath = '.' . UPLOAD_PATH . 'header/'; // 设置附件上传根目录
             $upload->autoSub = false; // 设置自动使用子目录保存上传文件
-            // 上传文件
-            $info = $upload->upload();
-            if (!$info) {// 上传错误提示错误信息
-                $this->error($upload->getError());
-                die;
-            } else {// 上传成功
-                //上传图片的路径
-                foreach ($info as $file) {
-                    $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
-                    $goodsHeaderPic = $url;
+
+            $goodsHeaderPic = '';
+            if (!empty($_FILES['headerPic'])) {
+                // 上传文件
+                $info = $upload->upload();
+                if (!$info) {// 上传错误提示错误信息
+                    $this->error($upload->getError());
+                    die;
+                } else {// 上传成功
+                    //上传图片的路径
+                    foreach ($info as $file) {
+                        $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
+                        $goodsHeaderPic = $url;
+                    }
                 }
             }
 

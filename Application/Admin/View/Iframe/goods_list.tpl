@@ -79,7 +79,7 @@
 <script src="__PUBLIC__/js/dataTables.bootstrap.min.js"></script>
 <script src="__PUBLIC__/js/dataTables.responsive.min.js"></script>
 
-<script src="__PUBLIC__/js/wangEditor.min.js"></script>
+<script src="__PUBLIC__/js/layer.js"></script>
 
 <script language="JavaScript">
     var table;
@@ -96,7 +96,7 @@
                     "<td>" + item.gcount + "</td>" +
                     "<td>" +
                     "<a class='btnInfo' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                    "<a class='btnInfo' href='{{U('Admin/Iframe/editGoods')}}?gID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                    "<a class='btnEdit' href='{{U('Admin/Iframe/editGoods')}}?gID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                     "<a class='btnRankTop' data-value='" + item.gid + "'><i class='fa fa-arrow-up fa-fw'></i></a>" +
                     "<a class='btnShutdown' data-value='" + item.gid + "'><i class='fa fa-close fa-fw'></i></a>" +
                     "<a class='btnDel' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
@@ -130,6 +130,48 @@
 
     $(function () {
         refresh();
+
+        $("#goodsListT").delegate('.btnInfo', 'click', function () {
+            var goodsID = $(this).attr('data-value');
+            $.ajax({
+                url: "{{U('Admin/Goods/getCurrentInfo')}}",
+                type: 'get',
+                data: {
+                    goodsID: goodsID
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var status = '';
+                    switch (data.gstatus) {
+                        case 0:
+                            status = '下架';
+                            break;
+                        case 1:
+                            status = '正常';
+                            break;
+                        case 2:
+                            status = '置顶';
+                            break;
+                    }
+                    var info =
+                        "<p>" + "商品ID：" + data.gid + "</p>" +
+                        "<p>" + "名称：" + data.gname + "</p>" +
+                        "<p>" + "种类：" + data.goodstypename + "</p>" +
+                        "<p>" + "价格：￥" + data.gprice + "</p>" +
+                        "<p>" + "原价：￥" + data.goriginprice + "</p>" +
+                        "<p>" + "库存：" + data.gcount + "</p>" +
+                        "<p>" + "销售商家：" + data.shopname + "</p>" +
+                        "<p>" + "商品描述：" + data.gdescription + "</p>" +
+                        "<p>" + "上架时间：" + data.gpubtime + "</p>" +
+                        "<p>" + "状态：" + data.gstatus + "</p>";
+                    layer.open({
+                        type: 1,
+                        title: '商品详细信息',
+                        content: info //注意，如果str是object，那么需要字符拼接。
+                    });
+                }
+            });
+        });
     })
 </script>
 </html>
