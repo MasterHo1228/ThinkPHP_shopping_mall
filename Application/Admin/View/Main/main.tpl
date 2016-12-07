@@ -72,7 +72,7 @@
                         <a class="active" href="{{U('Admin/Iframe/welcome')}}" target="mainIframe">欢迎</a>
                     </li>
                     <li>
-                        <a href="{{U('Admin/Iframe/goods_list')}}" target="mainIframe"><i
+                        <a href="{{U('Admin/Iframe/goodsList')}}" target="mainIframe"><i
                                     class="fa fa-shopping-basket fa-fw"></i> 商品管理</a>
                     </li>
                     <li>

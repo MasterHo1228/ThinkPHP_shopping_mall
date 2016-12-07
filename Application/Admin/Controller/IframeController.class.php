@@ -25,6 +25,15 @@ class IframeController extends Controller
         $this->display();
     }
 
+    public function goodsList()
+    {
+        if (session('?salesUID')) {
+            $this->display('goods_list');
+        } else {
+            $this->error('非法操作！', U('Admin/Main/main'));
+        }
+    }
+
     public function editGoods()
     {
         if (IS_GET && session('?salesUID')) {

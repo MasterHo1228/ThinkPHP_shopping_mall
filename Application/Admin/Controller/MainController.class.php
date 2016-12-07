@@ -24,6 +24,7 @@ class MainController extends Controller
     public function logout()
     {
         clearSession('admin');
+        clearSession('salesUID');
         $this->success('登出成功！', U('Admin/Index/login'));
     }
 }
