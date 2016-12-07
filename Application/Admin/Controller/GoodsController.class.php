@@ -154,4 +154,46 @@ class GoodsController extends Controller
             }
         }
     }
+
+    public function goodsReturn()
+    {
+        if (IS_POST && IS_AJAX && session('?salesUID')) {
+            $goodsID = I('post.goodsID/d');
+            $model = D('goods');
+
+            if ($model->returnGoods($goodsID)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
+
+    public function rankTop()
+    {
+        if (IS_POST && IS_AJAX && session('?salesUID')) {
+            $goodsID = I('post.goodsID/d');
+            $model = D('goods');
+
+            if ($model->goodsRankTop($goodsID)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
+
+    public function rankDown()
+    {
+        if (IS_POST && IS_AJAX && session('?salesUID')) {
+            $goodsID = I('post.goodsID/d');
+            $model = D('goods');
+
+            if ($model->goodsRankDown($goodsID)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
 }

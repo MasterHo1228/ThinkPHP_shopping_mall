@@ -118,6 +118,60 @@
     </div><!-- /.modal -->
 </div>
 
+<!-- 商品重上架提示 -->
+<div class="modal fade" id="returnGWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">重上架商品</h4>
+            </div>
+            <div class="modal-body">确定要重新上架该商品吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnToReturn">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 商品置顶提示 -->
+<div class="modal fade" id="topGWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">置顶商品</h4>
+            </div>
+            <div class="modal-body">确定要置顶该商品吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnToTop">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 商品取消置顶提示 -->
+<div class="modal fade" id="downGWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">置顶商品</h4>
+            </div>
+            <div class="modal-body">确定要取消置顶该商品吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnToDown">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <!-- 自定义提示 -->
 <div class="modal fade" id="alertHint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -149,7 +203,7 @@
 <script src="__PUBLIC__/js/layer.js"></script>
 
 <script language="JavaScript">
-    var delGID, shutGID;
+    var delGID, shutGID, returnGID, topGID, downGID;
     function refresh() {
         var table = $("#goodsList");
         $("#goodsListT").empty();
@@ -169,7 +223,7 @@
                             "<td>" +
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
                             "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
-                            "<a class='btnReturn' title='上架商品'  data-value='" + item.gid + "'><i class='fa fa-check fa-fw'></i></a>" +
+                            "<a class='btnReturn' title='重上架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#returnGWindow'><i class='fa fa-check fa-fw'></i></a>" +
                             "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
                             "</tr>";
@@ -186,7 +240,7 @@
                             "<td>" +
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
                             "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
-                            "<a class='btnRankTop' title='商品置顶显示' data-value='" + item.gid + "'><i class='fa fa-arrow-up fa-fw'></i></a>" +
+                            "<a class='btnRankTop' title='商品置顶显示' data-value='" + item.gid + "' data-toggle='modal' data-target='#topGWindow'><i class='fa fa-arrow-up fa-fw'></i></a>" +
                             "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
                             "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
@@ -204,6 +258,7 @@
                             "<td>" +
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
                             "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnRankDown' title='取消置顶' data-value='" + item.gid + "' data-toggle='modal' data-target='#downGWindow'><i class='fa fa-arrow-down fa-fw'></i></a>" +
                             "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
                             "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
@@ -290,6 +345,15 @@
         $("#goodsListT").delegate('.btnShutdown', 'click', function () {
             shutGID = $(this).attr('data-value');
         });
+        $("#goodsListT").delegate('.btnReturn', 'click', function () {
+            returnGID = $(this).attr('data-value');
+        });
+        $("#goodsListT").delegate('.btnRankTop', 'click', function () {
+            topGID = $(this).attr('data-value');
+        });
+        $("#goodsListT").delegate('.btnRankDown', 'click', function () {
+            downGID = $(this).attr('data-value');
+        });
 
         $("#btnToDelG").click(function () {
             if (delGID != '') {
@@ -330,6 +394,75 @@
                             $("#alertHintContent").empty().append("操作失败！");
                         }
                         $("#shutdownGWindow").modal('hide');
+                        $("#btnReload").attr('value', 'refresh');
+                        $("#alertHint").modal('show');
+                    }
+                });
+            }
+        });
+
+        $("#btnToReturn").click(function () {
+            if (returnGID != '') {
+                $.ajax({
+                    url: "{{U('Admin/Goods/goodsReturn')}}",
+                    type: 'post',
+                    data: {
+                        goodsID: returnGID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            $("#alertHintContent").empty().append("商品已重上架！");
+                        } else if (data == 'false') {
+                            $("#alertHintContent").empty().append("操作失败！");
+                        }
+                        $("#returnGWindow").modal('hide');
+                        $("#btnReload").attr('value', 'refresh');
+                        $("#alertHint").modal('show');
+                    }
+                });
+            }
+        });
+
+        $("#btnToTop").click(function () {
+            if (topGID != '') {
+                $.ajax({
+                    url: "{{U('Admin/Goods/rankTop')}}",
+                    type: 'post',
+                    data: {
+                        goodsID: topGID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            $("#alertHintContent").empty().append("商品置顶成功！");
+                        } else if (data == 'false') {
+                            $("#alertHintContent").empty().append("操作失败！");
+                        }
+                        $("#topGWindow").modal('hide');
+                        $("#btnReload").attr('value', 'refresh');
+                        $("#alertHint").modal('show');
+                    }
+                });
+            }
+        });
+
+        $("#btnToDown").click(function () {
+            if (downGID != '') {
+                $.ajax({
+                    url: "{{U('Admin/Goods/rankDown')}}",
+                    type: 'post',
+                    data: {
+                        goodsID: downGID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            $("#alertHintContent").empty().append("商品取消置顶成功！");
+                        } else if (data == 'false') {
+                            $("#alertHintContent").empty().append("操作失败！");
+                        }
+                        $("#downGWindow").modal('hide');
                         $("#btnReload").attr('value', 'refresh');
                         $("#alertHint").modal('show');
                     }

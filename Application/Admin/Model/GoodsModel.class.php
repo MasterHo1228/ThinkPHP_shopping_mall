@@ -75,7 +75,54 @@ class GoodsModel extends Model
     public function shutdownGoods($id)
     {
         if (!empty($id)) {
-            return $this->where('gID=' . $id)->setField('gStatus', '0');
+            $nowStatus = $this->where('gID=' . $id)->getField('gStatus');
+            if ($nowStatus == 1 || $nowStatus == 2) {
+                return $this->where('gID=' . $id)->setField('gStatus', '0');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function returnGoods($id)
+    {
+        if (!empty($id)) {
+            $nowStatus = $this->where('gID=' . $id)->getField('gStatus');
+            if ($nowStatus == 0) {
+                return $this->where('gID=' . $id)->setField('gStatus', '1');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function goodsRankTop($id)
+    {
+        if (!empty($id)) {
+            $nowStatus = $this->where('gID=' . $id)->getField('gStatus');
+            if ($nowStatus == 1) {
+                return $this->where('gID=' . $id)->setField('gStatus', '2');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function goodsRankDown($id)
+    {
+        if (!empty($id)) {
+            $nowStatus = $this->where('gID=' . $id)->getField('gStatus');
+            if ($nowStatus == 2) {
+                return $this->where('gID=' . $id)->setField('gStatus', '1');
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
