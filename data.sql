@@ -20,6 +20,15 @@ CREATE TABLE IF NOT EXISTS admin_login_log (
     ON DELETE NO ACTION
 );
 
+CREATE VIEW viewAdminLog AS
+  SELECT
+    a.aName AS 'adminName',
+    b.adminLoginTime,
+    b.adminLoginIP
+  FROM admin a,
+    admin_login_log b
+  WHERE a.aID = b.adminID;
+
 CREATE TABLE IF NOT EXISTS sale_users (
   sID       INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   sName     VARCHAR(20)              NOT NULL UNIQUE,

@@ -50,4 +50,16 @@ class IframeController extends Controller
             $this->error('非法操作！', U('Admin/Main/main'));
         }
     }
+
+    public function adminLog()
+    {
+        if (session('?admin')) {
+            $model = M('viewadminlog');
+            $data = $model->order('adminLoginTime desc')->limit(20)->select();
+            $this->assign('data', $data);
+            $this->display('admin_log');
+        } else {
+            $this->error('非法操作！', U('Admin/Main/main'));
+        }
+    }
 }
