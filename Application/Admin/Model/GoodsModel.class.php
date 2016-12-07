@@ -71,4 +71,13 @@ class GoodsModel extends Model
             return false;
         }
     }
+
+    public function shutdownGoods($id)
+    {
+        if (!empty($id)) {
+            return $this->where('gID=' . $id)->setField('gStatus', '0');
+        } else {
+            return false;
+        }
+    }
 }

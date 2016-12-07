@@ -140,4 +140,18 @@ class GoodsController extends Controller
             }
         }
     }
+
+    public function shutdown()
+    {
+        if (IS_POST && IS_AJAX && session('?salesUID')) {
+            $goodsID = I('post.goodsID/d');
+            $model = D('goods');
+
+            if ($model->shutdownGoods($goodsID)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
 }
