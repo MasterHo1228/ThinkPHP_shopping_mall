@@ -126,4 +126,18 @@ class GoodsController extends Controller
             }
         }
     }
+
+    public function delete()
+    {
+        if (IS_POST && IS_AJAX && session('?salesUID')) {
+            $goodsID = I('post.goodsID/d');
+            $model = D('goods');
+
+            if ($model->deleteGoods($goodsID)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
 }

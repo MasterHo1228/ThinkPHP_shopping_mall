@@ -81,6 +81,43 @@
     <!-- /.row -->
 </div>
 <!-- /.container -->
+
+<!-- 删除帖子提示 -->
+<div class="modal fade" id="alertDelGWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">删除商品</h4>
+            </div>
+            <div class="modal-body">确定要删除该商品吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnToDelG">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 自定义提示 -->
+<div class="modal fade" id="alertHint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">提示</h4>
+            </div>
+            <div class="modal-body" id="alertHintContent"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnReload">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 </body>
 <!-- jQuery -->
 <script src="__PUBLIC__/js/jquery.min.js"></script>
@@ -94,6 +131,7 @@
 <script src="__PUBLIC__/js/layer.js"></script>
 
 <script language="JavaScript">
+    var delGID;
     function refresh() {
         var table = $("#goodsList");
         $("#goodsListT").empty();
@@ -114,7 +152,7 @@
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
                             "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                             "<a class='btnReturn' title='上架商品'  data-value='" + item.gid + "'><i class='fa fa-check fa-fw'></i></a>" +
-                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
                             "</tr>";
                         break;
@@ -132,7 +170,7 @@
                             "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                             "<a class='btnRankTop' title='商品置顶显示' data-value='" + item.gid + "'><i class='fa fa-arrow-up fa-fw'></i></a>" +
                             "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "'><i class='fa fa-close fa-fw'></i></a>" +
-                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
                             "</tr>";
                         break;
@@ -149,12 +187,11 @@
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
                             "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                             "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "'><i class='fa fa-close fa-fw'></i></a>" +
-                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
                             "</tr>";
                         break;
                 }
-
 
                 $("#goodsListT").append(tableRow);
             });
@@ -177,7 +214,6 @@
                     }
                 }
             });
-            table.fnDraw();
         });
     }
 
@@ -224,10 +260,52 @@
                     layer.open({
                         type: 1,
                         title: '商品详细信息',
-                        content: info //注意，如果str是object，那么需要字符拼接。
+                        content: info
                     });
                 }
             });
+        });
+
+        $("#goodsListT").delegate('.btnDel', 'click', function () {
+            delGID = $(this).attr('data-value');
+        });
+
+        $("#btnToDelG").click(function () {
+            if (delGID != '') {
+                $.ajax({
+                    url: "{{U('Admin/Goods/delete')}}",
+                    type: 'post',
+                    data: {
+                        goodsID: delGID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            $("#alertHintContent").empty().append("删除成功！");
+                        } else if (data == 'false') {
+                            $("#alertHintContent").empty().append("删除失败！");
+                        }
+                        delGID = '';
+                        $("#alertDelGWindow").modal('hide');
+                        $("#btnReload").attr('value', 'refresh');
+                        $("#alertHint").modal('show');
+                    }
+                });
+            }
+        });
+
+        $("#btnReload").click(function () {
+            $("#alertHint").modal('hide');
+
+            switch ($(this).attr('value')) {
+                case 'reload':
+                    window.location.reload();
+                    break;
+                case 'refresh':
+                    delGID = '';
+                    refresh();
+                    break;
+            }
         });
     })
 </script>

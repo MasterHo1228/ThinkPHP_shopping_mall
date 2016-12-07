@@ -62,4 +62,13 @@ class GoodsModel extends Model
             return false;
         }
     }
+
+    public function deleteGoods($id)
+    {
+        if (!empty($id)) {
+            return $this->where('gID=' . $id)->delete();
+        } else {
+            return false;
+        }
+    }
 }
