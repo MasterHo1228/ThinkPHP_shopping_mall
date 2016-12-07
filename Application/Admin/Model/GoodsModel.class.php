@@ -36,4 +36,30 @@ class GoodsModel extends Model
             return false;
         }
     }
+
+    public function getCurrentDetailInfo($id)
+    {
+        if (!empty($id)) {
+            return $this->where('gID=' . $id)->field('gID,gName,gType,gPrice,gOriginPrice,gCount,gDescription')->find();
+        } else {
+            return false;
+        }
+    }
+
+    public function updateGoods($id, $name, $type, $price, $originPrice, $count, $desc)
+    {
+        if (!empty($id) && !empty($name) && !empty($type) && !empty($price) && !empty($count)) {
+            $data['gID'] = $id;
+            $data['gName'] = $name;
+            $data['gType'] = $type;
+            $data['gPrice'] = $price;
+            $data['gOriginPrice'] = $originPrice;
+            $data['gCount'] = $count;
+            $data['gDescription'] = $desc;
+
+            return $this->where('gID=' . $id)->save($data);
+        } else {
+            return false;
+        }
+    }
 }

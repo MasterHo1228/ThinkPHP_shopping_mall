@@ -106,7 +106,7 @@
                     "<td>" + item.gcount + "</td>" +
                     "<td>" +
                     "<a class='btnInfo' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                    "<a class='btnEdit' href='{{U('Admin/Iframe/editGoods')}}?gID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                    "<a class='btnEdit' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                     "<a class='btnRankTop' data-value='" + item.gid + "'><i class='fa fa-arrow-up fa-fw'></i></a>" +
                     "<a class='btnShutdown' data-value='" + item.gid + "'><i class='fa fa-close fa-fw'></i></a>" +
                     "<a class='btnDel' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +

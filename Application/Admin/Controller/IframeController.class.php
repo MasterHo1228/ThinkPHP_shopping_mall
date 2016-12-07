@@ -24,4 +24,21 @@ class IframeController extends Controller
         $this->assign('loginIpAddr', $logIP);
         $this->display();
     }
+
+    public function editGoods()
+    {
+        if (IS_GET && session('?salesUID')) {
+            $goodsID = I('get.goodsID');
+            $model = D('goods');
+            $data = $model->getCurrentDetailInfo($goodsID);
+            if ($data) {
+                $this->assign('data', $data);
+                $this->display('edit_goods');
+            } else {
+                $this->error('商品不存在！');
+            }
+        } else {
+            $this->error('非法操作！', U('Admin/Main/main'));
+        }
+    }
 }

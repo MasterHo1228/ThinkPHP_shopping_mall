@@ -106,4 +106,24 @@ class GoodsController extends Controller
             $this->error('非法操作！！', U('Admin/Index/login'));
         }
     }
+
+    public function update()
+    {
+        if (IS_POST && session('?salesUID')) {
+            $goodsID = I('post.goodsID/d');
+            $goodsName = I('post.goodsName/s');
+            $goodsType = I('post.goodsType/d');
+            $goodsPrice = I('post.goodsPrice/f');
+            $goodsOriginPrice = I('post.goodsOriginPrice/f');
+            $goodsCount = I('post.goodsCount/d');
+            $goodsDesc = I('post.goodsDesc/s', '', 'htmlspecialchars,nl2br');
+
+            $model = D('goods');
+            if ($model->updateGoods($goodsID, $goodsName, $goodsType, $goodsPrice, $goodsOriginPrice, $goodsCount, $goodsDesc)) {
+                $this->success('商品信息更新成功！', U('Admin/Iframe/goods_list'));
+            } else {
+                $this->error('商品信息更新失败！');
+            }
+        }
+    }
 }
