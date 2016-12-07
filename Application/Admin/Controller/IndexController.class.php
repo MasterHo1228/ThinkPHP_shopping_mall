@@ -13,7 +13,7 @@ class IndexController extends Controller
                 $password = I('post.usrPasswd');
                 $model = D('admin');
                 if ($model->CheckAccount($userName, $password)) {
-                    $this->success('Welcome back！', U('Admin/Main/main'));
+                    $this->redirect('Admin/Main/main');
                 } else {
                     $this->error('用户名或密码错误！！');
                 }
