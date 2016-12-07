@@ -51,6 +51,7 @@
                             <th>商品种类</th>
                             <th>商品价格</th>
                             <th>商品库存</th>
+                            <th>状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -64,6 +65,7 @@
                             <th>商品种类</th>
                             <th>商品价格</th>
                             <th>商品库存</th>
+                            <th>状态</th>
                             <th>操作</th>
                         </tr>
                         </tfoot>
@@ -97,21 +99,62 @@
         $("#goodsListT").empty();
         $.getJSON("{{U('Admin/Goods/getList')}}", function (data) {
             $.each(data, function (i, item) {
-                var tableRow =
-                    "<tr>" +
-                    "<td>" + item.gid + "</td>" +
-                    "<td>" + item.gname + "</td>" +
-                    "<td>" + item.goodstypename + "</td>" +
-                    "<td>" + item.gprice + "</td>" +
-                    "<td>" + item.gcount + "</td>" +
-                    "<td>" +
-                    "<a class='btnInfo' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                    "<a class='btnEdit' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
-                    "<a class='btnRankTop' data-value='" + item.gid + "'><i class='fa fa-arrow-up fa-fw'></i></a>" +
-                    "<a class='btnShutdown' data-value='" + item.gid + "'><i class='fa fa-close fa-fw'></i></a>" +
-                    "<a class='btnDel' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
-                    "</td>" +
-                    "</tr>";
+                var tableRow;
+                switch (item.gstatus) {
+                    case '0':
+                        tableRow =
+                            "<tr>" +
+                            "<td>" + item.gid + "</td>" +
+                            "<td>" + item.gname + "</td>" +
+                            "<td>" + item.goodstypename + "</td>" +
+                            "<td>" + item.gprice + "</td>" +
+                            "<td>" + item.gcount + "</td>" +
+                            "<td>" + "已下架" + "</td>" +
+                            "<td>" +
+                            "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
+                            "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnReturn' title='上架商品'  data-value='" + item.gid + "'><i class='fa fa-check fa-fw'></i></a>" +
+                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "</td>" +
+                            "</tr>";
+                        break;
+                    case '1':
+                        tableRow =
+                            "<tr>" +
+                            "<td>" + item.gid + "</td>" +
+                            "<td>" + item.gname + "</td>" +
+                            "<td>" + item.goodstypename + "</td>" +
+                            "<td>" + item.gprice + "</td>" +
+                            "<td>" + item.gcount + "</td>" +
+                            "<td>" + "正常" + "</td>" +
+                            "<td>" +
+                            "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
+                            "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnRankTop' title='商品置顶显示' data-value='" + item.gid + "'><i class='fa fa-arrow-up fa-fw'></i></a>" +
+                            "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "'><i class='fa fa-close fa-fw'></i></a>" +
+                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "</td>" +
+                            "</tr>";
+                        break;
+                    case '2':
+                        tableRow =
+                            "<tr>" +
+                            "<td>" + item.gid + "</td>" +
+                            "<td>" + item.gname + "</td>" +
+                            "<td>" + item.goodstypename + "</td>" +
+                            "<td>" + item.gprice + "</td>" +
+                            "<td>" + item.gcount + "</td>" +
+                            "<td>" + "置顶" + "</td>" +
+                            "<td>" +
+                            "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
+                            "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "'><i class='fa fa-close fa-fw'></i></a>" +
+                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "</td>" +
+                            "</tr>";
+                        break;
+                }
+
 
                 $("#goodsListT").append(tableRow);
             });
@@ -157,13 +200,13 @@
                 success: function (data) {
                     var status = '';
                     switch (data.gstatus) {
-                        case 0:
+                        case '0':
                             status = '下架';
                             break;
-                        case 1:
+                        case '1':
                             status = '正常';
                             break;
-                        case 2:
+                        case '2':
                             status = '置顶';
                             break;
                     }
@@ -177,7 +220,7 @@
                         "<p>" + "销售商家：" + data.shopname + "</p>" +
                         "<p>" + "商品描述：" + data.gdescription + "</p>" +
                         "<p>" + "上架时间：" + data.gpubtime + "</p>" +
-                        "<p>" + "状态：" + data.gstatus + "</p>";
+                        "<p>" + "状态：" + status + "</p>";
                     layer.open({
                         type: 1,
                         title: '商品详细信息',
