@@ -82,7 +82,22 @@
                         <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-bullhorn fa-fw"></i> 网站公告管理</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-group fa-fw"></i> 账号管理</a>
+                        <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-group fa-fw"></i> 账号管理 <span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="javascript:void(0)">商城用户管理</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">店铺账号管理</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">系统管理员登录日志</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)">管理员账号管理</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
