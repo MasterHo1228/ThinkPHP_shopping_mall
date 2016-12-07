@@ -67,6 +67,26 @@ class GoodsController extends Controller
 
     public function add()
     {
+        $goodsHeaderPic = '';
+        if (!empty($_FILES['headerPic'])) {
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize = 3145728;// 设置附件上传大小
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+            $upload->rootPath = '.' . UPLOAD_PATH . 'header/'; // 设置附件上传根目录
+            $upload->autoSub = false; // 设置自动使用子目录保存上传文件
+            // 上传文件
+            $info = $upload->upload();
+            if (!$info) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+                die;
+            } else {// 上传成功
+                //上传图片的路径
+                foreach ($info as $file) {
+                    $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
+                    $goodsHeaderPic = $url;
+                }
+            }
+        }
         if (IS_POST && session('?salesUID')) {
 
             $goodsName = I('post.goodsName/s');
@@ -75,28 +95,6 @@ class GoodsController extends Controller
             $goodsOriginPrice = I('post.goodsOriginPrice/f');
             $goodsCount = I('post.goodsCount/d');
             $goodsDesc = I('post.goodsDesc/s', '', 'htmlspecialchars,nl2br');
-
-            $upload = new \Think\Upload();// 实例化上传类
-            $upload->maxSize = 3145728;// 设置附件上传大小
-            $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-            $upload->rootPath = '.' . UPLOAD_PATH . 'header/'; // 设置附件上传根目录
-            $upload->autoSub = false; // 设置自动使用子目录保存上传文件
-
-            $goodsHeaderPic = '';
-            if (!empty($_FILES['headerPic'])) {
-                // 上传文件
-                $info = $upload->upload();
-                if (!$info) {// 上传错误提示错误信息
-                    $this->error($upload->getError());
-                    die;
-                } else {// 上传成功
-                    //上传图片的路径
-                    foreach ($info as $file) {
-                        $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
-                        $goodsHeaderPic = $url;
-                    }
-                }
-            }
 
             $model = D('goods');
             if ($model->addNewGoods($goodsName, $goodsType, $goodsPrice, $goodsOriginPrice, $goodsCount, $goodsDesc, $goodsHeaderPic)) {

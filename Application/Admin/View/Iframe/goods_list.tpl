@@ -57,6 +57,16 @@
                         <tbody id="goodsListT">
 
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>商品编号</th>
+                            <th>商品名称</th>
+                            <th>商品种类</th>
+                            <th>商品价格</th>
+                            <th>商品库存</th>
+                            <th>操作</th>
+                        </tr>
+                        </tfoot>
                     </table>
                     <!-- /.table-responsive -->
                 </div>
@@ -82,10 +92,10 @@
 <script src="__PUBLIC__/js/layer.js"></script>
 
 <script language="JavaScript">
-    var table;
     function refresh() {
+        var table = $("#goodsList");
+        $("#goodsListT").empty();
         $.getJSON("{{U('Admin/Goods/getList')}}", function (data) {
-            $("#goodsListT").empty();
             $.each(data, function (i, item) {
                 var tableRow =
                     "<tr>" +
@@ -104,32 +114,36 @@
                     "</tr>";
 
                 $("#goodsListT").append(tableRow);
-            })
-        });
-
-        $("#goodsList").dataTable({
-            retrieve: true,
-            responsive: true,
-            sPaginationType: "full_numbers",
-            oLanguage: {
-                sLengthMenu: "每页显示 _MENU_ 条记录",
-                sInfo: "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-                sInfoEmpty: "没有数据",
-                sInfoFiltered: "(从 _MAX_ 条数据中检索)",
-                sZeroRecords: "没有检索到数据",
-                sSearch: "搜索:",
-                oPaginate: {
-                    sFirst: "首页",
-                    sPrevious: "前一页",
-                    sNext: "后一页",
-                    sLast: "尾页"
+            });
+            table.dataTable({
+                retrieve: true,
+                responsive: true,
+                sPaginationType: "full_numbers",
+                oLanguage: {
+                    sLengthMenu: "每页显示 _MENU_ 条记录",
+                    sInfo: "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                    sInfoEmpty: "没有数据",
+                    sInfoFiltered: "(从 _MAX_ 条数据中检索)",
+                    sZeroRecords: "没有检索到数据",
+                    sSearch: "搜索:",
+                    oPaginate: {
+                        sFirst: "首页",
+                        sPrevious: "前一页",
+                        sNext: "后一页",
+                        sLast: "尾页"
+                    }
                 }
-            }
+            });
+            table.fnDraw();
         });
     }
 
     $(function () {
         refresh();
+
+        $("#btnRefresh").click(function () {
+            refresh();
+        });
 
         $("#goodsListT").delegate('.btnInfo', 'click', function () {
             var goodsID = $(this).attr('data-value');

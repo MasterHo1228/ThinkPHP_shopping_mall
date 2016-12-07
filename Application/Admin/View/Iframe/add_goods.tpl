@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="goodsDesc">商品图片</label>
+                    <label for="goodsDesc">商品图片<span style="color: red;font-weight: bold">（必要）</span></label>
                     <input type="file" name="headerPic">
                 </div>
                 <div class="form-group">
