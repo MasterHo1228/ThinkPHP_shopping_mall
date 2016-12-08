@@ -31,7 +31,9 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <a class="btn btn-primary btn-block" href="javascript:void(0)">添加管理员账号</a>
+                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addAdminWindow">
+                        添加管理员账号
+                    </button>
                     <br/>
                     <table width="100%" class="table table-striped table-bordered table-hover" id="adminList">
                         <thead>
@@ -75,6 +77,37 @@
     </div><!-- /.modal -->
 </div>
 
+<!-- 添加用户窗口 -->
+<div class="modal fade" id="addAdminWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">添加管理员用户</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="adminName">用户名</label>
+                    <input type="text" class="form-control" id="addAdminName" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label for="adminPasswd">密码</label>
+                    <input type="password" class="form-control" id="addAdminPasswd" placeholder="密码">
+                </div>
+                <div class="form-group">
+                    <label for="adminPasswdT">确认密码</label>
+                    <input type="password" class="form-control" id="addAdminPasswdT" placeholder="确认密码">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnToAdd">确定</button>
+                <button type="button" class="btn btn-default" id="btnExitAdd" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <!-- 修改密码窗口 -->
 <div class="modal fade" id="editAdminWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -87,15 +120,15 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="adminName">用户名</label>
-                    <input type="text" class="form-control" id="adminName" disabled>
+                    <input type="text" class="form-control" id="editAdminName" disabled>
                 </div>
                 <div class="form-group">
                     <label for="adminPasswd">密码</label>
-                    <input type="password" class="form-control" id="adminPasswd" placeholder="密码">
+                    <input type="password" class="form-control" id="editAdminPasswd" placeholder="密码">
                 </div>
                 <div class="form-group">
                     <label for="adminPasswdT">确认密码</label>
-                    <input type="password" class="form-control" id="adminPasswdT" placeholder="确认密码">
+                    <input type="password" class="form-control" id="editAdminPasswdT" placeholder="确认密码">
                 </div>
             </div>
             <div class="modal-footer">
@@ -159,6 +192,43 @@
             refresh();
         });
 
+        $("#btnToAdd").click(function () {
+            if ($("#addAdminName").val() != '') {
+                if ($("#addAdminPasswd").val() == $("#addAdminPasswdT").val()) {
+                    var adminName = $("#addAdminName").val();
+                    var password = $("#addAdminPasswd").val();
+                    $.ajax({
+                        url: "{{U('Admin/Admin/add')}}",
+                        type: 'post',
+                        data: {
+                            adminName: adminName,
+                            password: password
+                        },
+                        dataType: 'text',
+                        success: function (data) {
+                            if (data == 'true') {
+                                $("#alertHintContent").empty().append("添加成功！");
+                                $("#addAdminName").val('');
+                                $("#adminPasswd").val('');
+                                $("#adminPasswdT").val('');
+                            } else if (data == 'false') {
+                                $("#alertHintContent").empty().append("添加失败！");
+                            }
+                            $("#addAdminWindow").modal('hide');
+                            $("#btnReload").attr('value', 'refresh');
+                            $("#alertHint").modal('show');
+                        }
+                    });
+                } else {
+                    $("#alertHintContent").empty().append("两次输入的密码不一致！");
+                    $("#alertHint").modal('show');
+                }
+            } else {
+                $("#alertHintContent").empty().append("请输入用户名！");
+                $("#alertHint").modal('show');
+            }
+        });
+
         $("#adminListT").delegate('.btnEdit', 'click', function () {
             editAdminID = $(this).prop('value');
             $.ajax({
@@ -170,7 +240,7 @@
                 dataType: 'text',
                 success: function (data) {
                     if (data != '') {
-                        $("#adminName").val(data);
+                        $("#editAdminName").val(data);
                     }
                     $("#editAdminWindow").modal('show');
                 }
@@ -179,8 +249,8 @@
 
         $("#btnToEdit").click(function () {
             if (editAdminID != '') {
-                if ($("#adminPasswd").val() == $("#adminPasswdT").val()) {
-                    var password = $("#adminPasswd").val();
+                if ($("#editAdminPasswd").val() == $("#editAdminPasswdT").val()) {
+                    var password = $("#editAdminPasswd").val();
                     $.ajax({
                         url: "{{U('Admin/Admin/update')}}",
                         type: 'post',
@@ -193,8 +263,8 @@
                         success: function (data) {
                             if (data == 'true') {
                                 $("#alertHintContent").empty().append("修改成功！");
-                                $("#adminPasswd").val('');
-                                $("#adminPasswdT").val('');
+                                $("#editAdminPasswd").val('');
+                                $("#editAdminPasswdT").val('');
                             } else if (data == 'false') {
                                 $("#alertHintContent").empty().append("修改失败！");
                             }

@@ -31,6 +31,21 @@ class AdminController extends Controller
         }
     }
 
+    public function add()
+    {
+        if (IS_AJAX && IS_POST && session('?admin') && session('admin.usrName') == 'admin') {
+            $model = D('admin');
+            $data['aName'] = I('post.adminName/s');
+            $data['aPassword'] = I('post.password/s');
+
+            if ($model->add($data)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
+
     public function update()
     {
         if (IS_AJAX && IS_POST && session('?admin') && session('admin.usrName') == 'admin') {
