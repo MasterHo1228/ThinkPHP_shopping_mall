@@ -63,7 +63,7 @@ class AdminModel extends Model
             $salt = generatePasswordSalt();
             $data['aPassword'] = md5($password . $salt);
             $data['aSalt'] = $salt;
-            return $this->where('aID=' . $id)->save($data);
+            return $this->where('aID=' . $id)->filter('strip_tags')->save($data);
         } else {
             return false;
         }
