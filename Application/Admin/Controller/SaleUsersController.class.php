@@ -31,6 +31,22 @@ class SaleUsersController extends Controller
         }
     }
 
+    public function add()
+    {
+        if (IS_POST && IS_AJAX && session('?admin')) {
+            $SULoginName = I('post.SULoginName/s');
+            $SUPasswd = I('post.SUPasswd/s');
+            $SUName = I('post.SUName/s');
+
+            $model = D('SaleUsers');
+            if ($model->addShop($SULoginName, $SUPasswd, $SUName)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
+
     public function update()
     {
         if (IS_AJAX && IS_POST && session('?admin')) {

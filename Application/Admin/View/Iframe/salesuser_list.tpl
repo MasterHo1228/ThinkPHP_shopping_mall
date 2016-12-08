@@ -43,6 +43,10 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
+                    <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addShopWindow">
+                        添加商铺
+                    </button>
+                    <br/>
                     <table width="100%" class="table table-striped table-bordered table-hover" id="shopList">
                         <thead>
                         <tr>
@@ -74,7 +78,41 @@
 </div>
 <!-- /.container -->
 
-<!-- 编辑用户提示 -->
+<!-- 添加商铺提示 -->
+<div class="modal fade" id="addShopWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">添加商铺</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="addSUName">商铺名称</label>
+                    <input type="email" class="form-control" id="addSUName" name="addSUName"
+                           placeholder="商铺名称">
+                </div>
+                <div class="form-group">
+                    <label for="addSULoginName">商铺登录名</label>
+                    <input type="text" class="form-control" id="addSULoginName" name="addSULoginName"
+                           placeholder="输入商城登录名">
+                </div>
+                <div class="form-group">
+                    <label for="addSUPassword">密码</label>
+                    <input type="password" class="form-control" id="addSUPassword" name="addSUPassword"
+                           placeholder="输入密码">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnToAddSU">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 编辑商铺提示 -->
 <div class="modal fade" id="editShopWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -108,7 +146,7 @@
     </div><!-- /.modal -->
 </div>
 
-<!-- 删除用户提示 -->
+<!-- 删除商铺提示 -->
 <div class="modal fade" id="alertDelSUWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -200,6 +238,41 @@
 
         $("#btnRefresh").click(function () {
             refresh();
+        });
+
+        $("#btnToAddSU").click(function () {
+            var SULoginName = $("#addSULoginName").val();
+            var SUPasswd = $("#addSUPassword").val();
+            var SUName = $("#addSUName").val();
+
+            if (SULoginName != '' && SUPasswd != '' && SUName != '') {
+                $.ajax({
+                    url: "{{U('Admin/SaleUsers/add')}}",
+                    type: 'post',
+                    data: {
+                        SULoginName: SULoginName,
+                        SUPasswd: SUPasswd,
+                        SUName: SUName
+                    },
+                    dadaType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            $("#btnReload").attr('value', 'refresh');
+                            $("#alertHintContent").empty().append("商铺添加成功！");
+                            $("#addSULoginName").val('');
+                            $("#addSUPassword").val('');
+                            $("#addSUName").val('');
+                        } else if (data == 'false') {
+                            $("#alertHintContent").empty().append("商铺添加失败！");
+                        }
+                        $("#addShopWindow").modal('hide');
+                        $("#alertHint").modal('show');
+                    }
+                })
+            } else {
+                $("#alertHintContent").empty().append("商铺信息请填写完整！");
+                $("#alertHint").modal('show');
+            }
         });
 
         $("#shopListT").delegate('.btnEdit', 'click', function () {

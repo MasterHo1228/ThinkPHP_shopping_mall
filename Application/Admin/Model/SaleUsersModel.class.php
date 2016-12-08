@@ -26,6 +26,21 @@ class SaleUsersModel extends Model
         }
     }
 
+    public function addShop($loginName, $password, $shopName)
+    {
+        if (!empty($loginName) && !empty($password) && !empty($shopName)) {
+            $data['sName'] = $loginName;
+            $data['shopName'] = $shopName;
+            $salt = generatePasswordSalt();
+            $data['salt'] = $salt;
+            $data['sPassword'] = md5($password . $salt);
+
+            return $this->add($data);
+        } else {
+            return false;
+        }
+    }
+
     public function updateInfo($id, $name, $password, $shopName)
     {
         if (!empty($id)) {
