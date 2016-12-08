@@ -18,6 +18,12 @@
     <!-- DataTables Responsive CSS -->
     <link href="__PUBLIC__/css/responsive.bootstrap.min.css" rel="stylesheet">
 
+    <style type="text/css">
+        .checkUserInfo {
+            cursor: pointer;
+        }
+    </style>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -67,6 +73,50 @@
     <!-- /.row -->
 </div>
 <!-- /.container -->
+
+<!-- 编辑用户提示 -->
+<div class="modal fade" id="editUserWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">编辑用户</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editUserName">用户名</label>
+                    <input type="text" class="form-control" id="editUserName" name="editUserName" placeholder="输入用户名">
+                </div>
+                <div class="form-group">
+                    <label for="editUserPasswd">密码</label>
+                    <input type="password" class="form-control" id="editUserPasswd" name="editUserPasswd"
+                           placeholder="输入密码">
+                </div>
+                <div class="form-group">
+                    <label for="editUserGender">性别</label>
+                    <select class="form-control" id="editUserGender" name="editUserGender">
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editUserEmail">E-Mail</label>
+                    <input type="email" class="form-control" id="editUserEmail" name="editUserEmail"
+                           placeholder="E-Mail">
+                </div>
+                <div class="form-group">
+                    <label for="editUserPhone">联系电话</label>
+                    <input type="text" class="form-control" id="editUserPhone" name="editUserPhone" placeholder="联系电话">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnToEditU">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <!-- 删除用户提示 -->
 <div class="modal fade" id="alertDelUWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -126,7 +176,7 @@
                 var tableRow =
                     "<tr>" +
                     "<td>" + item.uid + "</td>" +
-                    "<td>" + "<a class='checkUserInfo' href='' data-value='" + item.uid + "'>" + item.uname + "</a>" + "</td>" +
+                    "<td>" + "<a class='checkUserInfo' title='查看用户详细信息' data-value='" + item.uid + "'>" + item.uname + "</a>" + "</td>" +
                     "<td>" +
                     "<button class='btn btn-xs btn-primary btnEdit' data-value='" + item.uid + "'>编辑</a>" +
                     "<button class='btn btn-xs btn-danger btnDel' title='删除商品' data-value='" + item.uid + "' data-toggle='modal' data-target='#alertDelUWindow'>删除</button>" +
@@ -174,10 +224,19 @@
                 },
                 dataType: 'json',
                 success: function (data) {
+                    var gender = '';
+                    switch (data.ugender) {
+                        case 'male':
+                            gender = '男';
+                            break;
+                        case 'female':
+                            gender = '女';
+                            break;
+                    }
                     var info =
                         "<p>" + "用户ID：" + data.uid + "</p>" +
                         "<p>" + "用户名：" + data.uname + "</p>" +
-                        "<p>" + "性别：" + data.ugender + "</p>" +
+                        "<p>" + "性别：" + gender + "</p>" +
                         "<p>" + "E-Mail：" + data.uemail + "</p>" +
                         "<p>" + "联系电话：" + data.uphone + "</p>";
                     layer.open({
@@ -191,6 +250,75 @@
 
         $("#userListT").delegate('.btnEdit', 'click', function () {
             editUID = $(this).attr('data-value');
+            $.ajax({
+                url: "{{U('Admin/User/getCurrentInfo')}}",
+                type: 'get',
+                data: {
+                    userID: editUID
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $("#editUserName").val(data.uname);
+                    $("#editUserEmail").val(data.uemail);
+                    $("#editUserPhone").val(data.uphone);
+                    $("#editUserGender option[value='" + data.ugender + "']").prop('selected', true);
+                },
+                complete: function () {
+                    $("#editUserWindow").modal('show');
+                }
+            });
+        });
+
+        $("#btnToEditU").click(function () {
+            if (editUID != '') {
+                var userName = $("#editUserName").val();
+                var userPasswd = $("#editUserPasswd").val();
+                var userGender = $("#editUserGender").val();
+                var userEmail = $("#editUserEmail").val();
+                var userPhone = $("#editUserPhone").val();
+
+                var data;
+                if (userName != '') {
+                    if (userPasswd == '') {
+                        data = {
+                            userID: editUID,
+                            userName: userName,
+                            userGender: userGender,
+                            userEmail: userEmail,
+                            userPhone: userPhone
+                        };
+                    } else {
+                        data = {
+                            userID: editUID,
+                            userName: userName,
+                            userPasswd: userPasswd,
+                            userGender: userGender,
+                            userEmail: userEmail,
+                            userPhone: userPhone
+                        };
+                    }
+
+                    $.ajax({
+                        url: "{{U('Admin/User/update')}}",
+                        type: 'post',
+                        data: data,
+                        dadaType: 'text',
+                        success: function (data) {
+                            if (data == 'true') {
+                                $("#btnReload").attr('value', 'refresh');
+                                $("#alertHintContent").empty().append("用户信息更新成功！");
+                            } else if (data == 'false') {
+                                $("#alertHintContent").empty().append("用户信息更新失败！");
+                            }
+                            $("#editUserWindow").modal('hide');
+                            $("#alertHint").modal('show');
+                        }
+                    })
+                } else {
+                    $("#alertHintContent").empty().append("请输入用户名！");
+                    $("#alertHint").modal('show');
+                }
+            }
         });
 
         $("#userListT").delegate('.btnDel', 'click', function () {
