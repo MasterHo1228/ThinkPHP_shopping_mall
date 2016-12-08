@@ -55,7 +55,13 @@ class IframeController extends Controller
     {
         if (session('?admin')) {
             $model = M('viewadminlog');
-            $data = $model->order('adminLoginTime desc')->limit(20)->select();
+            $adminName = session('admin.usrName');
+            if ($adminName == 'admin') {
+                $data = $model->order('adminLoginTime desc')->limit(20)->select();
+            } else {
+                $data = $model->where("adminName='$adminName'")->order('adminLoginTime desc')->limit(20)->select();
+            }
+
             $this->assign('data', $data);
             $this->display('admin_log');
         } else {

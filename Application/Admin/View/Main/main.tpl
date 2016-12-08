@@ -91,12 +91,16 @@
                             <li>
                                 <a href="javascript:void(0)">店铺账号管理</a>
                             </li>
+                            {{if isset($smarty.session.admin)}}
                             <li>
                                 <a href="{{U('Admin/Iframe/adminLog')}}" target="mainIframe">系统管理员登录日志</a>
                             </li>
+                            {{if $smarty.session.admin.usrName=='admin'}}
                             <li>
                                 <a href="javascript:void(0)">管理员账号管理</a>
                             </li>
+                            {{/if}}
+                            {{/if}}
                         </ul>
                     </li>
                 </ul>

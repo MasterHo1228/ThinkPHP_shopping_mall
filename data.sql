@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS admin (
 
 INSERT INTO admin
 SET aName = 'admin', aPassword = MD5('123456..msho'), aSalt = 'msho';
+INSERT INTO admin
+SET aName = 'adMan', aPassword = MD5('123456EcX7'), aSalt = 'EcX7';
 
 CREATE TABLE IF NOT EXISTS admin_login_log (
   adminID        INT UNSIGNED NOT NULL,
