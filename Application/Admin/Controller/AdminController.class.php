@@ -30,4 +30,35 @@ class AdminController extends Controller
             $this->ajaxReturn($data, 'EVAL');
         }
     }
+
+    public function update()
+    {
+        if (IS_AJAX && IS_POST && session('?admin') && session('admin.usrName') == 'admin') {
+            $adminID = I('post.adminID/d');
+            $model = D('admin');
+            if (I('post.type/s') == 'password' && !empty(I('post.password/s'))) {
+                if ($model->changePassword($adminID, I('post.password/s'))) {
+                    $this->ajaxReturn('true', 'EVAL');
+                } else {
+                    $this->ajaxReturn('false', 'EVAL');
+                }
+            }
+        }
+    }
+
+    public function delete()
+    {
+        if (IS_AJAX && IS_POST && session('?admin') && session('admin.usrName') == 'admin') {
+            $adminID = I('post.adminID/d');
+            $model = D('admin');
+
+            if ($adminID != 1) {
+                if ($model->deleteByID($adminID)) {
+                    $this->ajaxReturn('true', 'EVAL');
+                } else {
+                    $this->ajaxReturn('false', 'EVAL');
+                }
+            }
+        }
+    }
 }

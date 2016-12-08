@@ -56,4 +56,25 @@ class AdminModel extends Model
             return false;
         }
     }
+
+    public function changePassword($id, $password)
+    {
+        if (!empty($id) && !empty($password)) {
+            $salt = generatePasswordSalt();
+            $data['aPassword'] = md5($password . $salt);
+            $data['aSalt'] = $salt;
+            return $this->where('aID=' . $id)->save($data);
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteByID($id)
+    {
+        if (!empty($id)) {
+            return $this->where('aID=' . $id)->delete();
+        } else {
+            return false;
+        }
+    }
 }

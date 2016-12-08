@@ -35,7 +35,7 @@
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="panel-title pull-left">管理员账号列表</div>
+                    <div class="panel-title">管理员账号列表</div>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -177,9 +177,9 @@
                 },
                 dataType: 'text',
                 success: function (data) {
-//                    if (data!=''){
-                    $("#adminName").val(data);
-//                    }
+                    if (data != '') {
+                        $("#adminName").val(data);
+                    }
                     $("#editAdminWindow").modal('show');
                 }
             });
@@ -188,20 +188,23 @@
         $("#btnToEdit").click(function () {
             if (editAdminID != '') {
                 if ($("#adminPasswd").val() == $("#adminPasswdT").val()) {
+                    var password = $("#adminPasswd").val();
                     $.ajax({
-                        url: "{{U('Admin/Admin/updatePassword')}}",
+                        url: "{{U('Admin/Admin/update')}}",
                         type: 'post',
                         data: {
-                            adminID: delAdminID
+                            type: 'password',
+                            adminID: editAdminID,
+                            password: password
                         },
                         dataType: 'text',
                         success: function (data) {
                             if (data == 'true') {
-                                $("#alertHintContent").empty().append("删除成功！");
+                                $("#alertHintContent").empty().append("修改成功！");
                                 $("#adminPasswd").val('');
                                 $("#adminPasswdT").val('');
                             } else if (data == 'false') {
-                                $("#alertHintContent").empty().append("删除失败！");
+                                $("#alertHintContent").empty().append("修改失败！");
                             }
                             $("#editAdminWindow").modal('hide');
                             $("#btnReload").attr('value', 'refresh');
