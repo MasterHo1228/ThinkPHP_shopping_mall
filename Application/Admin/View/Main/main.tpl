@@ -86,7 +86,7 @@
                                     class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="javascript:void(0)">商城用户管理</a>
+                                <a href="{{U('Admin/Iframe/userList')}}" target="mainIframe">商城用户管理</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)">店铺账号管理</a>

@@ -77,4 +77,13 @@ class IframeController extends Controller
             $this->error('非法操作！', U('Admin/Main/main'));
         }
     }
+
+    public function userList()
+    {
+        if (session('?admin')) {
+            $this->display('user_list');
+        } else {
+            $this->error('非法操作！', U('Admin/Main/main'));
+        }
+    }
 }
