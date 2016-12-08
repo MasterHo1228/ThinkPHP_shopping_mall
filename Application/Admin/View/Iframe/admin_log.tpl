@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="page-header">添加商品</h2>
+            <h2 class="page-header">管理员登录日志</h2>
             <table width="100%" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>

@@ -97,7 +97,7 @@
                             </li>
                             {{if $smarty.session.admin.usrName=='admin'}}
                             <li>
-                                <a href="javascript:void(0)">管理员账号管理</a>
+                                <a href="{{U('Admin/Iframe/adminList')}}" target="mainIframe">管理员账号管理</a>
                             </li>
                             {{/if}}
                             {{/if}}

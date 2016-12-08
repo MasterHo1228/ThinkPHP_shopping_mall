@@ -42,4 +42,18 @@ class AdminModel extends Model
             return false;
         }
     }
+
+    public function getNormalAdminList()
+    {
+        return $this->where("aName<>'admin'")->field('aID,aName')->select();
+    }
+
+    public function getName($id)
+    {
+        if (!empty($id)) {
+            return $this->where('aID=' . $id)->getField('aName');
+        } else {
+            return false;
+        }
+    }
 }
