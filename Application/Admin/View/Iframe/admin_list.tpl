@@ -13,14 +13,6 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link href="__PUBLIC__/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables Responsive CSS -->
-    <link href="__PUBLIC__/css/responsive.bootstrap.min.css" rel="stylesheet">
-
-    <link href="__PUBLIC__/css/wangEditor.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

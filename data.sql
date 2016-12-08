@@ -53,6 +53,13 @@ CREATE TABLE IF NOT EXISTS users (
   uPhone    VARCHAR(20)
 );
 
+INSERT INTO users
+SET uName = '路人甲', uPassword = md5('123456.');
+INSERT INTO users
+SET uName = '路人乙', uPassword = md5('123456');
+INSERT INTO users
+SET uName = '路人丙', uPassword = md5('123456+');
+
 CREATE TABLE IF NOT EXISTS goodsType (
   tID          INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   tName        VARCHAR(20)              NOT NULL,

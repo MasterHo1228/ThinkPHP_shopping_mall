@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>商品列表 - 商城后台管理系统</title>
+    <title>商城用户列表 - 商城后台管理系统</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
@@ -19,6 +19,8 @@
     <link href="__PUBLIC__/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <!-- DataTables Responsive CSS -->
     <link href="__PUBLIC__/css/responsive.bootstrap.min.css" rel="stylesheet">
+
+    <link href="__PUBLIC__/css/wangEditor.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
