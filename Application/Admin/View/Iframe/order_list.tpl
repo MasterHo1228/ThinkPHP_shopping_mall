@@ -99,6 +99,10 @@
                     <input type="text" class="form-control" id="sendOrderCName" name="sendOrderCName" readonly>
                 </div>
                 <div class="form-group">
+                    <label for="sendOrderAddress">收货地址</label>
+                    <input type="text" class="form-control" id="sendOrderAddress" name="sendOrderAddress" readonly>
+                </div>
+                <div class="form-group">
                     <label for="sendOrderPhone">联系电话</label>
                     <input type="text" class="form-control" id="sendOrderPhone" name="sendOrderPhone" readonly>
                 </div>
@@ -136,7 +140,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel1">取消订单</h4>
             </div>
-            <div class="modal-body">确定要删除该订单吗？</div>
+            <div class="modal-body">确定要取消该订单吗？</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="btnToCancelO">确定</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -188,6 +192,8 @@
                 var PaidBy = '';
                 var orderStatus = item.orderstatus;
                 var statusW = '';
+                var statusStyle = 'none';
+                var cancelStyle = 'block';
 
                 switch (isPaid) {
                     case '0':
@@ -208,15 +214,20 @@
                 switch (orderStatus) {
                     case '0':
                         statusW = '已取消';
+                        cancelStyle = 'none';
                         break;
                     case '1':
                         statusW = '未发货';
+                        if (isPaid == '1') {
+                            statusStyle = 'block';
+                        }
                         break;
                     case '2':
                         statusW = '已发货';
                         break;
                     case '3':
                         statusW = '已收货';
+                        cancelStyle = 'none';
                         break;
                 }
 
@@ -228,8 +239,8 @@
                     "<td>" + PaidBy + "</td>" +
                     "<td>" + statusW + "</td>" +
                     "<td>" +
-                    "<button class='btn btn-xs btn-success btnSend' data-value='" + orderID + "'>订单发货</a>" +
-                    "<button class='btn btn-xs btn-danger btnCancel' data-value='" + orderID + "' data-toggle='modal' data-target='#alertCancelOWindow'>取消订单</button>" +
+                    "<button class='btn btn-xs btn-success btnSend' style='display: " + statusStyle + "' data-value='" + orderID + "'>订单发货</a>" +
+                    "<button class='btn btn-xs btn-danger btnCancel' style='display: " + cancelStyle + "' data-value='" + orderID + "' data-toggle='modal' data-target='#alertCancelOWindow'>取消订单</button>" +
                     "</td>" +
                     "</tr>";
 
@@ -267,8 +278,8 @@
         $("#orderListT").delegate('.checkOrderInfo', 'click', function () {
             var orderID = $(this).attr('data-value');
             $.ajax({
-                url: "{{U('Admin/Order/getCurrentInfo')}}",
-                type: 'get',
+                url: "{{U('Admin/Order/getCurrentDetailInfo')}}",
+                type: 'post',
                 data: {
                     orderID: orderID
                 },
@@ -315,6 +326,7 @@
                         "<p>" + "订单号：" + data.orderid + "</p>" +
                         "<p>" + "订单总价：￥" + data.ordersumprice + "</p>" +
                         "<p>" + "订单收货人：" + data.ordercname + "</p>" +
+                        "<p>" + "收货地址：" + data.orderaddress + "</p>" +
                         "<p>" + "收货人联系电话：" + data.orderphone + "</p>" +
                         "<p>" + "快递：" + data.expressname + "</p>" +
                         "<p>" + "运单号：" + data.expressnum + "</p>" +
@@ -326,121 +338,111 @@
                         title: '用户详细信息',
                         content: info
                     });
+                },
+                error: function () {
+                    $("#alertHintContent").empty().append("无法查询订单信息！");
+                    $("#alertHint").modal('show');
                 }
             });
         });
 
-        /*$("#userListT").delegate('.btnEdit', 'click', function () {
-         editUID = $(this).attr('data-value');
-         $.ajax({
-         url: "{{U('Admin/User/getCurrentInfo')}}",
-         type: 'get',
-         data: {
-         userID: editUID
-         },
-         dataType: 'json',
-         success: function (data) {
-         $("#editUserName").val(data.uname);
-         $("#editUserEmail").val(data.uemail);
-         $("#editUserPhone").val(data.uphone);
-         $("#editUserGender option[value='" + data.ugender + "']").prop('selected', true);
-         },
-         complete: function () {
-         $("#editUserWindow").modal('show');
-         }
-         });
-         });
+        $("#orderListT").delegate('.btnSend', 'click', function () {
+            sendOrderID = $(this).attr('data-value');
+            $.ajax({
+                url: "{{U('Admin/Order/getCurrentSimpleInfo')}}",
+                type: 'post',
+                data: {
+                    orderID: sendOrderID
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $("#sendOrderID").val(sendOrderID);
+                    $("#sendOrderCName").val(data.ordercname);
+                    $("#sendOrderAddress").val(data.orderaddress);
+                    $("#sendOrderPhone").val(data.orderphone);
+                },
+                complete: function () {
+                    $("#sendOrderWindow").modal('show');
+                }
+            });
+        });
 
-         $("#btnToEditU").click(function () {
-         if (editUID != '') {
-         var userName = $("#editUserName").val();
-         var userPasswd = $("#editUserPasswd").val();
-         var userGender = $("#editUserGender").val();
-         var userEmail = $("#editUserEmail").val();
-         var userPhone = $("#editUserPhone").val();
+        $("#btnToSendOrder").click(function () {
+            if (sendOrderID != '') {
+                var sendOrderExpress = $("#sendOrderExpress").val();
+                var sendOrderEID = $("#sendOrderEID").val();
+                if (sendOrderExpress != '' && sendOrderEID != '') {
+                    $.ajax({
+                        url: "{{U('Admin/Order/send')}}",
+                        type: 'post',
+                        data: {
+                            orderID: sendOrderID,
+                            expressID: sendOrderExpress,
+                            expressNum: sendOrderEID
+                        },
+                        dadaType: 'text',
+                        success: function (data) {
+                            if (data == 'true') {
+                                $("#btnReload").attr('value', 'refresh');
+                                $("#sendOrderExpress").val('');
+                                $("#sendOrderEID").val('');
+                                $("#alertHintContent").empty().append("已更新订单物流信息，发货成功！");
+                            } else if (data == 'false') {
+                                $("#alertHintContent").empty().append("操作失败！");
+                            }
+                            $("#sendOrderWindow").modal('hide');
+                            $("#alertHint").modal('show');
+                        }
+                    })
+                } else {
+                    $("#alertHintContent").empty().append("快递信息请填写完整！");
+                    $("#alertHint").modal('show');
+                }
+            }
+        });
 
-         var data;
-         if (userName != '') {
-         if (userPasswd == '') {
-         data = {
-         userID: editUID,
-         userName: userName,
-         userGender: userGender,
-         userEmail: userEmail,
-         userPhone: userPhone
-         };
-         } else {
-         data = {
-         userID: editUID,
-         userName: userName,
-         userPasswd: userPasswd,
-         userGender: userGender,
-         userEmail: userEmail,
-         userPhone: userPhone
-         };
-         }
+        $("#orderListT").delegate('.btnCancel', 'click', function () {
+            cancelOrderID = $(this).attr('data-value');
+        });
 
-         $.ajax({
-         url: "{{U('Admin/User/update')}}",
-         type: 'post',
-         data: data,
-         dadaType: 'text',
-         success: function (data) {
-         if (data == 'true') {
-         $("#btnReload").attr('value', 'refresh');
-         $("#alertHintContent").empty().append("用户信息更新成功！");
-         } else if (data == 'false') {
-         $("#alertHintContent").empty().append("用户信息更新失败！");
-         }
-         $("#editUserWindow").modal('hide');
-         $("#alertHint").modal('show');
-         }
-         })
-         } else {
-         $("#alertHintContent").empty().append("请输入用户名！");
-         $("#alertHint").modal('show');
-         }
-         }
-         });
+        $("#btnToCancelO").click(function () {
+            if (cancelOrderID != '') {
+                $.ajax({
+                    url: "{{U('Admin/Order/cancel')}}",
+                    type: 'post',
+                    data: {
+                        orderID: cancelOrderID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            $("#alertHintContent").empty().append("取消成功！");
+                        } else if (data == 'false') {
+                            $("#alertHintContent").empty().append("操作失败！");
+                        }
+                        $("#alertCancelOWindow").modal('hide');
+                        $("#btnReload").attr('value', 'refresh');
+                        $("#alertHint").modal('show');
+                    },
+                    error: function () {
+                        $("#alertHintContent").empty().append("操作失败！");
+                        $("#alertHint").modal('show');
+                    }
+                });
+            }
+        });
 
-         $("#userListT").delegate('.btnDel', 'click', function () {
-         delUID = $(this).attr('data-value');
-         });
+        $("#btnReload").click(function () {
+            $("#alertHint").modal('hide');
 
-         $("#btnToDelU").click(function () {
-         if (delUID != '') {
-         $.ajax({
-         url: "{{U('Admin/User/delete')}}",
-         type: 'post',
-         data: {
-         userID: delUID
-         },
-         dataType: 'text',
-         success: function (data) {
-         if (data == 'true') {
-         $("#alertHintContent").empty().append("删除成功！");
-         } else if (data == 'false') {
-         $("#alertHintContent").empty().append("删除失败！");
-         }
-         $("#alertDelUWindow").modal('hide');
-         $("#btnReload").attr('value', 'refresh');
-         $("#alertHint").modal('show');
-         }
-         });
-         }
-         });
-
-         $("#btnReload").click(function () {
-         $("#alertHint").modal('hide');
-
-         switch ($(this).attr('value')) {
-         case 'refresh':
-         editUID = '';
-         delUID = '';
-         refresh();
-         break;
-         }
-         });*/
+            switch ($(this).attr('value')) {
+                case 'refresh':
+                    sendOrderID = '';
+                    cancelOrderID = '';
+                    refresh();
+                    break;
+            }
+        });
     })
 </script>
 </html>

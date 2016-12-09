@@ -23,10 +23,23 @@ class OrderController extends Controller
         }
     }
 
-    public function getCurrentInfo()
+    public function getCurrentSimpleInfo()
     {
-        if (IS_GET && session('?salesUID')) {
-            $orderID = I('get.orderID/s');
+        if (IS_AJAX && IS_POST && session('?salesUID')) {
+            $orderID = I('post.orderID/s');
+            $orderList = M('vieworderinfo');
+
+            $data = $orderList->where("orderID='$orderID'")->field('orderID,orderCName,orderAddress,orderPhone')->find();
+            if ($data) {
+                $this->ajaxReturn($data);
+            }
+        }
+    }
+
+    public function getCurrentDetailInfo()
+    {
+        if (IS_AJAX && IS_POST && session('?salesUID')) {
+            $orderID = I('post.orderID/s');
             $orderList = M('vieworderinfo');
 
             $data1 = $orderList->where("orderID='$orderID'")->field('orderID,orderSumPrice,orderCName,orderAddress,orderPhone,expressName,expressNum,orderPaid,orderPaidBy,orderStatus')->find();
@@ -42,6 +55,42 @@ class OrderController extends Controller
                     }
                     $this->ajaxReturn($output);
                 }
+            }
+        }
+    }
+
+    public function send()
+    {
+        if (IS_AJAX && IS_POST && session('?salesUID')) {
+            $orderID = I('post.orderID/s');
+            $data['expressID'] = I('post.expressID/d');
+            $data['expressNum'] = I('post.expressNum/s');
+
+            $orderList = M('OrderList');
+            if ($orderList->where("orderID='$orderID'")->save($data)) {
+                $orderList->where("orderID='$orderID'")->setField('orderStatus', '2');
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
+
+    public function cancel()
+    {
+        if (IS_AJAX && IS_POST && session('?salesUID')) {
+            $orderID = I('post.orderID/s');
+            $orderList = M('OrderList');
+
+            $status = $orderList->where("orderID='$orderID'")->getField('orderStatus');
+            if ($status != '0' && $status != '3') {
+                if ($orderList->where("orderID='$orderID'")->setField('orderStatus', '0')) {
+                    $this->ajaxReturn('true', 'EVAL');
+                } else {
+                    $this->ajaxReturn('false', 'EVAL');
+                }
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
             }
         }
     }
