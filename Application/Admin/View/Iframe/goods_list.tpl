@@ -320,6 +320,7 @@
                     var info =
                         "<p>" + "商品ID：" + data.gid + "</p>" +
                         "<p>" + "名称：" + data.gname + "</p>" +
+                        "<p>" + "<img src='" + data.gphoto + "' width='150' height='150'>" + "</p>" +
                         "<p>" + "种类：" + data.goodstypename + "</p>" +
                         "<p>" + "价格：￥" + data.gprice + "</p>" +
                         "<p>" + "原价：￥" + data.goriginprice + "</p>" +
