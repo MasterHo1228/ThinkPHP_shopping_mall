@@ -94,15 +94,16 @@ CREATE TABLE IF NOT EXISTS express_list (
 INSERT INTO express_list (eName) VALUES ('顺丰速运'), ('申通快递'), ('圆通快递'), ('中通快递'), ('韵达快递'), ('EMS'), ('百世汇通');
 
 CREATE TABLE IF NOT EXISTS order_list (
-  orderID      VARCHAR(22)               NOT NULL UNIQUE,
-  orderCName   VARCHAR(15)               NOT NULL,
-  orderAddress TEXT                      NOT NULL,
-  orderPhone   VARCHAR(20)               NOT NULL,
-  expressID    INT UNSIGNED,
-  expressNum   VARCHAR(30),
-  orderPaid    ENUM ('0', '1')           NOT NULL DEFAULT '0',
-  orderPaidBy  ENUM ('alipay', 'wechat'),
-  orderStatus  ENUM ('0', '1', '2', '3') NOT NULL DEFAULT '1',
+  orderID       VARCHAR(22)               NOT NULL UNIQUE,
+  orderSumPrice DECIMAL(10, 2)            NOT NULL,
+  orderCName    VARCHAR(15)               NOT NULL,
+  orderAddress  TEXT                      NOT NULL,
+  orderPhone    VARCHAR(20)               NOT NULL,
+  expressID     INT UNSIGNED,
+  expressNum    VARCHAR(30),
+  orderPaid     ENUM ('0', '1')           NOT NULL DEFAULT '0',
+  orderPaidBy   ENUM ('alipay', 'wechat'),
+  orderStatus   ENUM ('0', '1', '2', '3') NOT NULL DEFAULT '1',
   CONSTRAINT FK_expressID FOREIGN KEY (expressID) REFERENCES express_list (eID)
 );
 
@@ -112,6 +113,14 @@ CREATE TABLE IF NOT EXISTS order_list_item (
   orderGCount INT UNSIGNED    NOT NULL,
   CONSTRAINT FK_orderID FOREIGN KEY (orderID) REFERENCES order_list (orderID),
   CONSTRAINT FK_orderGID FOREIGN KEY (orderGID) REFERENCES goods (gID)
+);
+
+CREATE TABLE IF NOT EXISTS user_cart (
+  userID     BIGINT UNSIGNED NOT NULL,
+  goodsID    BIGINT UNSIGNED NOT NULL,
+  goodsCount INT UNSIGNED    NOT NULL,
+  CONSTRAINT FK_userID FOREIGN KEY (userID) REFERENCES users (uID),
+  CONSTRAINT FK_goodsID FOREIGN KEY (goodsID) REFERENCES goods (gID)
 );
 
 CREATE VIEW viewGoodsDetail AS
@@ -135,3 +144,15 @@ CREATE VIEW viewGoodsDetail AS
     sale_users c
   WHERE a.gType = b.tID
         AND a.gSalesSUID = c.sID;
+
+CREATE VIEW viewOrderGoodsInfo AS
+  SELECT
+    a.orderID,
+    a.orderGID,
+    b.gName       AS 'goodsName',
+    a.orderGCount AS 'goodsCount',
+    b.gPrice      AS 'goodsPrice'
+  FROM
+    order_list_item a,
+    goods b
+  WHERE a.orderGID = b.gID;

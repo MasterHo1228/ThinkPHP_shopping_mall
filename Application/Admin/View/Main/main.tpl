@@ -76,7 +76,8 @@
                                     class="fa fa-shopping-basket fa-fw"></i> 商品管理</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-list-alt fa-fw"></i> 订单管理</a>
+                        <a href="{{U('Admin/Iframe/orderList')}}" target="mainIframe"><i
+                                    class="fa fa-list-alt fa-fw"></i> 订单管理</a>
                     </li>
                     <li>
                         <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-bullhorn fa-fw"></i> 网站公告管理</a>

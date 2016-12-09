@@ -51,6 +51,15 @@ class IframeController extends Controller
         }
     }
 
+    public function orderList()
+    {
+        if (session('?salesUID')) {
+            $this->display('order_list');
+        } else {
+            $this->error('非法操作！', U('Admin/Main/main'));
+        }
+    }
+
     public function adminLog()
     {
         if (session('?admin')) {
