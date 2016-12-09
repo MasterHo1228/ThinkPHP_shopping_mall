@@ -97,7 +97,7 @@
      tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="avatar-form" action="{{U('Admin/Goods/uploadHeaderImg')}}" enctype="multipart/form-data"
+            <form class="avatar-form" action="{{U('Admin/Image/uploadHeaderImg')}}" enctype="multipart/form-data"
                   method="post">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal" type="button">&times;</button>
@@ -160,7 +160,7 @@
 <script language="JavaScript">
     $(function () {
         var editor = new wangEditor('goodsDesc');
-        editor.config.uploadImgUrl = '{{U('Admin/Goods/uploadImg')}}';
+        editor.config.uploadImgUrl = '{{U('Admin/Image/uploadImg')}}';
         editor.config.hideLinkImg = true;
         editor.create();
 

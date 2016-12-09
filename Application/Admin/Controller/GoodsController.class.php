@@ -42,53 +42,6 @@ class GoodsController extends Controller
         }
     }
 
-    public function uploadHeaderImg()
-    {
-        if (session('?salesUID')) {
-            $upload = new \Think\Upload();// 实例化上传类
-            $upload->maxSize = 3145728;// 设置附件上传大小
-            $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-            $upload->rootPath = '.' . UPLOAD_PATH . 'header/'; // 设置附件上传根目录
-            $upload->autoSub = false; // 设置自动使用子目录保存上传文件
-            // 上传文件
-            $info = $upload->upload();
-            if (!$info) {// 上传错误提示错误信息
-                $data['error'] = $upload->getError();
-            } else {// 上传成功
-                //上传图片的路径
-                foreach ($info as $file) {
-                    $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
-                    $data['url'] = $url;
-                    session('uploadHeaderImgUrl', $url);
-                }
-            }
-            $this->ajaxReturn($data);
-        }
-    }
-
-    public function uploadImg()
-    {
-        if (session('?salesUID')) {
-            $upload = new \Think\Upload();// 实例化上传类
-            $upload->maxSize = 3145728;// 设置附件上传大小
-            $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-            $upload->rootPath = '.' . UPLOAD_PATH; // 设置附件上传根目录
-
-            //上传图片的路径
-            $urlPrefix = URL . UPLOAD_PATH;
-            // 上传单个文件
-            $info = $upload->upload();
-            if (!$info) {// 上传错误提示错误信息
-                $this->ajaxReturn('error|' . $upload->getError(), 'EVAL');
-            } else {// 上传成功 获取上传文件信息
-                foreach ($info as $file) {
-                    $url = $urlPrefix . $file['savepath'] . $file['savename'];
-                    $this->ajaxReturn($url, 'EVAL');
-                }
-            }
-        }
-    }
-
     public function add()
     {
         $goodsHeaderPic = session('uploadHeaderImgUrl');
