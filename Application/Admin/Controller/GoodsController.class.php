@@ -14,7 +14,7 @@ class GoodsController extends Controller
 {
     public function getList()
     {
-        if (session('?admin')) {
+        if (session('?salesUID')) {
             $model = M('viewgoodsdetail');
             $this->ajaxReturn($model->field('gID,gName,goodsTypeName,gPrice,gOriginPrice,gCount,gSalesSUID,shopName,gPubTime,gStatus')->select());
         } else if (session('?salesUID')) {
@@ -36,15 +36,39 @@ class GoodsController extends Controller
 
     public function getTypeList()
     {
-        if (session('?admin')) {
+        if (session('?salesUID')) {
             $table = M('goodstype');
             $this->ajaxReturn($table->field('tID,tName')->select());
         }
     }
 
+    public function uploadHeaderImg()
+    {
+        if (session('?salesUID')) {
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize = 3145728;// 设置附件上传大小
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+            $upload->rootPath = '.' . UPLOAD_PATH . 'header/'; // 设置附件上传根目录
+            $upload->autoSub = false; // 设置自动使用子目录保存上传文件
+            // 上传文件
+            $info = $upload->upload();
+            if (!$info) {// 上传错误提示错误信息
+                $data['error'] = $upload->getError();
+            } else {// 上传成功
+                //上传图片的路径
+                foreach ($info as $file) {
+                    $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
+                    $data['url'] = $url;
+                    session('uploadHeaderImgUrl', $url);
+                }
+            }
+            $this->ajaxReturn($data);
+        }
+    }
+
     public function uploadImg()
     {
-        if (session('?admin')) {
+        if (session('?salesUID')) {
             $upload = new \Think\Upload();// 实例化上传类
             $upload->maxSize = 3145728;// 设置附件上传大小
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
@@ -67,26 +91,7 @@ class GoodsController extends Controller
 
     public function add()
     {
-        $goodsHeaderPic = '';
-        if (!empty($_FILES['headerPic'])) {
-            $upload = new \Think\Upload();// 实例化上传类
-            $upload->maxSize = 3145728;// 设置附件上传大小
-            $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-            $upload->rootPath = '.' . UPLOAD_PATH . 'header/'; // 设置附件上传根目录
-            $upload->autoSub = false; // 设置自动使用子目录保存上传文件
-            // 上传文件
-            $info = $upload->upload();
-            if (!$info) {// 上传错误提示错误信息
-                $this->error($upload->getError());
-                die;
-            } else {// 上传成功
-                //上传图片的路径
-                foreach ($info as $file) {
-                    $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
-                    $goodsHeaderPic = $url;
-                }
-            }
-        }
+        $goodsHeaderPic = session('uploadHeaderImgUrl');
         if (IS_POST && session('?salesUID')) {
 
             $goodsName = I('post.goodsName/s');
