@@ -67,12 +67,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="goodsDesc">商品图片<span style="color: red;font-weight: bold">（必要）</span></label>
-                    <!--<input type="file" name="headerPic">-->
+                    <label for="goodsDesc">商品图片</label>
                     <div class="ibox-content">
                         <div class="row">
                             <div id="crop-avatar" class="col-md-6">
-                                <div class="avatar-view" title="Change Logo Picture">
+                                <div class="avatar-view" title="更换商品图片">
                                     <img src="__PUBLIC__/uploads/header/default.jpg" alt="商品图片">
                                 </div>
                             </div>
@@ -101,7 +100,7 @@
                   method="post">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal" type="button">&times;</button>
-                    <h4 class="modal-title" id="avatar-modal-label">Change Logo Picture</h4>
+                    <h4 class="modal-title" id="avatar-modal-label">上传商品图片</h4>
                 </div>
                 <div class="modal-body">
                     <div class="avatar-body">
@@ -121,18 +120,6 @@
                             </div>
                         </div>
                         <div class="row avatar-btns">
-                            <div class="col-md-9">
-                                <div class="btn-group">
-                                    <button class="btn" data-method="rotate" data-option="-90" type="button"
-                                            title="Rotate -90 degrees"><i class="fa fa-undo"></i> 向左旋转
-                                    </button>
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn" data-method="rotate" data-option="90" type="button"
-                                            title="Rotate 90 degrees"><i class="fa fa-repeat"></i> 向右旋转
-                                    </button>
-                                </div>
-                            </div>
                             <div class="col-md-3">
                                 <button class="btn btn-success btn-block avatar-save" type="submit"><i
                                             class="fa fa-save"></i> 保存修改
