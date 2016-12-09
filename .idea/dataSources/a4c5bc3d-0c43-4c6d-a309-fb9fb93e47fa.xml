@@ -33,497 +33,548 @@
     <view id="23" parent="2" name="viewordergoodsinfo">
       <Comment>VIEW</Comment>
     </view>
-    <column id="24" parent="11" name="aID">
+    <view id="24" parent="2" name="vieworderinfo">
+      <Comment>VIEW</Comment>
+    </view>
+    <column id="25" parent="11" name="aID">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="25" parent="11" name="aName">
+    <column id="26" parent="11" name="aName">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="26" parent="11" name="aPassword">
+    <column id="27" parent="11" name="aPassword">
       <Position>3</Position>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="27" parent="11" name="aSalt">
+    <column id="28" parent="11" name="aSalt">
       <Position>4</Position>
       <DataType>char(4)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="28" parent="11" name="aName">
+    <index id="29" parent="11" name="aName">
       <ColNames>aName</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="29" parent="11" name="PRIMARY">
+    <key id="30" parent="11" name="PRIMARY">
       <ColNames>aID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="30" parent="11" name="aName">
+    <key id="31" parent="11" name="aName">
       <ColNames>aName</ColNames>
       <UnderlyingIndexName>aName</UnderlyingIndexName>
     </key>
-    <column id="31" parent="12" name="adminID">
+    <column id="32" parent="12" name="adminID">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="32" parent="12" name="adminLoginTime">
+    <column id="33" parent="12" name="adminLoginTime">
       <Position>2</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="33" parent="12" name="adminLoginIP">
+    <column id="34" parent="12" name="adminLoginIP">
       <Position>3</Position>
       <DataType>varchar(35)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="34" parent="12" name="FK_adminID">
+    <index id="35" parent="12" name="FK_adminID">
       <ColNames>adminID</ColNames>
     </index>
-    <foreign-key id="35" parent="12" name="FK_adminID">
+    <foreign-key id="36" parent="12" name="FK_adminID">
       <ColNames>adminID</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>admin</RefTableName>
       <RefColNames>aID</RefColNames>
       <OnDelete>no-action</OnDelete>
     </foreign-key>
-    <column id="36" parent="13" name="eID">
+    <column id="37" parent="13" name="eID">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="37" parent="13" name="eName">
+    <column id="38" parent="13" name="eName">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="38" parent="13" name="ePhone">
+    <column id="39" parent="13" name="ePhone">
       <Position>3</Position>
       <DataType>varchar(20)|0</DataType>
     </column>
-    <key id="39" parent="13" name="PRIMARY">
+    <key id="40" parent="13" name="PRIMARY">
       <ColNames>eID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="40" parent="14" name="gID">
+    <column id="41" parent="14" name="gID">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="41" parent="14" name="gName">
+    <column id="42" parent="14" name="gName">
       <Position>2</Position>
       <DataType>varchar(35)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="42" parent="14" name="gType">
+    <column id="43" parent="14" name="gType">
       <Position>3</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="43" parent="14" name="gPrice">
+    <column id="44" parent="14" name="gPrice">
       <Position>4</Position>
       <DataType>decimal(10,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="44" parent="14" name="gOriginPrice">
+    <column id="45" parent="14" name="gOriginPrice">
       <Position>5</Position>
       <DataType>decimal(10,2)|0</DataType>
     </column>
-    <column id="45" parent="14" name="gCount">
+    <column id="46" parent="14" name="gCount">
       <Position>6</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="46" parent="14" name="gSoldOutNum">
+    <column id="47" parent="14" name="gSoldOutNum">
       <Position>7</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="47" parent="14" name="gSalesSUID">
+    <column id="48" parent="14" name="gSalesSUID">
       <Position>8</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="48" parent="14" name="gPhoto">
+    <column id="49" parent="14" name="gPhoto">
       <Position>9</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="49" parent="14" name="gDescription">
+    <column id="50" parent="14" name="gDescription">
       <Position>10</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="50" parent="14" name="gPubTime">
+    <column id="51" parent="14" name="gPubTime">
       <Position>11</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="51" parent="14" name="gStatus">
+    <column id="52" parent="14" name="gStatus">
       <Position>12</Position>
       <DataType>enum(&apos;0&apos;, &apos;1&apos;, &apos;2&apos;)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <index id="52" parent="14" name="FK_goodsSUID">
+    <index id="53" parent="14" name="FK_goodsSUID">
       <ColNames>gSalesSUID</ColNames>
     </index>
-    <index id="53" parent="14" name="FK_goodsType">
+    <index id="54" parent="14" name="FK_goodsType">
       <ColNames>gType</ColNames>
     </index>
-    <key id="54" parent="14" name="PRIMARY">
+    <key id="55" parent="14" name="PRIMARY">
       <ColNames>gID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="55" parent="14" name="FK_goodsType">
+    <foreign-key id="56" parent="14" name="FK_goodsType">
       <ColNames>gType</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>goodstype</RefTableName>
       <RefColNames>tID</RefColNames>
     </foreign-key>
-    <foreign-key id="56" parent="14" name="FK_goodsSUID">
+    <foreign-key id="57" parent="14" name="FK_goodsSUID">
       <ColNames>gSalesSUID</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>sale_users</RefTableName>
       <RefColNames>sID</RefColNames>
     </foreign-key>
-    <column id="57" parent="15" name="tID">
+    <column id="58" parent="15" name="tID">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="58" parent="15" name="tName">
+    <column id="59" parent="15" name="tName">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="59" parent="15" name="tDescription">
+    <column id="60" parent="15" name="tDescription">
       <Position>3</Position>
       <DataType>text|0</DataType>
     </column>
-    <key id="60" parent="15" name="PRIMARY">
+    <key id="61" parent="15" name="PRIMARY">
       <ColNames>tID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="61" parent="16" name="orderID">
+    <column id="62" parent="16" name="orderID">
       <Position>1</Position>
       <DataType>varchar(22)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="62" parent="16" name="orderCName">
+    <column id="63" parent="16" name="orderCName">
       <Position>3</Position>
       <DataType>varchar(15)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="63" parent="16" name="orderAddress">
+    <column id="64" parent="16" name="orderAddress">
       <Position>4</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="64" parent="16" name="orderPhone">
+    <column id="65" parent="16" name="orderPhone">
       <Position>5</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="65" parent="16" name="expressID">
+    <column id="66" parent="16" name="expressID">
       <Position>6</Position>
       <DataType>int(10) unsigned|0</DataType>
     </column>
-    <column id="66" parent="16" name="expressNum">
+    <column id="67" parent="16" name="expressNum">
       <Position>7</Position>
       <DataType>varchar(30)|0</DataType>
     </column>
-    <column id="67" parent="16" name="orderPaid">
+    <column id="68" parent="16" name="orderPaid">
       <Position>8</Position>
       <DataType>enum(&apos;0&apos;, &apos;1&apos;)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="68" parent="16" name="orderPaidBy">
+    <column id="69" parent="16" name="orderPaidBy">
       <Position>9</Position>
       <DataType>enum(&apos;alipay&apos;, &apos;wechat&apos;)|0</DataType>
     </column>
-    <column id="69" parent="16" name="orderStatus">
+    <column id="70" parent="16" name="orderStatus">
       <Position>10</Position>
       <DataType>enum(&apos;0&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
     </column>
-    <column id="70" parent="16" name="orderSumPrice">
+    <column id="71" parent="16" name="orderSumPrice">
       <Position>2</Position>
       <DataType>decimal(10,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="71" parent="16" name="FK_expressID">
+    <index id="72" parent="16" name="FK_expressID">
       <ColNames>expressID</ColNames>
     </index>
-    <index id="72" parent="16" name="orderID">
+    <index id="73" parent="16" name="orderID">
       <ColNames>orderID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="73" parent="16" name="orderID">
+    <key id="74" parent="16" name="orderID">
       <ColNames>orderID</ColNames>
       <UnderlyingIndexName>orderID</UnderlyingIndexName>
     </key>
-    <foreign-key id="74" parent="16" name="FK_expressID">
+    <foreign-key id="75" parent="16" name="FK_expressID">
       <ColNames>expressID</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>express_list</RefTableName>
       <RefColNames>eID</RefColNames>
     </foreign-key>
-    <column id="75" parent="17" name="orderID">
+    <column id="76" parent="17" name="orderID">
       <Position>1</Position>
       <DataType>varchar(22)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="76" parent="17" name="orderGID">
+    <column id="77" parent="17" name="orderGID">
       <Position>2</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="77" parent="17" name="orderGCount">
+    <column id="78" parent="17" name="orderGCount">
       <Position>3</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="78" parent="17" name="FK_orderGID">
+    <index id="79" parent="17" name="FK_orderGID">
       <ColNames>orderGID</ColNames>
     </index>
-    <index id="79" parent="17" name="FK_orderID">
+    <index id="80" parent="17" name="FK_orderID">
       <ColNames>orderID</ColNames>
     </index>
-    <foreign-key id="80" parent="17" name="FK_orderID">
+    <foreign-key id="81" parent="17" name="FK_orderID">
       <ColNames>orderID</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>order_list</RefTableName>
       <RefColNames>orderID</RefColNames>
     </foreign-key>
-    <foreign-key id="81" parent="17" name="FK_orderGID">
+    <foreign-key id="82" parent="17" name="FK_orderGID">
       <ColNames>orderGID</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>goods</RefTableName>
       <RefColNames>gID</RefColNames>
     </foreign-key>
-    <column id="82" parent="18" name="sID">
+    <column id="83" parent="18" name="sID">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="83" parent="18" name="sName">
+    <column id="84" parent="18" name="sName">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="84" parent="18" name="sPassword">
+    <column id="85" parent="18" name="sPassword">
       <Position>3</Position>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="85" parent="18" name="sSalt">
+    <column id="86" parent="18" name="sSalt">
       <Position>4</Position>
       <DataType>char(4)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="86" parent="18" name="shopName">
+    <column id="87" parent="18" name="shopName">
       <Position>5</Position>
       <DataType>varchar(25)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="87" parent="18" name="sName">
+    <index id="88" parent="18" name="sName">
       <ColNames>sName</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="88" parent="18" name="PRIMARY">
+    <key id="89" parent="18" name="PRIMARY">
       <ColNames>sID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="89" parent="18" name="sName">
+    <key id="90" parent="18" name="sName">
       <ColNames>sName</ColNames>
       <UnderlyingIndexName>sName</UnderlyingIndexName>
     </key>
-    <column id="90" parent="19" name="userID">
+    <column id="91" parent="19" name="userID">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="91" parent="19" name="goodsID">
+    <column id="92" parent="19" name="goodsID">
       <Position>2</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="92" parent="19" name="goodsCount">
+    <column id="93" parent="19" name="goodsCount">
       <Position>3</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="93" parent="19" name="FK_goodsID">
+    <index id="94" parent="19" name="FK_goodsID">
       <ColNames>goodsID</ColNames>
     </index>
-    <index id="94" parent="19" name="FK_userID">
+    <index id="95" parent="19" name="FK_userID">
       <ColNames>userID</ColNames>
     </index>
-    <foreign-key id="95" parent="19" name="FK_userID">
+    <foreign-key id="96" parent="19" name="FK_userID">
       <ColNames>userID</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>uID</RefColNames>
     </foreign-key>
-    <foreign-key id="96" parent="19" name="FK_goodsID">
+    <foreign-key id="97" parent="19" name="FK_goodsID">
       <ColNames>goodsID</ColNames>
       <RefSchemaName>dbmall</RefSchemaName>
       <RefTableName>goods</RefTableName>
       <RefColNames>gID</RefColNames>
     </foreign-key>
-    <column id="97" parent="20" name="uID">
+    <column id="98" parent="20" name="uID">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="98" parent="20" name="uName">
+    <column id="99" parent="20" name="uName">
       <Position>2</Position>
       <DataType>varchar(25)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="99" parent="20" name="uPassword">
+    <column id="100" parent="20" name="uPassword">
       <Position>3</Position>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="100" parent="20" name="uGender">
+    <column id="101" parent="20" name="uGender">
       <Position>4</Position>
       <DataType>enum(&apos;male&apos;, &apos;female&apos;)|0</DataType>
       <DefaultExpression>&apos;male&apos;</DefaultExpression>
     </column>
-    <column id="101" parent="20" name="uEmail">
+    <column id="102" parent="20" name="uEmail">
       <Position>5</Position>
       <DataType>varchar(30)|0</DataType>
     </column>
-    <column id="102" parent="20" name="uPhone">
+    <column id="103" parent="20" name="uPhone">
       <Position>6</Position>
       <DataType>varchar(20)|0</DataType>
     </column>
-    <index id="103" parent="20" name="uName">
+    <index id="104" parent="20" name="uName">
       <ColNames>uName</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="104" parent="20" name="PRIMARY">
+    <key id="105" parent="20" name="PRIMARY">
       <ColNames>uID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="105" parent="20" name="uName">
+    <key id="106" parent="20" name="uName">
       <ColNames>uName</ColNames>
       <UnderlyingIndexName>uName</UnderlyingIndexName>
     </key>
-    <column id="106" parent="21" name="adminName">
+    <column id="107" parent="21" name="adminName">
       <Position>1</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="107" parent="21" name="adminLoginTime">
+    <column id="108" parent="21" name="adminLoginTime">
       <Position>2</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="108" parent="21" name="adminLoginIP">
+    <column id="109" parent="21" name="adminLoginIP">
       <Position>3</Position>
       <DataType>varchar(35)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="109" parent="22" name="gID">
+    <column id="110" parent="22" name="gID">
       <Position>1</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="110" parent="22" name="gName">
+    <column id="111" parent="22" name="gName">
       <Position>2</Position>
       <DataType>varchar(35)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="111" parent="22" name="gType">
+    <column id="112" parent="22" name="gType">
       <Position>3</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="112" parent="22" name="goodsTypeName">
+    <column id="113" parent="22" name="goodsTypeName">
       <Position>4</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="113" parent="22" name="gPrice">
+    <column id="114" parent="22" name="gPrice">
       <Position>5</Position>
       <DataType>decimal(10,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="114" parent="22" name="gOriginPrice">
+    <column id="115" parent="22" name="gOriginPrice">
       <Position>6</Position>
       <DataType>decimal(10,2)|0</DataType>
     </column>
-    <column id="115" parent="22" name="gCount">
+    <column id="116" parent="22" name="gCount">
       <Position>7</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="116" parent="22" name="gSalesSUID">
+    <column id="117" parent="22" name="gSalesSUID">
       <Position>8</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="117" parent="22" name="shopName">
+    <column id="118" parent="22" name="shopName">
       <Position>9</Position>
       <DataType>varchar(25)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="118" parent="22" name="gPhoto">
+    <column id="119" parent="22" name="gPhoto">
       <Position>10</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="119" parent="22" name="gDescription">
+    <column id="120" parent="22" name="gDescription">
       <Position>11</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="120" parent="22" name="gPubTime">
+    <column id="121" parent="22" name="gPubTime">
       <Position>12</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="121" parent="22" name="gStatus">
+    <column id="122" parent="22" name="gStatus">
       <Position>13</Position>
       <DataType>enum(&apos;0&apos;, &apos;1&apos;, &apos;2&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="122" parent="23" name="orderID">
+    <column id="123" parent="23" name="orderID">
       <Position>1</Position>
       <DataType>varchar(22)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="123" parent="23" name="orderGID">
+    <column id="124" parent="23" name="orderGID">
       <Position>2</Position>
       <DataType>bigint(20) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="124" parent="23" name="goodsName">
+    <column id="125" parent="23" name="goodsName">
       <Position>3</Position>
       <DataType>varchar(35)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="125" parent="23" name="goodsCount">
+    <column id="126" parent="23" name="goodsCount">
       <Position>4</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="126" parent="23" name="goodsPrice">
+    <column id="127" parent="23" name="goodsPrice">
       <Position>5</Position>
       <DataType>decimal(10,2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="128" parent="24" name="orderID">
+      <Position>1</Position>
+      <DataType>varchar(22)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="129" parent="24" name="orderSumPrice">
+      <Position>2</Position>
+      <DataType>decimal(10,2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="130" parent="24" name="orderCName">
+      <Position>3</Position>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="131" parent="24" name="orderAddress">
+      <Position>4</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="132" parent="24" name="orderPhone">
+      <Position>5</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="133" parent="24" name="expressName">
+      <Position>6</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="134" parent="24" name="expressNum">
+      <Position>7</Position>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <column id="135" parent="24" name="orderPaid">
+      <Position>8</Position>
+      <DataType>enum(&apos;0&apos;, &apos;1&apos;)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="136" parent="24" name="orderPaidBy">
+      <Position>9</Position>
+      <DataType>enum(&apos;alipay&apos;, &apos;wechat&apos;)|0</DataType>
+    </column>
+    <column id="137" parent="24" name="orderStatus">
+      <Position>10</Position>
+      <DataType>enum(&apos;0&apos;, &apos;1&apos;, &apos;2&apos;, &apos;3&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
   </database-model>

@@ -145,6 +145,23 @@ CREATE VIEW viewGoodsDetail AS
   WHERE a.gType = b.tID
         AND a.gSalesSUID = c.sID;
 
+CREATE VIEW viewOrderInfo AS
+  SELECT
+    a.orderID,
+    a.orderSumPrice,
+    a.orderCName,
+    a.orderAddress,
+    a.orderPhone,
+    b.eName AS 'expressName',
+    a.expressNum,
+    a.orderPaid,
+    a.orderPaidBy,
+    a.orderStatus
+  FROM
+    order_list a,
+    express_list b
+  WHERE a.expressID = b.eID;
+
 CREATE VIEW viewOrderGoodsInfo AS
   SELECT
     a.orderID,

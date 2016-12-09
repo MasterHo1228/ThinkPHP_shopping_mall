@@ -180,7 +180,7 @@
     function refresh() {
         var table = $("#orderList");
         $("#orderListT").empty();
-        $.getJSON("{{U('Admin/Order/getSimpleList')}}", function (data) {
+        $.getJSON("{{U('Admin/Order/getList')}}", function (data) {
             $.each(data, function (i, item) {
                 var orderID = item.orderid;
                 var isPaid = item.orderpaid;
@@ -264,41 +264,73 @@
             refresh();
         });
 
-        /*$("#userListT").delegate('.checkUserInfo', 'click', function () {
-         var userID = $(this).attr('data-value');
-         $.ajax({
-         url: "{{U('Admin/User/getCurrentInfo')}}",
-         type: 'get',
-         data: {
-         userID: userID
-         },
-         dataType: 'json',
-         success: function (data) {
-         var gender = '';
-         switch (data.ugender) {
-         case 'male':
-         gender = '男';
-         break;
-         case 'female':
-         gender = '女';
-         break;
-         }
-         var info =
-         "<p>" + "用户ID：" + data.uid + "</p>" +
-         "<p>" + "用户名：" + data.uname + "</p>" +
-         "<p>" + "性别：" + gender + "</p>" +
-         "<p>" + "E-Mail：" + data.uemail + "</p>" +
-         "<p>" + "联系电话：" + data.uphone + "</p>";
-         layer.open({
-         type: 1,
-         title: '用户详细信息',
-         content: info
-         });
-         }
-         });
-         });
+        $("#orderListT").delegate('.checkOrderInfo', 'click', function () {
+            var orderID = $(this).attr('data-value');
+            $.ajax({
+                url: "{{U('Admin/Order/getCurrentInfo')}}",
+                type: 'get',
+                data: {
+                    orderID: orderID
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var isPaid = data.orderpaid;
+                    var isPaidW = '';
+                    var PaidBy = '';
+                    var orderStatus = data.orderstatus;
+                    var statusW = '';
 
-         $("#userListT").delegate('.btnEdit', 'click', function () {
+                    switch (isPaid) {
+                        case '0':
+                            isPaidW = '未付款';
+                            break;
+                        case '1':
+                            isPaidW = '已付款';
+                            break;
+                    }
+                    switch (data.orderpaidby) {
+                        case 'alipay':
+                            PaidBy = '支付宝';
+                            break;
+                        case 'wechat':
+                            PaidBy = '微信';
+                            break;
+                    }
+                    switch (orderStatus) {
+                        case '0':
+                            statusW = '已取消';
+                            break;
+                        case '1':
+                            statusW = '未发货';
+                            break;
+                        case '2':
+                            statusW = '已发货';
+                            break;
+                        case '3':
+                            statusW = '已收货';
+                            break;
+                    }
+
+                    var info =
+                        "<p>" + "订单号：" + data.orderid + "</p>" +
+                        "<p>" + "订单总价：￥" + data.ordersumprice + "</p>" +
+                        "<p>" + "订单收货人：" + data.ordercname + "</p>" +
+                        "<p>" + "收货人联系电话：" + data.orderphone + "</p>" +
+                        "<p>" + "快递：" + data.expressname + "</p>" +
+                        "<p>" + "运单号：" + data.expressnum + "</p>" +
+                        "<p>" + "是否已付款：" + isPaidW + "</p>" +
+                        "<p>" + "付款方式：" + PaidBy + "</p>" +
+                        "<p>" + "订单状态：" + statusW + "</p>";
+                    layer.open({
+                        type: 1,
+                        title: '用户详细信息',
+                        content: info
+                    });
+                }
+            });
+        });
+
+        /*$("#userListT").delegate('.btnEdit', 'click', function () {
          editUID = $(this).attr('data-value');
          $.ajax({
          url: "{{U('Admin/User/getCurrentInfo')}}",
