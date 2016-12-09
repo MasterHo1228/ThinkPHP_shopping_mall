@@ -25,12 +25,18 @@ class ImageController extends Controller
             if (!$info) {// 上传错误提示错误信息
                 $data['error'] = $upload->getError();
             } else {// 上传成功
-                //上传图片的路径
-                foreach ($info as $file) {
-                    $url = DEFAULT_HEADER_PIC_PATH . $file['savename'];
-                    $data['result'] = $url;
-                    session('uploadHeaderImgUrl', $url);
-                }
+                $avatarData = $_POST['avatar_data'];
+                $avatarArr = json_decode($avatarData,true);
+                //截图略缩图
+                $image = new \Think\Image();
+                $imgPath = './Public/uploads/header/'.$info['avatar_file']['savename'];
+                $image->open($imgPath);
+                $image->crop($avatarArr['width'], $avatarArr['height'],$avatarArr['x'],$avatarArr['y'])->save($imgPath);
+
+                //用session暂存图片的路径，稍后添加商品的时候一并写入数据库
+                $url = DEFAULT_HEADER_PIC_PATH.$info['avatar_file']['savename'];
+                $data['result'] = $url;
+                session('uploadHeaderImgUrl', $url);
             }
             $this->ajaxReturn($data);
         }
