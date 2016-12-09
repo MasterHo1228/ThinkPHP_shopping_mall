@@ -14,6 +14,8 @@ class ImageController extends Controller
 {
     public function uploadHeaderImg()
     {
+        //清除上次上传的图片的url
+        session('uploadHeaderImgUrl', null);
         if (session('?salesUID')) {
             $upload = new \Think\Upload();// 实例化上传类
             $upload->maxSize = 3145728;// 设置附件上传大小

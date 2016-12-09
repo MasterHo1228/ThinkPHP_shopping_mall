@@ -44,7 +44,6 @@ class GoodsController extends Controller
 
     public function add()
     {
-        $goodsHeaderPic = session('uploadHeaderImgUrl');
         if (IS_POST && session('?salesUID')) {
 
             $goodsName = I('post.goodsName/s');
@@ -53,9 +52,11 @@ class GoodsController extends Controller
             $goodsOriginPrice = I('post.goodsOriginPrice/f');
             $goodsCount = I('post.goodsCount/d');
             $goodsDesc = I('post.goodsDesc/s', '', 'htmlspecialchars,nl2br');
+            $goodsHeaderPic = session('uploadHeaderImgUrl');
 
             $model = D('goods');
             if ($model->addNewGoods($goodsName, $goodsType, $goodsPrice, $goodsOriginPrice, $goodsCount, $goodsDesc, $goodsHeaderPic)) {
+                session('uploadHeaderImgUrl', null);
                 $this->success('商品添加成功！', U('Admin/Iframe/goods_list'));
             } else {
                 $this->error('商品添加失败！');
