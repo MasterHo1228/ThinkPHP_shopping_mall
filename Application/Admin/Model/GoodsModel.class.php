@@ -10,11 +10,27 @@ namespace Admin\Model;
 
 use Think\Model;
 
+/**
+ * 商品模型类
+ * Class GoodsModel
+ * @package Admin\Model
+ */
 class GoodsModel extends Model
 {
+    /**
+     * 添加商品
+     * @param string $name 商品名
+     * @param string $type 商品种类
+     * @param double $price 商品价格
+     * @param double $originPrice 商品原价
+     * @param int $count 商品库存
+     * @param string $desc 商品描述
+     * @param string $headerPic 商品图片url
+     * @return bool|mixed
+     */
     public function addNewGoods($name, $type, $price, $originPrice, $count, $desc, $headerPic)
     {
-        if (session('?salesUID') && !empty($name) && !empty($price) && !empty($count)) {
+        if (!empty($name) && !empty($price) && !empty($count)) {
             if (empty($headerPic)) {
                 $headerPic = DEFAULT_HEADER_PIC_PATH . 'default.jpg';
             }
@@ -37,6 +53,11 @@ class GoodsModel extends Model
         }
     }
 
+    /**
+     * 根据商品ID获取商品详细信息
+     * @param int $id 商品ID
+     * @return bool|mixed
+     */
     public function getCurrentDetailInfo($id)
     {
         if (!empty($id)) {
@@ -46,6 +67,17 @@ class GoodsModel extends Model
         }
     }
 
+    /**
+     * 根据商品ID更新商品信息
+     * @param int $id 商品ID
+     * @param string $name 商品名称
+     * @param string $type 商品种类
+     * @param double $price 商品价格
+     * @param double $originPrice 商品原价
+     * @param int $count 商品库存
+     * @param string $desc 商品描述
+     * @return bool
+     */
     public function updateGoods($id, $name, $type, $price, $originPrice, $count, $desc)
     {
         if (!empty($id) && !empty($name) && !empty($type) && !empty($price) && !empty($count)) {
@@ -63,6 +95,11 @@ class GoodsModel extends Model
         }
     }
 
+    /**
+     * 根据商品ID删除对应商品
+     * @param int $id 商品ID
+     * @return bool|mixed
+     */
     public function deleteGoods($id)
     {
         if (!empty($id)) {
@@ -72,6 +109,11 @@ class GoodsModel extends Model
         }
     }
 
+    /**
+     * 根据商品ID下架对应商品
+     * @param int $id 商品ID
+     * @return bool
+     */
     public function shutdownGoods($id)
     {
         if (!empty($id)) {
@@ -86,6 +128,11 @@ class GoodsModel extends Model
         }
     }
 
+    /**
+     * 根据商品ID重上架架对应商品
+     * @param int $id 商品ID
+     * @return bool
+     */
     public function returnGoods($id)
     {
         if (!empty($id)) {
@@ -100,6 +147,11 @@ class GoodsModel extends Model
         }
     }
 
+    /**
+     * 根据商品ID置顶架对应商品
+     * @param int $id 商品ID
+     * @return bool
+     */
     public function goodsRankTop($id)
     {
         if (!empty($id)) {
@@ -114,6 +166,11 @@ class GoodsModel extends Model
         }
     }
 
+    /**
+     * 根据商品ID取消置顶架对应商品
+     * @param int $id 商品ID
+     * @return bool
+     */
     public function goodsRankDown($id)
     {
         if (!empty($id)) {

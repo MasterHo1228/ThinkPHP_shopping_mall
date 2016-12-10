@@ -10,20 +10,31 @@ namespace Admin\Controller;
 
 use Think\Controller;
 
+/**
+ * 商城用户操作类
+ * Class UserController
+ * @package Admin\Controller
+ */
 class UserController extends Controller
 {
+    /**
+     * 获取商城用户列表
+     */
     public function getList()
     {
-        if (IS_AJAX && session('?admin')) {
+        if (IS_AJAX && checkAdminLogin()) {
             $model = D('user');
             $data = $model->getAllUserList();
             $this->ajaxReturn($data);
         }
     }
 
+    /**
+     * 获取相应用户详细信息
+     */
     public function getCurrentInfo()
     {
-        if (IS_AJAX && IS_GET && session('?admin')) {
+        if (IS_AJAX && IS_GET && checkAdminLogin()) {
             $userID = I('get.userID/d');
             $model = D('user');
             $data = $model->getInfoByID($userID);
@@ -31,9 +42,12 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 更新用户信息
+     */
     public function update()
     {
-        if (IS_AJAX && IS_POST && session('?admin')) {
+        if (IS_AJAX && IS_POST && checkAdminLogin()) {
             $userID = I('post.userID/d');
             $userName = I('post.userName/s');
             $userPasswd = I('post.userPasswd/s');
@@ -50,9 +64,12 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 删除用户
+     */
     public function delete()
     {
-        if (IS_AJAX && IS_POST && session('?admin')) {
+        if (IS_AJAX && IS_POST && checkAdminLogin()) {
             $userID = I('post.userID/d');
             $model = D('user');
 

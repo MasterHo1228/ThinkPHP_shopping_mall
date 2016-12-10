@@ -3,16 +3,25 @@ namespace Admin\Controller;
 
 use Think\Controller;
 
+/**
+ * 后台管理系统初始控制类
+ * Class IndexController
+ * @package Admin\Controller
+ */
 class IndexController extends Controller
 {
+    /**
+     * 系统登录
+     */
     public function login()
     {
-        if (!session('?admin')) {
+        if (!checkAdminLogin() && !checkSalesUserLogin()) {
             if (IS_POST) {
                 $userName = I('post.usrName');
                 $password = I('post.usrPasswd');
-                $model = D('admin');
-                if ($model->CheckAccount($userName, $password)) {
+                if (D('admin')->CheckAccount($userName, $password)) {//验证是否为管理员账号登录
+                    $this->redirect('Admin/Main/main');
+                } else if (D('SaleUsers')->CheckAccount($userName, $password)) {//验证是否为商铺账号登录
                     $this->redirect('Admin/Main/main');
                 } else {
                     $this->error('用户名或密码错误！！');
@@ -21,11 +30,14 @@ class IndexController extends Controller
             } else {
                 $this->display();
             }
-        } else {
+        } else {//若已登录 则直接跳转至系统主界面
             $this->redirect('Admin/Main/main');
         }
     }
 
+    /**
+     * 生成验证码
+     */
     public function makeVCode()
     {
         $Verify = new \Think\Verify();
@@ -37,6 +49,9 @@ class IndexController extends Controller
         $Verify->entry();
     }
 
+    /**
+     * AJAX 校对验证码
+     */
     public function verifyVCode()
     {
         if (IS_POST) {

@@ -10,23 +10,36 @@ namespace Admin\Controller;
 
 use Think\Controller;
 
+/**
+ * 商品控制类
+ * Class GoodsController
+ * @package Admin\Controller
+ */
 class GoodsController extends Controller
 {
+    /**
+     * 获取商品列表
+     * （管理员）获取全部商品列表
+     * （商铺账号）获取该店铺的所有商品
+     */
     public function getList()
     {
-        if (session('?salesUID')) {
+        if (checkAdminLogin()) {
             $model = M('viewgoodsdetail');
             $this->ajaxReturn($model->field('gID,gName,goodsTypeName,gPrice,gOriginPrice,gCount,gSalesSUID,shopName,gPubTime,gStatus')->select());
-        } else if (session('?salesUID')) {
+        } else if (checkSalesUserLogin()) {
             $salesUID = session('salesUID');
             $model = M('viewgoodsdetail');
             $this->ajaxReturn($model->where('gSalesSUID=' . $salesUID)->field('gID,gName,goodsTypeName,gPrice,gOriginPrice,gCount,gSalesSUID,shopName,gPubTime,gStatus')->select());
         }
     }
 
+    /**
+     * 查看对应商品的详细信息
+     */
     public function getCurrentInfo()
     {
-        if (IS_GET && session('?salesUID')) {
+        if (IS_GET && checkSalesUserLogin()) {
             $goodsID = I('get.goodsID/d');
             $model = M('viewgoodsdetail');
 
@@ -34,17 +47,23 @@ class GoodsController extends Controller
         }
     }
 
+    /**
+     * 获取商品类型列表
+     */
     public function getTypeList()
     {
-        if (session('?salesUID')) {
+        if (checkSalesUserLogin()) {
             $table = M('goodstype');
             $this->ajaxReturn($table->field('tID,tName')->select());
         }
     }
 
+    /**
+     * 添加商品
+     */
     public function add()
     {
-        if (IS_POST && session('?salesUID')) {
+        if (IS_POST && checkSalesUserLogin()) {
 
             $goodsName = I('post.goodsName/s');
             $goodsType = I('post.goodsType/d');
@@ -61,11 +80,12 @@ class GoodsController extends Controller
             } else {
                 $this->error('商品添加失败！');
             }
-        } else {
-            $this->error('非法操作！！', U('Admin/Index/login'));
         }
     }
 
+    /**
+     * 更新商品信息
+     */
     public function update()
     {
         if (IS_POST && session('?salesUID')) {
@@ -86,9 +106,12 @@ class GoodsController extends Controller
         }
     }
 
+    /**
+     * 删除商品
+     */
     public function delete()
     {
-        if (IS_POST && IS_AJAX && session('?salesUID')) {
+        if (IS_POST && IS_AJAX && checkSalesUserLogin()) {
             $goodsID = I('post.goodsID/d');
             $model = D('goods');
 
@@ -100,9 +123,12 @@ class GoodsController extends Controller
         }
     }
 
+    /**
+     * 下架商品
+     */
     public function shutdown()
     {
-        if (IS_POST && IS_AJAX && session('?salesUID')) {
+        if (IS_POST && IS_AJAX && checkSalesUserLogin()) {
             $goodsID = I('post.goodsID/d');
             $model = D('goods');
 
@@ -114,9 +140,12 @@ class GoodsController extends Controller
         }
     }
 
+    /**
+     * 重上架商品
+     */
     public function goodsReturn()
     {
-        if (IS_POST && IS_AJAX && session('?salesUID')) {
+        if (IS_POST && IS_AJAX && checkSalesUserLogin()) {
             $goodsID = I('post.goodsID/d');
             $model = D('goods');
 
@@ -128,9 +157,12 @@ class GoodsController extends Controller
         }
     }
 
+    /**
+     * 置顶商品
+     */
     public function rankTop()
     {
-        if (IS_POST && IS_AJAX && session('?salesUID')) {
+        if (IS_POST && IS_AJAX && checkSalesUserLogin()) {
             $goodsID = I('post.goodsID/d');
             $model = D('goods');
 
@@ -142,9 +174,12 @@ class GoodsController extends Controller
         }
     }
 
+    /**
+     * 取消置顶商品
+     */
     public function rankDown()
     {
-        if (IS_POST && IS_AJAX && session('?salesUID')) {
+        if (IS_POST && IS_AJAX && checkSalesUserLogin()) {
             $goodsID = I('post.goodsID/d');
             $model = D('goods');
 

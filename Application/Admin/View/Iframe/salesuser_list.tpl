@@ -279,7 +279,7 @@
             editSUID = $(this).attr('data-value');
             $.ajax({
                 url: "{{U('Admin/SaleUsers/getCurrentInfo')}}",
-                type: 'get',
+                type: 'post',
                 data: {
                     salesUID: editSUID
                 },

@@ -10,11 +10,19 @@ namespace Admin\Controller;
 
 use Think\Controller;
 
+/**
+ * 订单独立控制类
+ * Class OrderController
+ * @package Admin\Controller
+ */
 class OrderController extends Controller
 {
+    /**
+     * 获取订单列表
+     */
     public function getList()
     {
-        if (IS_AJAX && session('?salesUID')) {
+        if (IS_AJAX && checkSalesUserLogin()) {
             $order = M('OrderList');
             $data = $order->field('orderID,orderSumPrice,orderPaid,orderPaidBy,orderStatus')->select();
             if ($data) {
@@ -23,9 +31,12 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 获取单个订单简略信息
+     */
     public function getCurrentSimpleInfo()
     {
-        if (IS_AJAX && IS_POST && session('?salesUID')) {
+        if (IS_AJAX && IS_POST && checkSalesUserLogin()) {
             $orderID = I('post.orderID/s');
             $orderList = M('vieworderinfo');
 
@@ -36,15 +47,20 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 获取订单详细信息
+     */
     public function getCurrentDetailInfo()
     {
-        if (IS_AJAX && IS_POST && session('?salesUID')) {
+        if (IS_AJAX && IS_POST && checkSalesUserLogin()) {
             $orderID = I('post.orderID/s');
             $orderList = M('vieworderinfo');
 
+            //获取订单详细信息
             $data1 = $orderList->where("orderID='$orderID'")->field('orderID,orderSumPrice,orderCName,orderAddress,orderPhone,expressName,expressNum,orderPaid,orderPaidBy,orderStatus')->find();
             if ($data1) {
                 $output = $data1;
+                //获取订单商品信息
                 $orderItem = M('viewordergoodsinfo');
                 $data2 = $orderItem->where("orderID='$orderID'")->field('goodsName,goodsPrice,goodsCount')->select();
                 if ($data2 != false) {
@@ -53,15 +69,19 @@ class OrderController extends Controller
                     } else {
                         $output['goods'] = null;
                     }
+                    //AJAX返回数据
                     $this->ajaxReturn($output);
                 }
             }
         }
     }
 
+    /**
+     * 订单发货
+     */
     public function send()
     {
-        if (IS_AJAX && IS_POST && session('?salesUID')) {
+        if (IS_AJAX && IS_POST && checkSalesUserLogin()) {
             $orderID = I('post.orderID/s');
             $data['expressID'] = I('post.expressID/d');
             $data['expressNum'] = I('post.expressNum/s');
@@ -76,9 +96,12 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 取消订单
+     */
     public function cancel()
     {
-        if (IS_AJAX && IS_POST && session('?salesUID')) {
+        if (IS_AJAX && IS_POST && checkSalesUserLogin()) {
             $orderID = I('post.orderID/s');
             $orderList = M('OrderList');
 
