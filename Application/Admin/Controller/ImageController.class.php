@@ -28,7 +28,7 @@ class ImageController extends Controller
             $model = new \Admin\Model\ImageModel();
             $info = $model->upload('header/');
             if ($info) {
-                $avatarArr = json_decode($_POST['avatar_data'], true);
+                $avatarArr = json_decode(I('post.avatar_data', '', ''), true);
                 $filePath = './Public/uploads/header/';
                 $fileName = $info['avatar_file']['savename'];
                 if ($model->cropImage($avatarArr, $filePath, $fileName)) {
