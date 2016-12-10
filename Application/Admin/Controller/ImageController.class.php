@@ -26,7 +26,7 @@ class ImageController extends Controller
         session('uploadHeaderImgUrl', null);
         if (checkSalesUserLogin()) {
             $model = new \Admin\Model\ImageModel();
-            $info = $model->upload('header/');
+            $info = $model->upload('header');
             if ($info) {
                 $avatarArr = json_decode(I('post.avatar_data', '', ''), true);
                 $filePath = './Public/uploads/header/';
