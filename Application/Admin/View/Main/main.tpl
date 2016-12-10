@@ -53,7 +53,13 @@
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> {{$smarty.session.admin.usrName}} <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-user fa-fw"></i>
+                    {{if isset($smarty.session.admin.usrName)}}
+                    {{$smarty.session.admin.usrName}}
+                    {{else}}
+                    {{$smarty.session.salesUName}}
+                    {{/if}}
+                    <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="{{U('Admin/Main/logout')}}"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
@@ -79,6 +85,7 @@
                         <a href="{{U('Admin/Iframe/orderList')}}" target="mainIframe"><i
                                     class="fa fa-list-alt fa-fw"></i> 订单管理</a>
                     </li>
+                    {{if isset($smarty.session.admin)}}
                     <li>
                         <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-bullhorn fa-fw"></i> 网站公告管理</a>
                     </li>
@@ -104,6 +111,7 @@
                             {{/if}}
                         </ul>
                     </li>
+                    {{/if}}
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

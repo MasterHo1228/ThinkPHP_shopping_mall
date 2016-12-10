@@ -26,10 +26,17 @@
     <div class="row">
         <div class="col-sm-12">
             {{nocache}}
-            <h1 class="page-header">Welcome!
+            <h1 class="page-header">
+                {{if isset($smarty.session.admin)}}
+                Welcome!
                 <small>{{$smarty.session.admin.usrName}}</small>
+                {{elseif isset($smarty.session.salesUName)}}
+                欢迎!
+                <small>{{$smarty.session.salesUName}}</small>
+                {{/if}}
             </h1>
             <p>
+                {{if isset($smarty.session.admin)}}
                 {{if isset($loginTime)}}
                 上次登录时间:{{$loginTime}}
                 {{else}}
@@ -41,6 +48,7 @@
                 上次登录的IP地址:{{$loginIpAddr}}
                 {{/if}}
             </p>
+            {{/if}}
             {{/nocache}}
         </div>
         <!-- /.col-lg-12 -->

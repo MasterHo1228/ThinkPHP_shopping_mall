@@ -22,14 +22,16 @@ class IframeController extends Controller
      */
     public function welcome()
     {
-        $log = M('AdminLoginLog');
-        $userID = session('admin.usrID');
-        $logData = $log->where("adminID=$userID")->order('adminLoginTime desc')->field('adminLoginTime,adminLoginIP')->limit(1, 1)->select();
-        $logTime = $logData[0]['adminlogintime'];
-        $logIP = $logData[0]['adminloginip'];
+        if (checkAdminLogin()) {
+            $log = M('AdminLoginLog');
+            $userID = session('admin.usrID');
+            $logData = $log->where("adminID=$userID")->order('adminLoginTime desc')->field('adminLoginTime,adminLoginIP')->limit(1, 1)->select();
+            $logTime = $logData[0]['adminlogintime'];
+            $logIP = $logData[0]['adminloginip'];
 
-        $this->assign('loginTime', $logTime);
-        $this->assign('loginIpAddr', $logIP);
+            $this->assign('loginTime', $logTime);
+            $this->assign('loginIpAddr', $logIP);
+        }
         $this->display();
     }
 
