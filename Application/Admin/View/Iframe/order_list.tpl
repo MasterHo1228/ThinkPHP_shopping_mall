@@ -246,25 +246,25 @@
 
                 $("#orderListT").append(tableRow);
             });
-        });
-        table.dataTable({
-            retrieve: true,
-            responsive: true,
-            sPaginationType: "full_numbers",
-            oLanguage: {
-                sLengthMenu: "每页显示 _MENU_ 条记录",
-                sInfo: "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
-                sInfoEmpty: "没有数据",
-                sInfoFiltered: "(从 _MAX_ 条数据中检索)",
-                sZeroRecords: "没有检索到数据",
-                sSearch: "搜索:",
-                oPaginate: {
-                    sFirst: "首页",
-                    sPrevious: "前一页",
-                    sNext: "后一页",
-                    sLast: "尾页"
+            table.dataTable({
+                retrieve: true,
+                responsive: true,
+                sPaginationType: "full_numbers",
+                oLanguage: {
+                    sLengthMenu: "每页显示 _MENU_ 条记录",
+                    sInfo: "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                    sInfoEmpty: "没有数据",
+                    sInfoFiltered: "(从 _MAX_ 条数据中检索)",
+                    sZeroRecords: "没有检索到数据",
+                    sSearch: "搜索:",
+                    oPaginate: {
+                        sFirst: "首页",
+                        sPrevious: "前一页",
+                        sNext: "后一页",
+                        sLast: "尾页"
+                    }
                 }
-            }
+            });
         });
     }
 
@@ -325,14 +325,25 @@
                     var info =
                         "<p>" + "订单号：" + data.orderid + "</p>" +
                         "<p>" + "订单总价：￥" + data.ordersumprice + "</p>" +
+                        "<p>" + "是否已付款：" + isPaidW + "</p>" +
+                        "<p>" + "付款方式：" + PaidBy + "</p>" +
+                        "<p>" + "订单状态：" + statusW + "</p>" +
                         "<p>" + "订单收货人：" + data.ordercname + "</p>" +
                         "<p>" + "收货地址：" + data.orderaddress + "</p>" +
                         "<p>" + "收货人联系电话：" + data.orderphone + "</p>" +
                         "<p>" + "快递：" + data.expressname + "</p>" +
-                        "<p>" + "运单号：" + data.expressnum + "</p>" +
-                        "<p>" + "是否已付款：" + isPaidW + "</p>" +
-                        "<p>" + "付款方式：" + PaidBy + "</p>" +
-                        "<p>" + "订单状态：" + statusW + "</p>";
+                        "<p>" + "运单号：" + data.expressnum + "</p>";
+
+
+                    info += "<p>订单商品：</p>";
+                    info += "<ul style='list-style: none'>";
+
+                    $.each(data.goods, function (i, item) {
+                        info += "<li>" + "商品名：" + item.goodsname + " " + "商品单价：" + item.goodsprice + " " + "商品数量：" + item.goodscount + "</li>";
+                    });
+
+                    info += "</ul>";
+
                     layer.open({
                         type: 1,
                         title: '用户详细信息',
