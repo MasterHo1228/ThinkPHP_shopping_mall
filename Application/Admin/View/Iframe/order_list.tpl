@@ -184,7 +184,7 @@
     function refresh() {
         var table = $("#orderList");
         $("#orderListT").empty();
-        $.getJSON("{{U('Admin/Order/getList')}}", function (data) {
+        $.getJSON("{{U('backyard/Order/getList')}}", function (data) {
             $.each(data, function (i, item) {
                 var orderID = item.orderid;
                 var isPaid = item.orderpaid;
@@ -278,7 +278,7 @@
         $("#orderListT").delegate('.checkOrderInfo', 'click', function () {
             var orderID = $(this).attr('data-value');
             $.ajax({
-                url: "{{U('Admin/Order/getCurrentDetailInfo')}}",
+                url: "{{U('backyard/Order/getCurrentDetailInfo')}}",
                 type: 'post',
                 data: {
                     orderID: orderID
@@ -360,7 +360,7 @@
         $("#orderListT").delegate('.btnSend', 'click', function () {
             sendOrderID = $(this).attr('data-value');
             $.ajax({
-                url: "{{U('Admin/Order/getCurrentSimpleInfo')}}",
+                url: "{{U('backyard/Order/getCurrentSimpleInfo')}}",
                 type: 'post',
                 data: {
                     orderID: sendOrderID
@@ -384,7 +384,7 @@
                 var sendOrderEID = $("#sendOrderEID").val();
                 if (sendOrderExpress != '' && sendOrderEID != '') {
                     $.ajax({
-                        url: "{{U('Admin/Order/send')}}",
+                        url: "{{U('backyard/Order/send')}}",
                         type: 'post',
                         data: {
                             orderID: sendOrderID,
@@ -419,7 +419,7 @@
         $("#btnToCancelO").click(function () {
             if (cancelOrderID != '') {
                 $.ajax({
-                    url: "{{U('Admin/Order/cancel')}}",
+                    url: "{{U('backyard/Order/cancel')}}",
                     type: 'post',
                     data: {
                         orderID: cancelOrderID

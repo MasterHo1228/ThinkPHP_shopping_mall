@@ -30,7 +30,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2 class="page-header">编辑商品信息</h2>
-            <form action="{{U('Admin/Goods/update')}}" enctype="multipart/form-data" method="post">
+            <form action="{{U('backyard/Goods/update')}}" enctype="multipart/form-data" method="post">
                 {{nocache}}
                 <input type="hidden" name="goodsID" value="{{$data['gid']}}">
                 <div class="form-group">
@@ -99,11 +99,11 @@
     var goodsTypeID = {{$data['gtype']}};
     $(function () {
         var editor = new wangEditor('goodsDesc');
-        editor.config.uploadImgUrl = '{{U('Admin/Goods/uploadImg')}}';
+        editor.config.uploadImgUrl = '{{U('backyard/Goods/uploadImg')}}';
         editor.config.hideLinkImg = true;
         editor.create();
 
-        $.getJSON("{{U('Admin/Goods/getTypeList')}}", function (data) {
+        $.getJSON("{{U('backyard/Goods/getTypeList')}}", function (data) {
             $.each(data, function (i, item) {
                 if (goodsTypeID == item.tid) {
                     $("#goodsType").append("<option value='" + item.tid + "' selected>" + item.tname + "</option>");

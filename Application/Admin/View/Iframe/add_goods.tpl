@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2 class="page-header">添加商品</h2>
-            <form action="{{U('Admin/Goods/add')}}" enctype="multipart/form-data" method="post">
+            <form action="{{U('backyard/Goods/add')}}" enctype="multipart/form-data" method="post">
                 <div class="form-group">
                     <label for="textGoodsName">商品名称</label>
                     <input type="text" class="form-control" id="textGoodsName" name="goodsName" placeholder="商品名称"
@@ -96,7 +96,7 @@
      tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form class="avatar-form" action="{{U('Admin/Image/uploadHeaderImg')}}" enctype="multipart/form-data"
+            <form class="avatar-form" action="{{U('backyard/Image/uploadHeaderImg')}}" enctype="multipart/form-data"
                   method="post">
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal" type="button">&times;</button>
@@ -147,11 +147,11 @@
 <script language="JavaScript">
     $(function () {
         var editor = new wangEditor('goodsDesc');
-        editor.config.uploadImgUrl = '{{U('Admin/Image/uploadImg')}}';
+        editor.config.uploadImgUrl = '{{U('backyard/Image/uploadImg')}}';
         editor.config.hideLinkImg = true;
         editor.create();
 
-        $.getJSON("{{U('Admin/Goods/getTypeList')}}", function (data) {
+        $.getJSON("{{U('backyard/Goods/getTypeList')}}", function (data) {
             $.each(data, function (i, item) {
                 $("#goodsType").append("<option value='" + item.tid + "'>" + item.tname + "</option>");
             });

@@ -45,7 +45,7 @@
                             <div class="form-group" id="divVCode">
                                 <p id="captcha-container">
                                     {{nocache}}<img id="captcha_img" width="120" height="40" alt="验证码"
-                                                    src="{{U('Admin/Index/MakeVCode')}}" title="点击刷新">{{/nocache}}
+                                                    src="{{U('backyard/Index/MakeVCode')}}" title="点击刷新">{{/nocache}}
                                     <input type="text" class="form-control" id="vCode" name="vCode" placeholder="验证码">
                                     <span id="VCodeError" class="help-block" style="display: none">验证码错误</span>
                                 </p>
@@ -91,9 +91,11 @@
         $("#vCode").blur(function () {
             var vCode = $(this).val();
             $.ajax({
-                url: "{{U('Admin/Index/verifyVCode')}}",
+                url: "{{U('backyard/Index/verifyVCode')}}",
                 type: 'post',
-                data:{vCode:vCode},
+                data: {
+                    vCode: vCode
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.checked == 'true') {

@@ -23,7 +23,7 @@ class MainController extends Controller
     public function main()
     {
         if (!checkAdminLogin() && !checkSalesUserLogin()) {
-            $this->error('非法操作！', U('Admin/Index/login'));
+            $this->error('非法操作！', U('backyard/Index/login'));
         } else {
             $this->display();
         }
@@ -37,6 +37,6 @@ class MainController extends Controller
         clearSession('admin');
         clearSession('salesUID');
         clearSession('salesUName');
-        $this->success('登出成功！', U('Admin/Index/login'));
+        $this->success('登出成功！', U('backyard/Index/login'));
     }
 }

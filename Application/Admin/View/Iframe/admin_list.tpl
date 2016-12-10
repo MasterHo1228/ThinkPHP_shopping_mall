@@ -167,7 +167,7 @@
     var editAdminID, delAdminID;
     function refresh() {
         $("#adminListT").empty();
-        $.getJSON("{{U('Admin/Admin/getList')}}", function (data) {
+        $.getJSON("{{U('backyard/Admin/getList')}}", function (data) {
             $.each(data, function (i, item) {
                 var adminID = item.aid;
                 var tableRow =
@@ -198,7 +198,7 @@
                     var adminName = $("#addAdminName").val();
                     var password = $("#addAdminPasswd").val();
                     $.ajax({
-                        url: "{{U('Admin/Admin/add')}}",
+                        url: "{{U('backyard/Admin/add')}}",
                         type: 'post',
                         data: {
                             adminName: adminName,
@@ -232,7 +232,7 @@
         $("#adminListT").delegate('.btnEdit', 'click', function () {
             editAdminID = $(this).prop('value');
             $.ajax({
-                url: "{{U('Admin/Admin/ajaxGetName')}}",
+                url: "{{U('backyard/Admin/ajaxGetName')}}",
                 type: 'post',
                 data: {
                     adminID: editAdminID
@@ -252,7 +252,7 @@
                 if ($("#editAdminPasswd").val() == $("#editAdminPasswdT").val()) {
                     var password = $("#editAdminPasswd").val();
                     $.ajax({
-                        url: "{{U('Admin/Admin/update')}}",
+                        url: "{{U('backyard/Admin/update')}}",
                         type: 'post',
                         data: {
                             type: 'password',
@@ -286,7 +286,7 @@
         $("#btnToDelAdmin").click(function () {
             if (delAdminID != '') {
                 $.ajax({
-                    url: "{{U('Admin/Admin/delete')}}",
+                    url: "{{U('backyard/Admin/delete')}}",
                     type: 'post',
                     data: {
                         adminID: delAdminID

@@ -43,7 +43,7 @@ class IframeController extends Controller
         if (checkSalesUserLogin()) {
             $this->display('goods_list');
         } else {
-            $this->error('非法操作！', U('Admin/Main/main'));
+            $this->error('非法操作！', U('backyard/Main/main'));
         }
     }
 
@@ -63,7 +63,7 @@ class IframeController extends Controller
                 $this->error('商品不存在！');
             }
         } else {
-            $this->error('非法操作！', U('Admin/Main/main'));
+            $this->error('非法操作！', U('backyard/Main/main'));
         }
     }
 
@@ -75,7 +75,7 @@ class IframeController extends Controller
         if (checkSalesUserLogin()) {
             $this->display('order_list');
         } else {
-            $this->error('非法操作！', U('Admin/Main/main'));
+            $this->error('非法操作！', U('backyard/Main/main'));
         }
     }
 
@@ -98,7 +98,7 @@ class IframeController extends Controller
             $this->assign('data', $data);
             $this->display('admin_log');
         } else {
-            $this->error('非法操作！', U('Admin/Main/main'));
+            $this->error('非法操作！', U('backyard/Main/main'));
         }
     }
 
@@ -110,7 +110,7 @@ class IframeController extends Controller
         if (checkAdminLogin() && isRealAdmin()) {
             $this->display('admin_list');
         } else {
-            $this->error('非法操作！', U('Admin/Main/main'));
+            $this->error('非法操作！', U('backyard/Main/main'));
         }
     }
 
@@ -122,7 +122,7 @@ class IframeController extends Controller
         if (checkAdminLogin()) {
             $this->display('user_list');
         } else {
-            $this->error('非法操作！', U('Admin/Main/main'));
+            $this->error('非法操作！', U('backyard/Main/main'));
         }
     }
 
@@ -134,7 +134,7 @@ class IframeController extends Controller
         if (checkAdminLogin()) {
             $this->display('salesuser_list');
         } else {
-            $this->error('非法操作！', U('Admin/Main/main'));
+            $this->error('非法操作！', U('backyard/Main/main'));
         }
     }
 }

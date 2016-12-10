@@ -197,7 +197,7 @@
     function refresh() {
         var table = $("#shopList");
         $("#shopListT").empty();
-        $.getJSON("{{U('Admin/SaleUsers/getList')}}", function (data) {
+        $.getJSON("{{U('backyard/SaleUsers/getList')}}", function (data) {
             $.each(data, function (i, item) {
                 var tableRow =
                     "<tr>" +
@@ -247,7 +247,7 @@
 
             if (SULoginName != '' && SUPasswd != '' && SUName != '') {
                 $.ajax({
-                    url: "{{U('Admin/SaleUsers/add')}}",
+                    url: "{{U('backyard/SaleUsers/add')}}",
                     type: 'post',
                     data: {
                         SULoginName: SULoginName,
@@ -278,7 +278,7 @@
         $("#shopListT").delegate('.btnEdit', 'click', function () {
             editSUID = $(this).attr('data-value');
             $.ajax({
-                url: "{{U('Admin/SaleUsers/getCurrentInfo')}}",
+                url: "{{U('backyard/SaleUsers/getCurrentInfo')}}",
                 type: 'post',
                 data: {
                     salesUID: editSUID
@@ -318,7 +318,7 @@
                     }
 
                     $.ajax({
-                        url: "{{U('Admin/SaleUsers/update')}}",
+                        url: "{{U('backyard/SaleUsers/update')}}",
                         type: 'post',
                         data: data,
                         dadaType: 'text',
@@ -347,7 +347,7 @@
         $("#btnToDelSU").click(function () {
             if (delSUID != '') {
                 $.ajax({
-                    url: "{{U('Admin/SaleUsers/delete')}}",
+                    url: "{{U('backyard/SaleUsers/delete')}}",
                     type: 'post',
                     data: {
                         salesUID: delSUID

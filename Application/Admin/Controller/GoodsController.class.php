@@ -76,7 +76,7 @@ class GoodsController extends Controller
             $model = D('goods');
             if ($model->addNewGoods($goodsName, $goodsType, $goodsPrice, $goodsOriginPrice, $goodsCount, $goodsDesc, $goodsHeaderPic)) {
                 session('uploadHeaderImgUrl', null);
-                $this->success('商品添加成功！', U('Admin/Iframe/goods_list'));
+                $this->success('商品添加成功！', U('backyard/Iframe/goods_list'));
             } else {
                 $this->error('商品添加失败！');
             }
@@ -99,7 +99,7 @@ class GoodsController extends Controller
 
             $model = D('goods');
             if ($model->updateGoods($goodsID, $goodsName, $goodsType, $goodsPrice, $goodsOriginPrice, $goodsCount, $goodsDesc)) {
-                $this->success('商品信息更新成功！', U('Admin/Iframe/goods_list'));
+                $this->success('商品信息更新成功！', U('backyard/Iframe/goods_list'));
             } else {
                 $this->error('商品信息更新失败！');
             }

@@ -20,9 +20,9 @@ class IndexController extends Controller
                 $userName = I('post.usrName');
                 $password = I('post.usrPasswd');
                 if (D('admin')->CheckAccount($userName, $password)) {//验证是否为管理员账号登录
-                    $this->redirect('Admin/Main/main');
+                    $this->redirect('backyard/Main/main');
                 } else if (D('SaleUsers')->CheckAccount($userName, $password)) {//验证是否为商铺账号登录
-                    $this->redirect('Admin/Main/main');
+                    $this->redirect('backyard/Main/main');
                 } else {
                     $this->error('用户名或密码错误！！');
                 }
@@ -31,7 +31,7 @@ class IndexController extends Controller
                 $this->display();
             }
         } else {//若已登录 则直接跳转至系统主界面
-            $this->redirect('Admin/Main/main');
+            $this->redirect('backyard/Main/main');
         }
     }
 

@@ -39,7 +39,7 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <a class="btn btn-primary btn-block" href="{{U('Admin/Iframe/add_goods')}}">添加商品</a>
+                    <a class="btn btn-primary btn-block" href="{{U('backyard/Iframe/add_goods')}}">添加商品</a>
                     <br/>
                     <table width="100%" class="table table-striped table-bordered table-hover" id="goodsList">
                         <thead>
@@ -205,7 +205,7 @@
     function refresh() {
         var table = $("#goodsList");
         $("#goodsListT").empty();
-        $.getJSON("{{U('Admin/Goods/getList')}}", function (data) {
+        $.getJSON("{{U('backyard/Goods/getList')}}", function (data) {
             $.each(data, function (i, item) {
                 var tableRow;
                 switch (item.gstatus) {
@@ -220,7 +220,7 @@
                             "<td>" + "已下架" + "</td>" +
                             "<td>" +
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                            "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnEdit' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                             "<a class='btnReturn' title='重上架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#returnGWindow'><i class='fa fa-check fa-fw'></i></a>" +
                             "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
@@ -237,7 +237,7 @@
                             "<td>" + "正常" + "</td>" +
                             "<td>" +
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                            "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnEdit' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                             "<a class='btnRankTop' title='商品置顶显示' data-value='" + item.gid + "' data-toggle='modal' data-target='#topGWindow'><i class='fa fa-arrow-up fa-fw'></i></a>" +
                             "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
                             "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
@@ -255,7 +255,7 @@
                             "<td>" + "置顶" + "</td>" +
                             "<td>" +
                             "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                            "<a class='btnEdit' title='编辑商品信息' href='{{U('Admin/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnEdit' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
                             "<a class='btnRankDown' title='取消置顶' data-value='" + item.gid + "' data-toggle='modal' data-target='#downGWindow'><i class='fa fa-arrow-down fa-fw'></i></a>" +
                             "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
                             "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
@@ -298,7 +298,7 @@
         $("#goodsListT").delegate('.btnInfo', 'click', function () {
             var goodsID = $(this).attr('data-value');
             $.ajax({
-                url: "{{U('Admin/Goods/getCurrentInfo')}}",
+                url: "{{U('backyard/Goods/getCurrentInfo')}}",
                 type: 'get',
                 data: {
                     goodsID: goodsID
@@ -357,7 +357,7 @@
         $("#btnToDelG").click(function () {
             if (delGID != '') {
                 $.ajax({
-                    url: "{{U('Admin/Goods/delete')}}",
+                    url: "{{U('backyard/Goods/delete')}}",
                     type: 'post',
                     data: {
                         goodsID: delGID
@@ -380,7 +380,7 @@
         $("#btnToShut").click(function () {
             if (shutGID != '') {
                 $.ajax({
-                    url: "{{U('Admin/Goods/shutdown')}}",
+                    url: "{{U('backyard/Goods/shutdown')}}",
                     type: 'post',
                     data: {
                         goodsID: shutGID
@@ -403,7 +403,7 @@
         $("#btnToReturn").click(function () {
             if (returnGID != '') {
                 $.ajax({
-                    url: "{{U('Admin/Goods/goodsReturn')}}",
+                    url: "{{U('backyard/Goods/goodsReturn')}}",
                     type: 'post',
                     data: {
                         goodsID: returnGID
@@ -426,7 +426,7 @@
         $("#btnToTop").click(function () {
             if (topGID != '') {
                 $.ajax({
-                    url: "{{U('Admin/Goods/rankTop')}}",
+                    url: "{{U('backyard/Goods/rankTop')}}",
                     type: 'post',
                     data: {
                         goodsID: topGID
@@ -449,7 +449,7 @@
         $("#btnToDown").click(function () {
             if (downGID != '') {
                 $.ajax({
-                    url: "{{U('Admin/Goods/rankDown')}}",
+                    url: "{{U('backyard/Goods/rankDown')}}",
                     type: 'post',
                     data: {
                         goodsID: downGID

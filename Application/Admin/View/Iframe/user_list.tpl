@@ -171,7 +171,7 @@
     function refresh() {
         var table = $("#userList");
         $("#userListT").empty();
-        $.getJSON("{{U('Admin/User/getList')}}", function (data) {
+        $.getJSON("{{U('backyard/User/getList')}}", function (data) {
             $.each(data, function (i, item) {
                 var tableRow =
                     "<tr>" +
@@ -217,7 +217,7 @@
         $("#userListT").delegate('.checkUserInfo', 'click', function () {
             var userID = $(this).attr('data-value');
             $.ajax({
-                url: "{{U('Admin/User/getCurrentInfo')}}",
+                url: "{{U('backyard/User/getCurrentInfo')}}",
                 type: 'get',
                 data: {
                     userID: userID
@@ -251,7 +251,7 @@
         $("#userListT").delegate('.btnEdit', 'click', function () {
             editUID = $(this).attr('data-value');
             $.ajax({
-                url: "{{U('Admin/User/getCurrentInfo')}}",
+                url: "{{U('backyard/User/getCurrentInfo')}}",
                 type: 'get',
                 data: {
                     userID: editUID
@@ -299,7 +299,7 @@
                     }
 
                     $.ajax({
-                        url: "{{U('Admin/User/update')}}",
+                        url: "{{U('backyard/User/update')}}",
                         type: 'post',
                         data: data,
                         dadaType: 'text',
@@ -328,7 +328,7 @@
         $("#btnToDelU").click(function () {
             if (delUID != '') {
                 $.ajax({
-                    url: "{{U('Admin/User/delete')}}",
+                    url: "{{U('backyard/User/delete')}}",
                     type: 'post',
                     data: {
                         userID: delUID

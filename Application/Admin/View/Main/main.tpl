@@ -46,7 +46,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{U('Admin/Main/main')}}">商城后台管理系统</a>
+            <a class="navbar-brand" href="{{U('backyard/Main/main')}}">商城后台管理系统</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -62,7 +62,7 @@
                     <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{U('Admin/Main/logout')}}"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
+                    <li><a href="{{U('backyard/Main/logout')}}"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -75,14 +75,14 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a class="active" href="{{U('Admin/Iframe/welcome')}}" target="mainIframe">欢迎</a>
+                        <a class="active" href="{{U('backyard/Iframe/welcome')}}" target="mainIframe">欢迎</a>
                     </li>
                     <li>
-                        <a href="{{U('Admin/Iframe/goodsList')}}" target="mainIframe"><i
+                        <a href="{{U('backyard/Iframe/goodsList')}}" target="mainIframe"><i
                                     class="fa fa-shopping-basket fa-fw"></i> 商品管理</a>
                     </li>
                     <li>
-                        <a href="{{U('Admin/Iframe/orderList')}}" target="mainIframe"><i
+                        <a href="{{U('backyard/Iframe/orderList')}}" target="mainIframe"><i
                                     class="fa fa-list-alt fa-fw"></i> 订单管理</a>
                     </li>
                     {{if isset($smarty.session.admin)}}
@@ -94,18 +94,18 @@
                                     class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="{{U('Admin/Iframe/userList')}}" target="mainIframe">商城用户管理</a>
+                                <a href="{{U('backyard/Iframe/userList')}}" target="mainIframe">商城用户管理</a>
                             </li>
                             <li>
-                                <a href="{{U('Admin/Iframe/salesUserList')}}" target="mainIframe">店铺账号管理</a>
+                                <a href="{{U('backyard/Iframe/salesUserList')}}" target="mainIframe">店铺账号管理</a>
                             </li>
                             {{if isset($smarty.session.admin)}}
                             <li>
-                                <a href="{{U('Admin/Iframe/adminLog')}}" target="mainIframe">系统管理员登录日志</a>
+                                <a href="{{U('backyard/Iframe/adminLog')}}" target="mainIframe">系统管理员登录日志</a>
                             </li>
                             {{if $smarty.session.admin.usrName=='admin'}}
                             <li>
-                                <a href="{{U('Admin/Iframe/adminList')}}" target="mainIframe">管理员账号管理</a>
+                                <a href="{{U('backyard/Iframe/adminList')}}" target="mainIframe">管理员账号管理</a>
                             </li>
                             {{/if}}
                             {{/if}}
@@ -121,7 +121,7 @@
 
     <!-- Page Content -->
     <div id="page-wrapper">
-        <iframe id="mainIframe" name="mainIframe" src="{{U('Admin/Iframe/welcome')}}" width="100%" height="580"
+        <iframe id="mainIframe" name="mainIframe" src="{{U('backyard/Iframe/welcome')}}" width="100%" height="580"
                 onload="this.height=mainIframe.document.body.scrollHeight" frameborder="0"></iframe>
     </div>
     <!-- /#page-wrapper -->
