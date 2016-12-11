@@ -28,7 +28,7 @@ return array(
     //模板文件后缀
     'TMPL_TEMPLATE_SUFFIX' => '.tpl',
     'TMPL_ENGINE_CONFIG' => array(
-        'caching' => true,
+        'caching' => false,
         'compile_dir' => TEMP_PATH,
         'cache_dir' => CACHE_PATH,
         'left_delimiter' => '{{',

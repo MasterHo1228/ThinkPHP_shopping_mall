@@ -7,6 +7,25 @@ class IndexController extends Controller
 {
     public function index()
     {
-        echo "<h1>:)</h1><h2>Coming soon!</h2>";
+        layout('Layout/layout');
+        $this->display();
+    }
+
+    public function register()
+    {
+        layout('Layout/layout');
+        $this->display();
+    }
+
+    public function login()
+    {
+        layout('Layout/layout');
+        $this->display();
+    }
+
+    public function single()
+    {
+        layout('Layout/layout');
+        $this->display();
     }
 }
