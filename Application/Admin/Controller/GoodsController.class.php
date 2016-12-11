@@ -64,13 +64,12 @@ class GoodsController extends Controller
     public function add()
     {
         if (IS_POST && checkSalesUserLogin()) {
-
             $goodsName = I('post.goodsName/s');
             $goodsType = I('post.goodsType/d');
-            $goodsPrice = I('post.goodsPrice/f');
-            $goodsOriginPrice = I('post.goodsOriginPrice/f');
-            $goodsCount = I('post.goodsCount/d');
-            $goodsDesc = I('post.goodsDesc/s', '', 'htmlspecialchars,nl2br');
+            $goodsPrice = I('post.goodsPrice/f', 0);
+            $goodsOriginPrice = I('post.goodsOriginPrice/f', 0);
+            $goodsCount = I('post.goodsCount/d', 0);
+            $goodsDesc = I('post.goodsDesc/s', '暂无商品描述', 'htmlspecialchars,nl2br');
             $goodsHeaderPic = session('uploadHeaderImgUrl');
 
             $model = D('goods');
@@ -92,10 +91,10 @@ class GoodsController extends Controller
             $goodsID = I('post.goodsID/d');
             $goodsName = I('post.goodsName/s');
             $goodsType = I('post.goodsType/d');
-            $goodsPrice = I('post.goodsPrice/f');
-            $goodsOriginPrice = I('post.goodsOriginPrice/f');
-            $goodsCount = I('post.goodsCount/d');
-            $goodsDesc = I('post.goodsDesc/s', '', 'htmlspecialchars,nl2br');
+            $goodsPrice = I('post.goodsPrice/f', 0);
+            $goodsOriginPrice = I('post.goodsOriginPrice/f', 0);
+            $goodsCount = I('post.goodsCount/d', 0);
+            $goodsDesc = I('post.goodsDesc/s', '暂无商品描述', 'htmlspecialchars,nl2br');
 
             $model = D('goods');
             if ($model->updateGoods($goodsID, $goodsName, $goodsType, $goodsPrice, $goodsOriginPrice, $goodsCount, $goodsDesc)) {

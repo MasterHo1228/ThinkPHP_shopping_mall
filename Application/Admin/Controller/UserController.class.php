@@ -53,7 +53,7 @@ class UserController extends Controller
             $userPasswd = I('post.userPasswd/s');
             $userGender = I('post.userGender/s');
             $userEmail = I('post.userEmail/s', '', 'email');
-            $userPhone = I('post.userPhone/s');
+            $userPhone = I('post.userPhone/s', '');
 
             $model = D('user');
             if ($model->updateInfo($userID, $userName, $userPasswd, $userGender, $userEmail, $userPhone)) {
