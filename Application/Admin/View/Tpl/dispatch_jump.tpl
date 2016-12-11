@@ -49,6 +49,7 @@
     </style>
 </head>
 <body>
+{{nocache}}
 <div class="system-message">
     {{if isset($message)}}
     <h1>:)</h1>
@@ -62,6 +63,7 @@
         页面自动 <a id="href" href="{{$jumpUrl}}">跳转</a> 等待时间： <b id="wait">{{$waitSecond}}</b>
     </p>
 </div>
+{{nocache}}
 <script type="text/javascript">
     (function () {
         var wait = document.getElementById('wait'), href = document.getElementById('href').href;

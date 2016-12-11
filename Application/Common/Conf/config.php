@@ -28,7 +28,9 @@ return array(
     //模板文件后缀
     'TMPL_TEMPLATE_SUFFIX' => '.tpl',
     'TMPL_ENGINE_CONFIG' => array(
-        'compile_dir' => CACHE_PATH,
+        'caching' => true,
+        'compile_dir' => TEMP_PATH,
+        'cache_dir' => CACHE_PATH,
         'left_delimiter' => '{{',
         'right_delimiter' => '}}',
     ),
@@ -37,4 +39,6 @@ return array(
     'TMPL_ACTION_ERROR' => 'Tpl/dispatch_jump',
     //默认成功跳转对应的模板文件
     'TMPL_ACTION_SUCCESS' => 'Tpl/dispatch_jump',
+    // 显示页面Trace信息
+    'SHOW_PAGE_TRACE' => true,
 );
