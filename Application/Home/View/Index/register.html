@@ -4,8 +4,8 @@
     <div class="container">
         <div class="breadcrumbs-main">
             <ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li class="active">注册页面</li>
+                <li><a href="__CONTROLLER__/index.html">主页</a></li>
+                <li class="active">用户注册</li>
             </ol>
         </div>
     </div>
@@ -19,33 +19,26 @@
         </div>
         <div class="register-main">
             <div class="col-md-6 account-left">
-                <input placeholder="请输入用户名" type="text" tabindex="1" required>
-                <input placeholder="请再次输入" type="text" tabindex="2" required>
-                <input placeholder="邮箱地址" type="text" tabindex="3" required>
-                <input placeholder="手机号码" type="text" tabindex="3" required>
+                <input name="usrName" placeholder="请输入用户名" type="text" tabindex="1" required>
+                <input name="usrPasswd" placeholder="请输入密码" type="password" tabindex="4" required>
+                <input name="usrPasswdT" placeholder="请再次输入" type="password" tabindex="4" required>
+                <br/>
+                <span>性别：</span>
                 <ul>
-                    <li><label class="radio left"><input type="radio" name="radio" checked=""><i></i>男</label></li>
-                    <li><label class="radio"><input type="radio" name="radio"><i></i>女</label></li>
-                    <div class="clearfix"></div>
+                    <li><label class="radio left"><input type="radio" name="usrGender" value="male"
+                                                         checked><i></i>男</label></li>
+                    <li><label class="radio"><input type="radio" name="usrGender" value="female"><i></i>女</label></li>
                 </ul>
+                <div class="clearfix"></div>
             </div>
             <div class="col-md-6 account-left">
-                <input placeholder="请输入密码" type="password" tabindex="4" required>
-                <input placeholder="请再次输入" type="password" tabindex="4" required>
+                <input name="usrEmail" placeholder="邮箱地址" type="text" tabindex="3">
+                <input name="usrPhone" placeholder="手机号码" type="text" tabindex="3">
             </div>
             <div class="clearfix"></div>
         </div>
         <div class="address submit">
-
-            <input type="submit" value="确认注册">
-
+            <input type="submit" value="注册">
         </div>
     </div>
-
 </div>
-
-<!--register-end-->
-<!--information-starts-->
-
-</body>
-</html>
