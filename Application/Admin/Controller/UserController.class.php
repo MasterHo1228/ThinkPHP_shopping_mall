@@ -52,7 +52,7 @@ class UserController extends Controller
             $userName = I('post.userName/s');
             $userPasswd = I('post.userPasswd/s');
             $userGender = I('post.userGender/s');
-            $userEmail = I('post.userEmail/s');
+            $userEmail = I('post.userEmail/s', '', 'email');
             $userPhone = I('post.userPhone/s');
 
             $model = D('user');

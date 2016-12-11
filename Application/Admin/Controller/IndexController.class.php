@@ -17,8 +17,8 @@ class IndexController extends Controller
     {
         if (!checkAdminLogin() && !checkSalesUserLogin()) {
             if (IS_POST) {
-                $userName = I('post.usrName');
-                $password = I('post.usrPasswd');
+                $userName = I('post.usrName/s');
+                $password = I('post.usrPasswd/s');
                 if (D('admin')->CheckAccount($userName, $password)) {//验证是否为管理员账号登录
                     $this->redirect('backyard/Main/main');
                 } else if (D('SaleUsers')->CheckAccount($userName, $password)) {//验证是否为商铺账号登录
