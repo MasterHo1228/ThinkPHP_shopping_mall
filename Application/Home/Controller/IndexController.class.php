@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 
+use Home\Model\GoodsModel;
 use Think\Controller;
 
 class IndexController extends Controller
@@ -42,7 +43,22 @@ class IndexController extends Controller
 
     public function single()
     {
-        layout('Layout/layout');
-        $this->display();
+        $goodsID = I('get.goodsID/d');
+        $model = new GoodsModel();
+
+        $data = $model->getDetailByID($goodsID);
+
+        if ($data) {
+            $data['gdescription'] = html_entity_decode($data['gdescription'], ENT_QUOTES, 'UTF-8');
+
+            $this->assign('data', $data);
+            $top3 = $model->getTop3Goods();
+            $this->assign('top3', $top3);
+
+            layout('Layout/layout');
+            $this->display();
+        } else {
+            $this->error('非法操作！', U('index'));
+        }
     }
 }

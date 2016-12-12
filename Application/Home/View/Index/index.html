@@ -54,10 +54,11 @@
                         <notempty name="goodsID">
                             <div class="col-md-3 product-left">
                                 <div class="product-main simpleCart_shelfItem">
-                                    <a href="single.html" class="mask"><img class="img-responsive zoom-img" width="350"
-                                                                            height="350"
-                                                                            src="{$list[$i+($row*4)]['gphoto']}"
-                                                                            alt="{$list[$i+($row*4)]['gname']}"/></a>
+                                    <a href="__CONTROLLER__/single.html?goodsID={$goodsID}" class="mask"><img
+                                            class="img-responsive zoom-img" width="350"
+                                            height="350"
+                                            src="{$list[$i+($row*4)]['gphoto']}"
+                                            alt="{$list[$i+($row*4)]['gname']}"/></a>
                                     <div class="product-bottom">
                                         <h3>{$list[$i+($row*4)]['gname']}</h3>
                                         <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">￥ {$list[$i+($row*4)]['gprice']|default="0.00"}</span>

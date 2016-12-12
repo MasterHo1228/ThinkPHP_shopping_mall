@@ -1,11 +1,15 @@
 <!--bottom-header-->
 <!--start-breadcrumbs-->
+<link rel="stylesheet" href="__PUBLIC__/css/flexslider.css" type="text/css" media="screen"/>
+<assign name="goodsID" value="$data['gid']"/>
+<assign name="goodsName" value="$data['gname']"/>
+
 <div class="breadcrumbs">
     <div class="container">
         <div class="breadcrumbs-main">
             <ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li class="active">Single</li>
+                <li><a href="index.html">主页</a></li>
+                <li class="active">{$goodsName}</li>
             </ol>
         </div>
     </div>
@@ -20,38 +24,17 @@
                     <div class="col-md-5 single-top-left">
                         <div class="flexslider">
                             <ul class="slides">
-                                <li data-thumb="__PUBLIC__/images/s-1.jpg">
-                                    <div class="thumb-image"><img src="__PUBLIC__/images/s-1.jpg" data-imagezoom="true"
-                                                                  class="img-responsive" alt=""/></div>
-                                </li>
-                                <li data-thumb="__PUBLIC__/images/s-2.jpg">
-                                    <div class="thumb-image"><img src="__PUBLIC__/images/s-2.jpg" data-imagezoom="true"
-                                                                  class="img-responsive" alt=""/></div>
-                                </li>
-                                <li data-thumb="__PUBLIC__/images/s-3.jpg">
-                                    <div class="thumb-image"><img src="__PUBLIC__/images/s-3.jpg" data-imagezoom="true"
+                                <li data-thumb="{$data['gphoto']}">
+                                    <div class="thumb-image"><img src="{$data['gphoto']}" data-imagezoom="true"
                                                                   class="img-responsive" alt=""/></div>
                                 </li>
                             </ul>
                         </div>
-                        <!-- FlexSlider -->
-                        <script src="__PUBLIC__/js/imagezoom.js"></script>
-                        <script defer src="__PUBLIC__/js/jquery.flexslider.js"></script>
-                        <link rel="stylesheet" href="__PUBLIC__/css/flexslider.css" type="text/css" media="screen"/>
 
-                        <script>
-                            // Can also be used with $(document).ready()
-                            $(window).load(function () {
-                                $('.flexslider').flexslider({
-                                    animation: "slide",
-                                    controlNav: "thumbnails"
-                                });
-                            });
-                        </script>
                     </div>
                     <div class="col-md-7 single-top-right">
                         <div class="single-para simpleCart_shelfItem">
-                            <h2>鬼吹灯全集（套装共8册）</h2>
+                            <h2>{$goodsName}</h2>
                             <div class="star-on">
                                 <ul class="star-footer">
                                     <li><a href="#"><i> </i></a></li>
@@ -67,19 +50,10 @@
                                 <div class="clearfix"></div>
                             </div>
 
-                            <h5 class="item_price">$ 799.00</h5>
-                            <p>
-                                天下霸唱原著，足本无删节！盗墓小说开山之作，摸金校尉寻宝历险记，引领南派三叔《盗墓笔记》等书热销！同名网剧腾讯视频全网独播，靳东、陈乔恩、赵达领衔主演，《琅琊榜》《欢乐颂》总导演、制片人年度力作。</p>
+                            <h5 class="item_price">￥ {$data['gprice']}</h5>
+                            <p></p>
                             <div class="available">
                                 <ul>
-                                    <li>套餐
-                                        <select>
-                                            <option>单本</option>
-                                            <option>一至四部</option>
-                                            <option>五至八部</option>
-                                            <option>全套八册</option>
-                                        </select>
-                                    </li>
                                     <li>快递
                                         <select>
                                             <option>顺丰</option>
@@ -94,9 +68,7 @@
                             </div>
                             <ul class="tag-men">
                                 <li><span>分类</span>
-                                    <span class="women1">: 侦探</span></li>
-                                <li><span>标签</span>
-                                    <span class="women1">: 悬疑/推理</span></li>
+                                    <span class="women1">: {$data['goodstypename']}</span></li>
                             </ul>
                             <a href="#" class="add-cart item_add">添加到购物车</a>
 
@@ -108,49 +80,15 @@
                     <ul class="menu_drop">
                         <li class="item1"><a><img src="__PUBLIC__/images/arrow.png" alt="">商品详情</a>
                             <ul>
-                                <li class="subitem1"><a>天下霸唱原著《鬼吹灯》诞生十年经典重现，原汁原味，足本无删节。八个分册依次为：《鬼吹灯1精绝古城》《鬼吹灯2龙岭迷窟》《鬼吹灯3云南虫谷》《鬼吹灯4昆仑神宫》《鬼吹灯5黄皮子坟》《鬼吹灯6南海归墟》《鬼吹灯7怒晴湘西》《鬼吹灯8巫峡棺山》</a>
-                                </li>
-                                <li class="subitem2"><a>
-                                    北有天下霸唱，南有南派三叔，《鬼吹灯》遥领《盗墓笔记》之先！作为中国超级网络文学作家和畅销书作家，天下霸唱小说本本受到好评，本本畅销不衰，追捧他的粉丝多达千万。</a>
-                                </li>
-                                <li class="subitem3"><a>《鬼吹灯》是中国盗墓小说开山之作，掀起了盗墓题材热销狂潮。根据此书改编的影视巨制有《九层妖塔》《寻龙诀》等。喜欢惊悚悬疑冒险类型的小伙伴们，够胆量就读《鬼吹灯》！</a>
+                                <li class="subitem1">
+                                    <a>{$data['gdescription']}</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="item2"><a><img src="__PUBLIC__/images/arrow.png" alt="">其他信息</a>
                             <ul>
-                                <li class="subitem2"><a> 版 次：1&nbsp;&nbsp;&nbsp; 页 数：&nbsp;&nbsp;&nbsp; 字 数：&nbsp;&nbsp;&nbsp;
-                                    印刷时间：2016年01月01日&nbsp;&nbsp;&nbsp;开 本：16开&nbsp;&nbsp;&nbsp;</a></li>
-                                <li class="subitem3"><a>纸 张：轻型纸&nbsp;&nbsp;&nbsp;包 装：平装-胶订&nbsp;&nbsp;&nbsp;国际标准书号ISBN：23808814&nbsp;&nbsp;&nbsp;丛书名：鬼吹灯系列</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="item3"><a><img src="__PUBLIC__/images/arrow.png" alt="">内容推荐</a>
-                            <ul>
-                                <li class="subitem1"><a>“人点烛，鬼吹灯”是传说中摸金派的不传之秘，意为进入古墓之中先在东南角点燃一支蜡烛才能开棺，如果蜡烛熄灭，须速速退出，不可取一物。相传这是祖师爷所定的一条活人与死人的契约，千年传承，不得破。</a>
-                                </li>
-                                <li class="subitem2"><a>
-                                    有谚为证：“发丘印，摸金符，搬山卸岭寻龙诀……窨沉棺，青铜椁，八字不硬莫近前。”故事以一本家传的秘书残卷为引，讲述三位当代摸金校尉，为解开部族消失的千古之谜，利用风水秘术，解读天下大山大川的脉搏，寻找一处处失落在大地深处的龙楼宝殿。</a>
-                                </li>
-                                <li class="subitem3"><a>毕竟那些龙形虎藏，揭天拔地、倒海翻江的举动，都迥异庸俗，在离奇诡异的地下世界中，历史的神秘面纱正一层层地被揭开…… </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="item4"><a><img src="__PUBLIC__/images/arrow.png" alt="">作者简介</a>
-                            <ul>
-                                <li class="subitem2"><a>
-                                    原名张牧野，天津人，想象力非凡的中国网络文学作家，其代表作《鬼吹灯》系列小说风靡华人世界，是继金庸等人的武侠作品以来，在华人中传播极广的小说。天下霸唱的创作将东方神秘文化与世界流行文化元素融为一体，为类型小说打上了深深的中国烙印。</a>
-                                </li>
-                                <li class="subitem3"><a>他的探险小说所关注的，是人在充满未知的环境中的思考与行动。古老的传承，神秘的遗迹，兄弟间的情义，情侣间的默契，生死无常的极限体验，加之幽默精练的文学语言、跌宕起伏的宏大叙事，使他的文字构建出另一处“江湖”。 </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="item5"><a><img src="__PUBLIC__/images/arrow.png" alt="">媒体评论</a>
-                            <ul>
-                                <li class="subitem1"><a>人点烛，鬼吹灯；千里寻龙，求其左右！小说《鬼吹灯》构筑了一个神秘迷人的想象世界，堪称中国盗墓题材的开山之作。——著名导演
-                                    乌尔善</a></li>
-                                <li class="subitem2"><a> 《鬼吹灯》丰富饱满的想象力，成为它最让人刮目相看的地方。——美国《时代周刊》</a></li>
-                                <li class="subitem3"><a>业性非常强，从历史、天文、地理，甚至植物学知识都有涉及，习惯了钢筋混泥土的白领们，对自然界的珍禽怪兽、奇花异草充满了猎奇之心，读此书还可沉醉于奇门遁甲、搬山卸岭的风水秘术，沉浸在红色年代的夸张语式所激发的无比幽默，震撼于现实生活与灵奇玄幻的穿越。——资深网友</a>
+                                <li class="subitem2"><a>商品上架时间：{$data['gpubtime']}</a></li>
+                                <li class="subitem3"><a>商家：{$data['shopname']}</a>
                                 </li>
                             </ul>
                         </li>
@@ -158,51 +96,21 @@
                 </div>
                 <div class="latestproducts">
                     <div class="product-one">
-                        <div class="col-md-4 product-left p-left">
-                            <div class="product-main simpleCart_shelfItem">
-                                <a href="single.html" class="mask"><img class="img-responsive zoom-img"
-                                                                        src="__PUBLIC__/images/p-1.png" alt=""/></a>
-                                <div class="product-bottom">
-                                    <h3>Smart Watches</h3>
-                                    <p>Explore Now</p>
-                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span>
-                                    </h4>
-                                </div>
-                                <div class="srch">
-                                    <span>-50%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 product-left p-left">
-                            <div class="product-main simpleCart_shelfItem">
-                                <a href="single.html" class="mask"><img class="img-responsive zoom-img"
-                                                                        src="__PUBLIC__/images/p-2.png" alt=""/></a>
-                                <div class="product-bottom">
-                                    <h3>Smart Watches</h3>
-                                    <p>Explore Now</p>
-                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span>
-                                    </h4>
-                                </div>
-                                <div class="srch">
-                                    <span>-50%</span>
+                        <foreach name="top3" item="topItem">
+                            <div class="col-md-4 product-left p-left">
+                                <div class="product-main simpleCart_shelfItem">
+                                    <a href="__CONTROLLER__/single.html?goodsID={$topItem['gid']}" class="mask"><img
+                                            class="img-responsive zoom-img" src="{$topItem.gphoto}"
+                                            alt="{$topItem.gname}"/></a>
+                                    <div class="product-bottom">
+                                        <h3>{$topItem.gname}</h3>
+                                        <p>近期热卖</p>
+                                        <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">￥ {$topItem.gprice|default="0.00"}</span>
+                                        </h4>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4 product-left p-left">
-                            <div class="product-main simpleCart_shelfItem">
-                                <a href="single.html" class="mask"><img class="img-responsive zoom-img"
-                                                                        src="__PUBLIC__/images/p-3.png" alt=""/></a>
-                                <div class="product-bottom">
-                                    <h3>Smart Watches</h3>
-                                    <p>Explore Now</p>
-                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span>
-                                    </h4>
-                                </div>
-                                <div class="srch">
-                                    <span>-50%</span>
-                                </div>
-                            </div>
-                        </div>
+                        </foreach>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -297,4 +205,20 @@
 </div>
 <!--end-single-->
 <!--information-starts-->
+
+<!-- jQuery -->
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<!-- FlexSlider -->
+<script src="__PUBLIC__/js/imagezoom.js"></script>
+<script defer src="__PUBLIC__/js/jquery.flexslider.js"></script>
+
+<script>
+    // Can also be used with $(document).ready()
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+</script>
 	
