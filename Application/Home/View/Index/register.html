@@ -19,9 +19,9 @@
         </div>
         <div class="register-main">
             <div class="col-md-6 account-left">
-                <input name="usrName" placeholder="请输入用户名" type="text" tabindex="1" required>
-                <input name="usrPasswd" placeholder="请输入密码" type="password" tabindex="4" required>
-                <input name="usrPasswdT" placeholder="请再次输入" type="password" tabindex="4" required>
+                <input id="usrName" name="usrName" placeholder="请输入用户名" type="text" tabindex="1" required>
+                <input id="usrPasswd" name="usrPasswd" placeholder="请输入密码" type="password" tabindex="4" required>
+                <input id="usrPasswdT" name="usrPasswdT" placeholder="请再次输入" type="password" tabindex="4" required>
                 <br/>
                 <span>性别：</span>
                 <ul>
@@ -32,13 +32,67 @@
                 <div class="clearfix"></div>
             </div>
             <div class="col-md-6 account-left">
-                <input name="usrEmail" placeholder="邮箱地址" type="text" tabindex="3">
-                <input name="usrPhone" placeholder="手机号码" type="text" tabindex="3">
+                <input id="usrEmail" name="usrEmail" placeholder="邮箱地址" type="text" tabindex="3">
+                <input id="usrPhone" name="usrPhone" placeholder="手机号码" type="text" tabindex="3">
             </div>
             <div class="clearfix"></div>
         </div>
         <div class="address submit">
-            <input type="submit" value="注册">
+            <input type="button" id="btnToReg" value="注册">
         </div>
     </div>
 </div>
+
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script language="JavaScript">
+    var validateEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    $(function () {
+        $("#btnToReg").click(function () {
+            var usrName = $("#usrName").val();
+            var usrPasswd = $("#usrPasswd").val();
+            var usrPasswdT = $("#usrPasswdT").val();
+            var usrGender = $("input[name='usrGender'][checked]").val();
+            var usrEmail = $("#usrEmail").val();
+            var usrPhone = $("#usrPhone").val();
+
+            if (usrName != '' && usrPasswd == usrPasswdT) {
+                if (usrEmail != '' && !validateEmail.test(usrEmail)) {
+                    alert('E-Mail格式不正确！');
+                } else {
+                    $.ajax({
+                        url: "{:U('User/register')}",
+                        type: 'post',
+                        data: {
+                            usrName: usrName,
+                            usrPasswd: usrPasswd,
+                            usrPasswdT: usrPasswdT,
+                            usrGender: usrGender,
+                            usrEmail: usrEmail,
+                            usrPhone: usrPhone
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            switch (data.error) {
+                                case 'none':
+                                    alert('注册成功！');
+                                    window.location.href = "{:U('login')}";
+                                    break;
+                                case 'password':
+                                    alert('两次输入的密码不一致！');
+                                    break;
+                                case 'name':
+                                    alert('用户名已被注册，注册失败！');
+                                    break;
+                                case 'failed':
+                                    alert('未知错误，注册失败！');
+                                    break;
+                            }
+                        }
+                    });
+                }
+            } else {
+                alert('两次输入的密码不一致！');
+            }
+        });
+    })
+</script>
