@@ -49,20 +49,23 @@
         <div class="product-top">
             <for start="0" end="$rowCount" name="row">
                 <div class="product-one">
-                    <for start="0" end="3">
-                        <div class="col-md-3 product-left">
-                            <div class="product-main simpleCart_shelfItem">
-                                <a href="single.html" class="mask"><img class="img-responsive zoom-img" width="350"
-                                                                        height="350"
-                                                                        src="{$list[$i+($row*3)]['gphoto']}"
-                                                                        alt="{$list[$i+($row*3)]['gname']}"/></a>
-                                <div class="product-bottom">
-                                    <h3>{$list[$i+($row*3)]['gname']}</h3>
-                                    <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">￥ {$list[$i+($row*3)]['gprice']|default="0.00"}</span>
-                                    </h4>
+                    <for start="0" end="4">
+                        <assign name="goodsID" value="$list[$i+($row*4)]['gid']"/>
+                        <notempty name="goodsID">
+                            <div class="col-md-3 product-left">
+                                <div class="product-main simpleCart_shelfItem">
+                                    <a href="single.html" class="mask"><img class="img-responsive zoom-img" width="350"
+                                                                            height="350"
+                                                                            src="{$list[$i+($row*4)]['gphoto']}"
+                                                                            alt="{$list[$i+($row*4)]['gname']}"/></a>
+                                    <div class="product-bottom">
+                                        <h3>{$list[$i+($row*4)]['gname']}</h3>
+                                        <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">￥ {$list[$i+($row*4)]['gprice']|default="0.00"}</span>
+                                        </h4>
+                                    </div>
                                 </div>
-                        </div>
-                    </div>
+                            </div>
+                        </notempty>
                     </for>
                 </div>
             </for>

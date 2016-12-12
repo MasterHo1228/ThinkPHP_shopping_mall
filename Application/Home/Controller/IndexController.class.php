@@ -16,12 +16,11 @@ class IndexController extends Controller
             $top3[$i]['gdescription'] = strip_tags($top3[$i]['gdescription']);
         }
 
-        $rowCount = count($list) / 3;
+        $rowCount = count($list) / 4;
         if ($rowCount < 1) {
             $rowCount = 1;
         }
 
-        dump($list);
         $this->assign('list', $list);
         $this->assign('rowCount', $rowCount);
         $this->assign('top3', $top3);
