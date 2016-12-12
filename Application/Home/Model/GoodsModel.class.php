@@ -17,6 +17,13 @@ class GoodsModel
         return $table->where($where)->order('gStatus DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->limit(30)->select();
     }
 
+    public function getTop3Goods()
+    {
+        $table = M('viewgoodsdetail');
+        $data = $table->where("gStatus='2'")->field('gID,gName,gPrice,gPhoto,gDescription')->limit(3)->select();
+        return $data;
+    }
+
     public function getDetailByID($id)
     {
         if (!empty($id)) {
