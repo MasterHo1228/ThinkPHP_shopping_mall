@@ -28,8 +28,14 @@
         </a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-        <li><a class="navbar-link glyphicon glyphicon-user" href="__CONTROLLER__/register.html">&nbsp;注册</a></li>
-        <li><a class="navbar-link glyphicon glyphicon-log-in" href="__CONTROLLER__/login.html">&nbsp;登录&nbsp;</a></li>
+        <notpresent name="Think.session.user">
+            <li><a class="navbar-link glyphicon glyphicon-user" href="__CONTROLLER__/register.html">&nbsp;注册</a></li>
+            <li><a class="navbar-link glyphicon glyphicon-log-in" href="__CONTROLLER__/login.html">&nbsp;登录&nbsp;</a></li>
+            <else/>
+            <li><a class="navbar-link glyphicon glyphicon-user" href="javascript:void(0)">&nbsp;{$Think.session.user.usrName}</a>
+            </li>
+            <li><a class="navbar-link glyphicon glyphicon-log-out" href="#" id="btnLogout">&nbsp;登出&nbsp;</a></li>
+        </notpresent>
     </ul>
 </div>
 
@@ -132,6 +138,23 @@
     </div>
 </div>
 
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="alertDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">提示</h4>
+            </div>
+            <div class="modal-body" id="alertDialogMain"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="btnReload">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <!--End-slider-script-->
 </body>
 
@@ -170,6 +193,30 @@
                 $('.events').append("<li>after event fired.</li>");
             }
         });
+
+        $("#btnLogout").click(function () {
+            $.getJSON("{:U('User/logout')}", function (data) {
+                if (data.resopnse == 'true') {
+                    $("#alertDialogMain").empty().append("登出成功！");
+                    $("#btnReload").prop('value', 'home');
+                    $("#alertDialog").modal('show')
+                }
+            });
+        });
+
+        $("#btnReload").click(function () {
+            switch ($(this).prop('value')) {
+                case 'reload':
+                    window.location.reload();
+                    break;
+                case 'login':
+                    window.location.href = "{:U('login')}";
+                    break;
+                case 'home':
+                    window.location.href = "{:U('index')}";
+                    break;
+            }
+        })
     });
 </script>
 </html>

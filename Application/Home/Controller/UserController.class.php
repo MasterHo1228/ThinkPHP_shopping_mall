@@ -59,4 +59,14 @@ class UserController extends Controller
             $this->ajaxReturn($data);
         }
     }
+
+    public function logout()
+    {
+        if (session('?user')) {
+            clearSession('user');
+            $data['resopnse'] = 'true';
+
+            $this->ajaxReturn($data);
+        }
+    }
 }
