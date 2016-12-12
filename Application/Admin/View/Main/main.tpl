@@ -87,9 +87,6 @@
                     </li>
                     {{if isset($smarty.session.admin)}}
                     <li>
-                        <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-bullhorn fa-fw"></i> 网站公告管理</a>
-                    </li>
-                    <li>
                         <a href="javascript:void(0)" target="mainIframe"><i class="fa fa-group fa-fw"></i> 账号管理 <span
                                     class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
