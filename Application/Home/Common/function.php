@@ -18,3 +18,16 @@ function isUserLogin()
         return false;
     }
 }
+
+/**
+ * 获取当前登录用户的ID
+ * @return bool|mixed
+ */
+function getUserID()
+{
+    if (session('?user')) {
+        return session('user.usrID');
+    } else {
+        return false;
+    }
+}

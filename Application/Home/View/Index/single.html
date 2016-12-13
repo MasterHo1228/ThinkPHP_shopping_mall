@@ -55,22 +55,23 @@
                             <div class="available">
                                 <ul>
                                     <li>数量
-                                        <select>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select id="goodsCount">
+                                            <option value="1" selected>1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
                                         </select>
                                     </li>
-                                    <div class="clearfix"></div>
                                 </ul>
+                                <div class="clearfix"></div>
                             </div>
                             <ul class="tag-men">
                                 <li><span>分类</span>
                                     <span class="women1">: {$data['goodstypename']}</span></li>
                             </ul>
-                            <a href="#" class="add-cart item_add">添加到购物车</a>
+                            <a id="btnAddToCart" class="add-cart item_add" style="cursor: pointer"
+                               data-value="{$goodsID}">添加到购物车</a>
 
                         </div>
                     </div>
@@ -135,7 +136,7 @@
             </div>
         </div>
     </div>
-    <br/>
+</div>
 <!--end-single-->
 <!--information-starts-->
 
@@ -147,11 +148,43 @@
 
 <script>
     // Can also be used with $(document).ready()
-    $(window).load(function () {
+    $(function () {
         $('.flexslider').flexslider({
             animation: "slide",
             controlNav: "thumbnails"
         });
+
+        $("#btnAddToCart").click(function () {
+            var goodsID = $(this).attr('data-value');
+            var goodsCount = $("#goodsCount").val();
+
+            if (goodsID != '' && goodsCount != '') {
+                $.ajax({
+                    url: "{:U('Order/addToCart')}",
+                    type: 'post',
+                    data: {
+                        goodsID: goodsID,
+                        goodsCount: goodsCount
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        switch (data.response) {
+                            case 'success':
+                                $("#alertDialogMain").empty().append("商品已成功添加到购物车！");
+                                break;
+                            case 'failed':
+                                $("#alertDialogMain").empty().append("抱歉，操作失败！");
+                                break;
+                            case 'noLogin':
+                                $("#btnReload").prop('value', 'login');
+                                $("#alertDialogMain").empty().append("您尚未登录，快去登录吧！");
+                                break;
+                        }
+
+                        $("#alertDialog").modal('show');
+                    }
+                });
+            }
+        })
     });
 </script>
-	
