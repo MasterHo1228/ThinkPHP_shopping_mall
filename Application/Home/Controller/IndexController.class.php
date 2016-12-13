@@ -64,6 +64,8 @@ class IndexController extends Controller
             $this->assign('data', $data);
             $top3 = $model->getTop3Goods();
             $this->assign('top3', $top3);
+            $latestList = $model->getLatestList();
+            $this->assign('latest', $latestList);
 
             layout('Layout/layout');
             $this->display();

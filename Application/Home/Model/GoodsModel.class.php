@@ -17,6 +17,13 @@ class GoodsModel
         return $table->where($where)->order('gStatus DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->limit(30)->select();
     }
 
+    public function getLatestList()
+    {
+        $table = M('viewgoodsdetail');
+        $where = "gStatus<>'0'";
+        return $table->where($where)->order('gPubTime DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->limit(30)->select();
+    }
+
     public function getTop3Goods()
     {
         $table = M('viewgoodsdetail');

@@ -96,56 +96,42 @@
                 </div>
                 <div class="latestproducts">
                     <div class="product-one">
-                        <foreach name="top3" item="topItem">
+                        <for start="0" end="3">
                             <div class="col-md-4 product-left p-left">
                                 <div class="product-main simpleCart_shelfItem">
-                                    <a href="__CONTROLLER__/single.html?goodsID={$topItem['gid']}" class="mask"><img
-                                            class="img-responsive zoom-img" src="{$topItem.gphoto}"
-                                            alt="{$topItem.gname}" width="350" height="350"/></a>
+                                    <a href="__CONTROLLER__/single.html?goodsID={$latest[$i]['gid']}" class="mask"><img
+                                            class="img-responsive zoom-img" src="{$latest[$i]['gphoto']}"
+                                            alt="{$latest[$i]['gname']}" width="350" height="350"/></a>
                                     <div class="product-bottom">
-                                        <h3>{$topItem.gname}</h3>
-                                        <p>近期热卖</p>
-                                        <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">￥ {$topItem.gprice|default="0.00"}</span>
+                                        <h3>{$latest[$i]['gname']}</h3>
+                                        <p>最新上架</p>
+                                        <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">￥ {$latest[$i]['gprice']|default="0.00"}</span>
                                         </h4>
                                     </div>
                                 </div>
                             </div>
-                        </foreach>
+                        </for>
                         <div class="clearfix"></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 single-right">
-                <div class="product-main simpleCart_shelfItem">
-                    <a href="single.html" class="mask"><img class="img-responsive zoom-img"
-                                                            src="__PUBLIC__/images/p-1.png" alt=""/></a>
-                    <div class="product-bottom">
-                        <h3>书名</h3>
-                        <p>简介</p>
-                        <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
+                <for start="0" end="2">
+                    <div class="product-main simpleCart_shelfItem">
+                        <a href="single.html?goodsID={$top3[$i]['gid']}" class="mask"><img
+                                class="img-responsive zoom-img" width="350" height="350" src="{$top3[$i]['gphoto']}"
+                                alt="{$top3[$i]['gname']}"/></a>
+                        <div class="product-bottom">
+                            <h3>{$top3[$i]['gname']}</h3>
+                            <p>近期热卖</p>
+                            <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">￥ {$top3[$i]['gprice']}</span>
+                            </h4>
+                        </div>
                     </div>
-                    <div class="srch">
-                        <span>-50%</span>
-                    </div>
-                </div>
-                <br/>
-                <br/>
-                <br/>
-
-
-                <div class="product-main simpleCart_shelfItem">
-                    <a href="single.html" class="mask"><img class="img-responsive zoom-img"
-                                                            src="__PUBLIC__/images/p-2.png" alt=""/></a>
-                    <div class="product-bottom">
-                        <h3>书名</h3>
-                        <p>简介</p>
-                        <h4><a class="item_add" href="#"><i></i></a> <span class=" item_price">$ 329</span></h4>
-                    </div>
-                    <div class="srch">
-                        <span>-50%</span>
-                    </div>
-                </div>
-
+                    <br/>
+                    <br/>
+                    <br/>
+                </for>
             </div>
         </div>
     </div>
