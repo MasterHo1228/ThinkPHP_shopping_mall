@@ -31,8 +31,13 @@ class IndexController extends Controller
 
     public function login()
     {
-        layout('Layout/layout');
-        $this->display();
+        if (isUserLogin()) {
+            $this->redirect('index');
+        } else {
+            $this->assign('isLoginPage', 'true');
+            layout('Layout/layout');
+            $this->display();
+        }
     }
 
     public function register()

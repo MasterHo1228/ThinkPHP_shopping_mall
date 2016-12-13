@@ -28,9 +28,12 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
         <notpresent name="Think.session.user">
-            <li><a class="navbar-link glyphicon glyphicon-user" href="__CONTROLLER__/register.html">&nbsp;注册</a></li>
-            <li><a class="navbar-link glyphicon glyphicon-log-in" href="#" data-toggle="modal"
-                   data-target="#loginDialog">&nbsp;登录&nbsp;</a></li>
+            <notpresent name="isLoginPage">
+                <li><a class="navbar-link glyphicon glyphicon-user" href="__CONTROLLER__/register.html">&nbsp;注册</a>
+                </li>
+                <li><a class="navbar-link glyphicon glyphicon-log-in" href="#" data-toggle="modal"
+                       data-target="#loginDialog">&nbsp;登录&nbsp;</a></li>
+            </notpresent>
             <else/>
             <li><a class="navbar-link glyphicon glyphicon-user" href="javascript:void(0)">&nbsp;{$Think.session.user.usrName}</a>
             </li>
