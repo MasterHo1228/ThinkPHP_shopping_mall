@@ -248,6 +248,7 @@
 
         $("#userListT").delegate('.btnEdit', 'click', function () {
             editUID = $(this).attr('data-value');
+            $("#editUserPasswd").val('');
             $.ajax({
                 url: "{{U('backyard/User/getCurrentInfo')}}",
                 type: 'get',
