@@ -48,17 +48,18 @@ CREATE TABLE IF NOT EXISTS users (
   uID       BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   uName     VARCHAR(25)                 NOT NULL UNIQUE,
   uPassword VARCHAR(32)                 NOT NULL,
+  uSalt     CHAR(4)                     NOT NULL,
   uGender   ENUM ('male', 'female')              DEFAULT 'male',
   uEmail    VARCHAR(30),
   uPhone    VARCHAR(20)
 );
 
 INSERT INTO users
-SET uName = '路人甲', uPassword = md5('123456.');
+SET uName = '路人甲', uPassword = md5('demo123456.'), uSalt = 'demo';
 INSERT INTO users
-SET uName = '路人乙', uPassword = md5('123456');
+SET uName = '路人乙', uPassword = md5('demo123456'), uSalt = 'demo';
 INSERT INTO users
-SET uName = '路人丙', uPassword = md5('123456+');
+SET uName = '路人丙', uPassword = md5('demo123456+'), uSalt = 'demo';
 
 CREATE TABLE IF NOT EXISTS goodsType (
   tID          INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,

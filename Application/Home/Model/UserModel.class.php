@@ -18,9 +18,10 @@ class UserModel extends Model
     {
         if (!empty($userName) && !empty($password)) {
             $where['uName'] = $userName;
+            $tmpSalt = $this->where($where)->getField('uSalt');
             $tmpPassword = $this->where($where)->getField('uPassword');
 
-            if (md5($password) == $tmpPassword) {
+            if (md5($tmpSalt . $password) == $tmpPassword) {
                 $userID = $this->where($where)->getField('uID');
                 session('user.usrID', $userID);
                 session('user.usrName', $userName);
@@ -37,7 +38,9 @@ class UserModel extends Model
     {
         if (!empty($userName) && !empty($password)) {
             $data['uName'] = $userName;
-            $data['uPassword'] = md5($password);
+            $salt = generatePasswordSalt();
+            $data['uSalt'] = $salt;
+            $data['uPassword'] = md5($salt . $password);
             $data['uGender'] = $gender;
             $data['uEmail'] = $email;
             $data['uPhone'] = $phone;

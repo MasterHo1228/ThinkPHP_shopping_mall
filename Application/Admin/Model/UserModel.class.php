@@ -61,7 +61,9 @@ class UserModel extends Model
             $data['uEmail'] = $email;
             $data['uPhone'] = $phone;
             if (!empty($password)) {
-                $data['uPassword'] = md5($password);
+                $salt = generatePasswordSalt();
+                $data['uSalt'] = $salt;
+                $data['uPassword'] = md5($salt . $password);
             }
             return $this->where('uID=' . $id)->save($data);
         } else {
