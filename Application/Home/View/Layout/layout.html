@@ -29,7 +29,8 @@
     <ul class="nav navbar-nav navbar-right">
         <notpresent name="Think.session.user">
             <li><a class="navbar-link glyphicon glyphicon-user" href="__CONTROLLER__/register.html">&nbsp;注册</a></li>
-            <li><a class="navbar-link glyphicon glyphicon-log-in" href="__CONTROLLER__/login.html">&nbsp;登录&nbsp;</a></li>
+            <li><a class="navbar-link glyphicon glyphicon-log-in" href="#" data-toggle="modal"
+                   data-target="#loginDialog">&nbsp;登录&nbsp;</a></li>
             <else/>
             <li><a class="navbar-link glyphicon glyphicon-user" href="javascript:void(0)">&nbsp;{$Think.session.user.usrName}</a>
             </li>
@@ -137,17 +138,43 @@
     </div>
 </div>
 
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="alertDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="loginDialog" tabindex="-1" role="dialog" aria-labelledby="loginDialogTitle"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="loginDialogTitle">登录</h4>
+            </div>
+            <div class="modal-body" id="loginDialogMain">
+                <div class="form-group">
+                    <label for="loginUsrName">用户名</label>
+                    <input type="text" class="form-control" name="loginUsrName" id="loginUsrName" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                    <label for="loginUsrPasswd">密码</label>
+                    <input type="password" class="form-control" name="loginUsrPasswd" id="loginUsrPasswd"
+                           placeholder="密码">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success" id="btnToLogin">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="alertDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">提示</h4>
             </div>
             <div class="modal-body" id="alertDialogMain"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" id="btnReload">确定</button>
             </div>
         </div><!-- /.modal-content -->
@@ -193,6 +220,35 @@
             }
         });
 
+        $("#btnToLogin").click(function () {
+            var usrName = $("#loginUsrName").val();
+            var usrPasswd = $("#loginUsrPasswd").val();
+
+            if (usrName != '' && usrPasswd != '') {
+                $.ajax({
+                    url: "{:U('User/login')}",
+                    type: 'post',
+                    data: {
+                        usrName: usrName,
+                        usrPasswd: usrPasswd
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            $("#loginDialog").modal('hide');
+                            $("#alertDialogMain").empty().append("登录成功！");
+                            $("#btnReload").prop('value', 'reload');
+                        } else {
+                            $("#alertDialogMain").empty().append("用户名或密码错误！");
+                        }
+                    }
+                });
+            } else {
+                $("#alertDialogMain").empty().append("请输入用户名和密码！");
+            }
+            $("#alertDialog").modal('show');
+        });
+
         $("#btnLogout").click(function () {
             $.getJSON("{:U('User/logout')}", function (data) {
                 if (data.resopnse == 'true') {
@@ -209,12 +265,15 @@
                     window.location.reload();
                     break;
                 case 'login':
-                    window.location.href = "{:U('login')}";
+                    $("#loginDialog").modal('show');
                     break;
                 case 'home':
                     window.location.href = "{:U('index')}";
                     break;
             }
+
+            $("#alertDialog").modal('hide');
+            $(this).prop('value', '');
         })
     });
 </script>

@@ -35,12 +35,6 @@ class IndexController extends Controller
         $this->display();
     }
 
-    public function login()
-    {
-        layout('Layout/layout');
-        $this->display();
-    }
-
     public function single()
     {
         $goodsID = I('get.goodsID/d');
