@@ -28,14 +28,16 @@
         <div class="about-top grid-1">
             <foreach name="top3" item="topItem">
                 <div class="col-md-4 about-left">
-                    <figure class="effect-bubba">
-                        <img class="img-responsive" src="{$topItem.gphoto}" alt="{$topItem.gname}"/>
-                        <figcaption>
-                            <h2>{$topItem.gname}</h2>
-                            <p>{$topItem.gdescription}</p>
-                            <p>￥{$topItem.gprice|default="0.00"}</p>
-                        </figcaption>
-                    </figure>
+                    <a href="__CONTROLLER__/single.html?goodsID={$topItem.gid}">
+                        <figure class="effect-bubba">
+                            <img class="img-responsive" src="{$topItem.gphoto}" alt="{$topItem.gname}"/>
+                            <figcaption>
+                                <h2>{$topItem.gname}</h2>
+                                <p>{$topItem.gdescription}</p>
+                                <p>￥{$topItem.gprice|default="0.00"}</p>
+                            </figcaption>
+                        </figure>
+                    </a>
                 </div>
             </foreach>
             <div class="clearfix"></div>
