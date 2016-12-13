@@ -20,6 +20,12 @@
     <!-- DataTables Responsive CSS -->
     <link href="__PUBLIC__/css/responsive.bootstrap.min.css" rel="stylesheet">
 
+    <style type="text/css">
+        .tableBtns {
+            cursor: pointer;
+        }
+    </style>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -217,10 +223,10 @@
                             "<td>" + item.gcount + "</td>" +
                             "<td>" + "已下架" + "</td>" +
                             "<td>" +
-                            "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                            "<a class='btnEdit' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
-                            "<a class='btnReturn' title='重上架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#returnGWindow'><i class='fa fa-check fa-fw'></i></a>" +
-                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "<a class='btnInfo tableBtns' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
+                            "<a class='btnEdit tableBtns' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnReturn tableBtns' title='重上架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#returnGWindow'><i class='fa fa-check fa-fw'></i></a>" +
+                            "<a class='btnDel tableBtns' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
                             "</tr>";
                         break;
@@ -234,11 +240,11 @@
                             "<td>" + item.gcount + "</td>" +
                             "<td>" + "正常" + "</td>" +
                             "<td>" +
-                            "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                            "<a class='btnEdit' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
-                            "<a class='btnRankTop' title='商品置顶显示' data-value='" + item.gid + "' data-toggle='modal' data-target='#topGWindow'><i class='fa fa-arrow-up fa-fw'></i></a>" +
-                            "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
-                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "<a class='btnInfo tableBtns' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
+                            "<a class='btnEdit tableBtns' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnRankTop tableBtns' title='商品置顶显示' data-value='" + item.gid + "' data-toggle='modal' data-target='#topGWindow'><i class='fa fa-arrow-up fa-fw'></i></a>" +
+                            "<a class='btnShutdown tableBtns' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
+                            "<a class='btnDel tableBtns' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
                             "</tr>";
                         break;
@@ -252,11 +258,11 @@
                             "<td>" + item.gcount + "</td>" +
                             "<td>" + "置顶" + "</td>" +
                             "<td>" +
-                            "<a class='btnInfo' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
-                            "<a class='btnEdit' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
-                            "<a class='btnRankDown' title='取消置顶' data-value='" + item.gid + "' data-toggle='modal' data-target='#downGWindow'><i class='fa fa-arrow-down fa-fw'></i></a>" +
-                            "<a class='btnShutdown' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
-                            "<a class='btnDel' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
+                            "<a class='btnInfo tableBtns' title='查看详细信息' data-value='" + item.gid + "'><i class='fa fa-search fa-fw'></i></a>" +
+                            "<a class='btnEdit tableBtns' title='编辑商品信息' href='{{U('backyard/Iframe/editGoods')}}?goodsID=" + item.gid + "'><i class='fa fa-edit fa-fw'></i></a>" +
+                            "<a class='btnRankDown tableBtns' title='取消置顶' data-value='" + item.gid + "' data-toggle='modal' data-target='#downGWindow'><i class='fa fa-arrow-down fa-fw'></i></a>" +
+                            "<a class='btnShutdown tableBtns' title='下架商品'  data-value='" + item.gid + "' data-toggle='modal' data-target='#shutdownGWindow'><i class='fa fa-close fa-fw'></i></a>" +
+                            "<a class='btnDel tableBtns' title='删除商品' data-value='" + item.gid + "' data-toggle='modal' data-target='#alertDelGWindow'><i class='fa fa-trash fa-fw'></i></a>" +
                             "</td>" +
                             "</tr>";
                         break;
