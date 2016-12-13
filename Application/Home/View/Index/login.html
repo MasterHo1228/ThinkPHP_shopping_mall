@@ -1,0 +1,77 @@
+<!--bottom-header-->
+<!--start-breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li><a href="__CONTROLLER__/index.html">主页</a></li>
+                <li class="active">登陆页面</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!--end-breadcrumbs-->
+<!--register-starts-->
+<div class="login">
+    <div class="container">
+        <div class="register-main">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4 account-left"
+                 style="width:390px;height:280px; background-color:#2e2e2e; color:#FFF; margin-bottom:50px;">
+                <center>
+                    <div class="text">
+                        <h2><strong>用户登陆</strong></h2>
+                    </div>
+                    <br/>
+                    <input id="usrName" placeholder="用户名" type="text" style="background-color:#fff;" required>
+                    <input id="usrPasswd" placeholder="密码" type="password" style="background-color:#fff;" required>
+
+                    <div class="address submit ">
+                        <input type="button" id="pageBtnToLogin" value="登录">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; <a href="__CONTROLLER__/register.html" style="color:#FFF;">还没账号？点击注册-></a>
+                    </div>
+                </center>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <br>
+    </div>
+</div>
+<!--register-end-->
+<!--information-starts-->
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script language="JavaScript">
+    $(function () {
+        $("#pageBtnToLogin").click(function () {
+            var usrName = $("#usrName").val();
+            var usrPasswd = $("#usrPasswd").val();
+
+            if (usrName != '' && usrPasswd != '') {
+                $.ajax({
+                    url: "{:U('User/login')}",
+                    type: 'post',
+                    data: {
+                        usrName: usrName,
+                        usrPasswd: usrPasswd
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        if (data == 'true') {
+                            window.location.href = "{:U('index')}";
+                        } else {
+                            alert('用户名或密码错误！');
+                        }
+                    }
+                })
+            } else {
+                alert('请输入用户名和密码！');
+            }
+        });
+    })
+</script>
