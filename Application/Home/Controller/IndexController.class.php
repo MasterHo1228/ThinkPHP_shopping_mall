@@ -71,4 +71,10 @@ class IndexController extends Controller
             $this->error('非法操作！', U('index'));
         }
     }
+
+    public function cart()
+    {
+        layout('Layout/layout');
+        $this->display();
+    }
 }
