@@ -34,7 +34,7 @@ class IndexController extends Controller
         if (isUserLogin()) {
             $this->redirect('index');
         } else {
-            $this->assign('isLoginPage', 'true');
+            $this->assign('isAccountPage', 'true');
             layout('Layout/layout');
             $this->display();
         }
@@ -42,8 +42,13 @@ class IndexController extends Controller
 
     public function register()
     {
-        layout('Layout/layout');
-        $this->display();
+        if (isUserLogin()) {
+            $this->redirect('index');
+        } else {
+            $this->assign('isAccountPage', 'true');
+            layout('Layout/layout');
+            $this->display();
+        }
     }
 
     public function single()
