@@ -77,15 +77,19 @@ class IndexController extends Controller
 
     public function cart()
     {
-        $userID = getUserID();
-        $model = new \Home\Model\OrderModel();
+        if (isUserLogin()) {
+            $userID = getUserID();
+            $model = new \Home\Model\OrderModel();
 
-        $data = $model->getUserCartByID($userID);
-        if ($data) {
-            $this->assign('data', $data);
+            $data = $model->getUserCartByID($userID);
+            if ($data) {
+                $this->assign('data', $data);
+            }
+
+            layout('Layout/layout');
+            $this->display();
+        } else {
+            $this->error('非法操作！', U('index'));
         }
-
-        layout('Layout/layout');
-        $this->display();
     }
 }

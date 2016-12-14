@@ -45,4 +45,17 @@ class OrderModel
         }
     }
 
+    public function removeCartGoodsByGID($userID, $goodsID)
+    {
+        if (!empty($userID) && !empty($goodsID)) {
+            $where['userID'] = $userID;
+            $where['goodsID'] = $goodsID;
+
+            $model = M('UserCart');
+            return $model->where($where)->delete();
+        } else {
+            return false;
+        }
+    }
+
 }

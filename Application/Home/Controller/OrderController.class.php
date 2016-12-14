@@ -14,14 +14,10 @@ class OrderController extends Controller
 {
     public function addToCart()
     {
-        if (isUserLogin()) {
+        if (isUserLogin() && IS_AJAX && IS_POST) {
             $userID = getUserID();
             $goodsID = I('post.goodsID/d');
             $goodsCount = I('post.goodsCount/d');
-
-            $data['userID'] = $userID;
-            $data['goodsID'] = $goodsID;
-            $data['goodsCount'] = $goodsCount;
 
             $model = new \Home\Model\OrderModel();
             if ($model->goodsToUserCart($userID, $goodsID, $goodsCount)) {
@@ -33,5 +29,23 @@ class OrderController extends Controller
             $data['response'] = 'noLogin';
         }
         $this->ajaxReturn($data);
+    }
+
+    public function dropCartGoods()
+    {
+        if (isUserLogin() && IS_AJAX && IS_POST) {
+            $userID = getUserID();
+            $goodsID = I('post.goodsID/d');
+
+            $data['goodsID'] = $goodsID;
+
+            $model = new \Home\Model\OrderModel();
+            if ($model->removeCartGoodsByGID($userID, $goodsID)) {
+                $data['response'] = 'success';
+            } else {
+                $data['response'] = 'failed';
+            }
+            $this->ajaxReturn($data);
+        }
     }
 }

@@ -69,7 +69,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <foreach name="data" item="v">
+                                <empty name="data">
+                                    <tr>
+                                        <td colspan="5" style="text-align: center">噢......购物车空空如也~~</td>
+                                    </tr>
+                                    <else/>
+                                    <foreach name="data" item="v">
                                     <tr>
                                         <td>
                                             <div class="col-md-4"></div>
@@ -86,7 +91,8 @@
                                         <td><input class="btnDelCartGoods" type="button" value="删除"
                                                    data-value="{$v.goodsid}"/></td>
                                     </tr>
-                                </foreach>
+                                    </foreach>
+                                </empty>
                                 </tbody>
                             </table>
                         </div>
@@ -98,3 +104,59 @@
     </div>
     <!--end-ckeckout-->
     <!--information-starts-->
+</div>
+
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="delCartGoodsDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">删除购物车商品</h4>
+            </div>
+            <div class="modal-body">确定要删除该商品了吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="btnToDelCartGoods">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- jQuery -->
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script language="JavaScript">
+    var goodsID;
+    $(function () {
+        $(".btnDelCartGoods").click(function () {
+            goodsID = $(this).attr('data-value');
+            $("#delCartGoodsDialog").modal('show');
+        });
+
+        $("#btnToDelCartGoods").click(function () {
+            if (goodsID != '') {
+                $.ajax({
+                    url: "{:U('Order/dropCartGoods')}",
+                    type: 'post',
+                    data: {
+                        goodsID: goodsID
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#delCartGoodsDialog").modal('hide');
+                        switch (data.response) {
+                            case 'success':
+                                $("#btnReload").prop('value', 'reload');
+                                $("#alertDialogMain").empty().append("删除成功！");
+                                break;
+                            case 'failed':
+                                $("#alertDialogMain").empty().append("抱歉，操作失败！");
+                                break;
+                        }
+
+                        $("#alertDialog").modal('show');
+                    }
+                })
+            }
+        });
+    })
+</script>
