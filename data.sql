@@ -174,3 +174,17 @@ CREATE VIEW viewOrderGoodsInfo AS
     order_list_item a,
     goods b
   WHERE a.orderGID = b.gID;
+
+CREATE VIEW viewUserCart AS
+  SELECT
+    a.userID,
+    a.goodsID,
+    b.gName  AS 'goodsName',
+    b.gPrice AS 'goodsPrice',
+    b.gPhoto AS 'goodsPhoto',
+    a.goodsCount
+  FROM
+    user_cart a,
+    goods b
+  WHERE
+    a.goodsID = b.gID;

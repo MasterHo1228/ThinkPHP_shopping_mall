@@ -23,7 +23,7 @@ class OrderController extends Controller
             $data['goodsID'] = $goodsID;
             $data['goodsCount'] = $goodsCount;
 
-            $model = new \Home\Model\OrderController();
+            $model = new \Home\Model\OrderModel();
             if ($model->goodsToUserCart($userID, $goodsID, $goodsCount)) {
                 $data['response'] = 'success';
             } else {

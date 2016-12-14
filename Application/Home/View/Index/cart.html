@@ -69,20 +69,24 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="col-md-4"></div>
-                                        <div href="single.html" class="thumbnail col-md-4"><img
-                                                src="__PUBLIC__/images/c-1.jpg" class="img-responsive" alt=""></div>
-                                        <div class="col-md-4"></div>
-                                    </td>
-                                    <td>Bangalore</td>
-                                    <td>Tanmay</td>
-                                    <td><input style="width:160px;" type="number" class="form-control" id="goodsCount"
-                                               name="goodsCount" placeholder="数量"></td>
-                                    <td><input type="button" value="删除"/></td>
-                                </tr>
-
+                                <foreach name="data" item="v">
+                                    <tr>
+                                        <td>
+                                            <div class="col-md-4"></div>
+                                            <a href="__CONTROLLER__/single.html?goodsID={$v.goodsid}" target="_blank"
+                                               class="thumbnail col-md-4"><img src="{$v.goodsphoto}"
+                                                                               class="img-responsive" alt=""></a>
+                                            <div class="col-md-4"></div>
+                                        </td>
+                                        <td>{$v.goodsname}</td>
+                                        <td>￥ {$v.goodsprice}</td>
+                                        <td><input style="width:160px;" type="number" class="form-control"
+                                                   id="goodsCount" name="goodsCount" placeholder="数量"
+                                                   value="{$v.goodscount}"></td>
+                                        <td><input class="btnDelCartGoods" type="button" value="删除"
+                                                   data-value="{$v.goodsid}"/></td>
+                                    </tr>
+                                </foreach>
                                 </tbody>
                             </table>
                         </div>

@@ -8,7 +8,7 @@
 
 namespace Home\Model;
 
-class OrderController
+class OrderModel
 {
     public function goodsToUserCart($userID, $goodsID, $goodsCount)
     {
@@ -38,8 +38,8 @@ class OrderController
     public function getUserCartByID($id)
     {
         if (!empty($id)) {
-            $model = M('UserCart');
-            return $model->where('userID=' . $id)->select();
+            $model = M('viewusercart');
+            return $model->where('userID=' . $id)->field('goodsID,goodsName,goodsPrice,goodsPhoto,goodsCount')->select();
         } else {
             return false;
         }

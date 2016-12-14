@@ -2,6 +2,7 @@
 namespace Home\Controller;
 
 use Home\Model\GoodsModel;
+use Home\Model\OrderController;
 use Think\Controller;
 
 class IndexController extends Controller
@@ -76,6 +77,14 @@ class IndexController extends Controller
 
     public function cart()
     {
+        $userID = getUserID();
+        $model = new \Home\Model\OrderModel();
+
+        $data = $model->getUserCartByID($userID);
+        if ($data) {
+            $this->assign('data', $data);
+        }
+
         layout('Layout/layout');
         $this->display();
     }
