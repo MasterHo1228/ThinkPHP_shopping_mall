@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS goodsType (
   tDescription TEXT
 );
 
-INSERT INTO goodsType (tName) VALUES ('外国'), ('科幻'), ('侦探'), ('恐怖'), ('历史'), ('周边物品'), ('其他');
+INSERT INTO goodsType (tID, tName) VALUES (1, '外国'), (2, '科幻'), (3, '侦探'), (4, '恐怖'), (5, '历史'), (6, '周边物品'), (7, '其他');
 
 CREATE TABLE IF NOT EXISTS goods (
   gID          BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,

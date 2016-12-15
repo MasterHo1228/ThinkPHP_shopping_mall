@@ -46,4 +46,16 @@ class GoodsModel
             return false;
         }
     }
+
+    public function getListByGoodsType($type)
+    {
+        if (!empty($type)) {
+            $table = M('viewgoodsdetail');
+            $where = "gType='$type' AND gStatus<>'0'";
+
+            return $table->where($where)->order('gStatus DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->select();
+        } else {
+            return false;
+        }
+    }
 }

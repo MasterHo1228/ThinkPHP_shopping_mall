@@ -52,6 +52,31 @@ class IndexController extends Controller
         }
     }
 
+    public function products()
+    {
+        if (IS_GET && I('get.type') != null) {
+            $goodsType = I('get.type/s');
+            $model = new \Home\Model\GoodsModel();
+            $list = $model->getListByGoodsType($goodsType);
+
+            $rowCount = count($list) / 4;
+            if ($rowCount < 1) {
+                $rowCount = 1;
+            }
+
+            $thisTypeName = M('goodstype')->where("tID='$goodsType'")->getField('tName');
+
+            $this->assign('list', $list);
+            $this->assign('typeName', $thisTypeName);
+            $this->assign('rowCount', $rowCount);
+
+            layout('Layout/layout');
+            $this->display();
+        } else {
+            $this->error('非法操作！', U('index'));
+        }
+    }
+
     public function single()
     {
         $goodsID = I('get.goodsID/d');
