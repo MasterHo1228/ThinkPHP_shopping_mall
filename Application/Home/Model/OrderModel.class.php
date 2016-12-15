@@ -52,7 +52,12 @@ class OrderModel
             $where['userID'] = $userID;
             $where['goodsID'] = $goodsID;
 
-            return $model->where($where)->setField('goodsCount', $goodsCount);
+            $nowGoodsCount = M('goods')->where('gID=' . $goodsID)->getField('gCount');
+            if ($nowGoodsCount >= $goodsCount) {
+                return $model->where($where)->setField('goodsCount', $goodsCount);
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

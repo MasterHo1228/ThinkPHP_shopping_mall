@@ -21,42 +21,6 @@
             <div class="cart-items">
                 <div class="in-check">
                     <div class="header-bottom ">
-                        <!--<div class="container">
-                            <div class="header">
-                                <div class="col-md-12">
-                                    <div class="top-nav">
-                                        <ol class="nav nav-pills nav-justified">
-                                            <li class="grid"><a href="__CONTROLLER__/index.html" style="color:#000;">商品</a></li>
-                                            <li class="grid"><a  style="color:#000;">商品名</a></li>
-                                            <li class="grid"><a  style="color:#000;">价格</a></li>
-                                            <li class="grid"><a  style="color:#000;">快递</a></li>
-                                            <li class="grid"><a  style="color:#000;">数量</a></li>
-                                            <li class="grid"><a  style="color:#000;">编辑</a></li>
-                                        </ol>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>-->
-
-
-                        <!-- <ul class="cart-header">
-
-                             <li style="width:200px;" class="ring-in"><a href="single.html"><img src="__PUBLIC__/images/c-1.jpg" class="img-responsive" alt=""></a>
-                             </li>
-                             <li style="width:200px;"><span >商品</span></li>
-                             <li style="width:180px;"><span >$ 290.00</span></li>
-                             <li style="width:180px;"><span>顺丰</span></li>
-                             <li style="width:180px; height:53.8px; margin-top:30px;"><input style="width:160px;" type="number" class="form-control" id="goodsCount" name="goodsCount" placeholder="数量" required></li>
-                             <li style="width:130px;margin-top:33px;"><input type="button" value="删除" /></li>
-                             <div class="clearfix"></div>
-
-
-
-                         </ul>-->
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
@@ -90,7 +54,10 @@
                                                        class="form-control goodsCount" name="goodsCount"
                                                        placeholder="数量"
                                                        value="{$v.goodscount}" data-value="{$v.goodsid}" min="1" max="5"
-                                                       required></td>
+                                                       required>
+                                                <input type="hidden" class="currentGoodsCount" value="{$v.goodscount}"
+                                                       data-value="{$v.goodsid}">
+                                            </td>
                                             <td><input class="btnDelCartGoods" type="button" value="删除"
                                                        data-value="{$v.goodsid}"/></td>
                                         </tr>
@@ -169,6 +136,10 @@
                     function (data) {
                         if (data.response == 'failed') {
                             console.log('Change goods count failed!   goodsID:' + goodsID);
+                            var currentCount = $(".currentGoodsCount[data-value=" + goodsID + "]").val();
+                            $(".goodsCount[data-value=" + goodsID + "]").val(currentCount);
+                        } else {
+                            $(".currentGoodsCount[data-value=" + goodsID + "]").val(goodsCount);
                         }
                     }, 'json');
             }
