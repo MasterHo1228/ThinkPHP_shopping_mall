@@ -1,0 +1,51 @@
+<!--bottom-header-->
+<!--start-breadcrumbs-->
+<div class="breadcrumbs">
+    <div class="container">
+        <div class="breadcrumbs-main">
+            <ol class="breadcrumb">
+                <li><a href="index.html">首页</a></li>
+                <li class="active">搜索结果</li>
+                <li class="active">{$Think.get.searchKey}</li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!--end-breadcrumbs-->
+<!--prdt-starts-->
+<div class="prdt">
+    <div class="container">
+        <div class="prdt-top">
+            <div class="col-md-12 prdt-left">
+                <for start="0" end="$rowCount" name="row">
+                    <div class="product-one">
+                        <for start="0" end="4">
+                            <assign name="goodsID" value="$list[$i+($row*4)]['gid']"/>
+                            <notempty name="goodsID">
+                                <div class="col-md-3 product-left p-left">
+                                    <div class="product-main simpleCart_shelfItem">
+                                        <a href="__CONTROLLER__/single.html?goodsID={$goodsID}" class="mask"><img
+                                                class="img-responsive zoom-img" width="230"
+                                                height="230"
+                                                src="{$list[$i+($row*4)]['gphoto']}"
+                                                alt="{$list[$i+($row*4)]['gname']}"/></a>
+                                        <div class="product-bottom">
+                                            <h3>{$list[$i+($row*4)]['gname']}</h3>
+                                            <h4><span class=" item_price">￥ {$list[$i+($row*4)]['gprice']|default="0.00"}</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </notempty>
+                        </for>
+                        <div class="clearfix"></div>
+                    </div>
+                </for>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <!--product-end-->
+        <!--information-starts-->
+    </div>
+</div>

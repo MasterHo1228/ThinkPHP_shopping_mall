@@ -77,6 +77,23 @@ class IndexController extends Controller
         }
     }
 
+    public function search()
+    {
+        $searchKey = I('get.searchKey/s');
+
+        $model = new \Home\Model\GoodsModel();
+        $list = $model->getListBySearchKey($searchKey);
+        $rowCount = count($list) / 4;
+        if ($rowCount < 1) {
+            $rowCount = 1;
+        }
+
+        $this->assign('list', $list);
+        $this->assign('rowCount', $rowCount);
+        layout('Layout/layout');
+        $this->display();
+    }
+
     public function single()
     {
         $goodsID = I('get.goodsID/d');
