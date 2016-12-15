@@ -148,20 +148,19 @@ CREATE VIEW viewGoodsDetail AS
 
 CREATE VIEW viewOrderInfo AS
   SELECT
-    a.orderID,
-    a.orderSumPrice,
-    a.orderCName,
-    a.orderAddress,
-    a.orderPhone,
-    b.eName AS 'expressName',
-    a.expressNum,
-    a.orderPaid,
-    a.orderPaidBy,
-    a.orderStatus
+    orderID,
+    orderSumPrice,
+    orderCName,
+    orderAddress,
+    orderPhone,
+    express_list.eName AS 'expressName',
+    expressNum,
+    orderPaid,
+    orderPaidBy,
+    orderStatus
   FROM
-    order_list a,
-    express_list b
-  WHERE a.expressID = b.eID;
+    order_list
+    LEFT JOIN express_list ON order_list.expressID = express_list.eID;
 
 CREATE VIEW viewOrderGoodsInfo AS
   SELECT
