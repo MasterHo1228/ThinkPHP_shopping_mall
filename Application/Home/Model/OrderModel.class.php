@@ -45,6 +45,19 @@ class OrderModel
         }
     }
 
+    public function changeUserCartGoodsCount($userID, $goodsID, $goodsCount)
+    {
+        if (!empty($userID) && !empty($goodsID)) {
+            $model = M('UserCart');
+            $where['userID'] = $userID;
+            $where['goodsID'] = $goodsID;
+
+            return $model->where($where)->setField('goodsCount', $goodsCount);
+        } else {
+            return false;
+        }
+    }
+
     public function removeCartGoodsByGID($userID, $goodsID)
     {
         if (!empty($userID) && !empty($goodsID)) {

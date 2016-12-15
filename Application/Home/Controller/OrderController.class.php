@@ -31,6 +31,23 @@ class OrderController extends Controller
         $this->ajaxReturn($data);
     }
 
+    public function changeGoodsCount()
+    {
+        if (isUserLogin() && IS_AJAX && IS_POST) {
+            $userID = getUserID();
+            $goodsID = I('post.goodsID/d');
+            $goodsCount = I('post.goodsCount/d');
+
+            $model = new \Home\Model\OrderModel();
+            if (!$model->changeUserCartGoodsCount($userID, $goodsID, $goodsCount)) {
+                $data['response'] = 'failed';
+            } else {
+                $data['response'] = 'success';
+            }
+            $this->ajaxReturn($data);
+        }
+    }
+
     public function dropCartGoods()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
