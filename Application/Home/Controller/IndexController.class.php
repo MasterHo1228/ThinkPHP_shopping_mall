@@ -2,14 +2,14 @@
 namespace Home\Controller;
 
 use Home\Model\GoodsModel;
-use Home\Model\OrderController;
+use Home\Model\OrderModel;
 use Think\Controller;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        $model = new \Home\Model\GoodsModel();
+        $model = new GoodsModel();
         $list = $model->getIndexList();
         $top3 = $model->getTop3Goods();
 
@@ -58,7 +58,7 @@ class IndexController extends Controller
     {
         if (IS_GET && I('get.type') != null) {
             $goodsType = I('get.type/s');
-            $model = new \Home\Model\GoodsModel();
+            $model = new GoodsModel();
             $list = $model->getListByGoodsType($goodsType);
 
             $rowCount = count($list) / 4;
@@ -83,7 +83,7 @@ class IndexController extends Controller
     {
         $searchKey = I('get.searchKey/s');
 
-        $model = new \Home\Model\GoodsModel();
+        $model = new GoodsModel();
         $list = $model->getListBySearchKey($searchKey);
         $rowCount = count($list) / 4;
         if ($rowCount < 1) {
@@ -123,7 +123,7 @@ class IndexController extends Controller
     {
         if (isUserLogin()) {
             $userID = getUserID();
-            $model = new \Home\Model\OrderModel();
+            $model = new OrderModel();
 
             $data = $model->getUserCartByID($userID);
             if ($data) {

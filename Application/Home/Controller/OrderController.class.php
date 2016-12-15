@@ -8,6 +8,7 @@
 
 namespace Home\Controller;
 
+use Home\Model\OrderModel;
 use Think\Controller;
 
 class OrderController extends Controller
@@ -19,7 +20,7 @@ class OrderController extends Controller
             $goodsID = I('post.goodsID/d');
             $goodsCount = I('post.goodsCount/d');
 
-            $model = new \Home\Model\OrderModel();
+            $model = new OrderModel();
             if ($model->goodsToUserCart($userID, $goodsID, $goodsCount)) {
                 $data['response'] = 'success';
             } else {
@@ -38,7 +39,7 @@ class OrderController extends Controller
             $goodsID = I('post.goodsID/d');
             $goodsCount = I('post.goodsCount/d');
 
-            $model = new \Home\Model\OrderModel();
+            $model = new OrderModel();
             if (!$model->changeUserCartGoodsCount($userID, $goodsID, $goodsCount)) {
                 $data['response'] = 'failed';
             } else {
@@ -54,7 +55,7 @@ class OrderController extends Controller
             $userID = getUserID();
             $goodsID = I('post.goodsID/d');
 
-            $model = new \Home\Model\OrderModel();
+            $model = new OrderModel();
             if ($model->removeCartGoodsByGID($userID, $goodsID)) {
                 $data['response'] = 'success';
             } else {
@@ -69,7 +70,7 @@ class OrderController extends Controller
         if (isUserLogin() && IS_AJAX) {
             $userID = getUserID();
 
-            $model = new \Home\Model\OrderModel();
+            $model = new OrderModel();
             if ($model->clearUserCart($userID)) {
                 $data['response'] = 'success';
             } else {
