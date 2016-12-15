@@ -54,3 +54,13 @@ function generatePasswordSalt()
 
     return $output;
 }
+
+function generateOrderNum()
+{
+    $prefix = "MG";
+    $nowTime = date("YmdHis", time());
+    $randNum = rand(100000, 999999);
+
+    $orderNum = $prefix . $nowTime . $randNum;
+    return $orderNum;
+}
