@@ -36,6 +36,7 @@ class IndexController extends Controller
             $this->redirect('index');
         } else {
             $this->assign('isAccountPage', 'true');
+            $this->assign('noNavTab', 'true');
             layout('Layout/layout');
             $this->display();
         }
@@ -47,6 +48,7 @@ class IndexController extends Controller
             $this->redirect('index');
         } else {
             $this->assign('isAccountPage', 'true');
+            $this->assign('noNavTab', 'true');
             layout('Layout/layout');
             $this->display();
         }
@@ -128,6 +130,7 @@ class IndexController extends Controller
                 $this->assign('data', $data);
             }
 
+            $this->assign('noNavTab', 'true');
             layout('Layout/layout');
             $this->display();
         } else {
