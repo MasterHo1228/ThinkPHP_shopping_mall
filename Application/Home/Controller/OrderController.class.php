@@ -79,4 +79,23 @@ class OrderController extends Controller
             $this->ajaxReturn($data);
         }
     }
+
+    public function placeOrder()
+    {
+        if (isUserLogin() && IS_AJAX && IS_POST) {
+            $userID = getUserID();
+            $orderCName = I('post.orderCName/s');
+            $orderPhone = I('post.orderPhone/s');
+            $orderAddress = I('post.orderAddress/s');
+            $orderSumPrice = I('post.orderSumPrice/f');
+
+            $model = new OrderModel();
+            if ($model->placeUserOrder($userID, $orderSumPrice, $orderCName, $orderPhone, $orderAddress)) {
+                $data['response'] = 'success';
+            } else {
+                $data['response'] = 'failed';
+            }
+            $this->ajaxReturn($data);
+        }
+    }
 }

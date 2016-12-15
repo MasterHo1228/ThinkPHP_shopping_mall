@@ -137,4 +137,34 @@ class IndexController extends Controller
             $this->error('非法操作！', U('index'));
         }
     }
+
+    public function makeOrder()
+    {
+        if (isUserLogin()) {
+            $userID = getUserID();
+            $model = new OrderModel();
+
+            $data = $model->getUserCartByID($userID);
+            if (!$data) {
+                $this->error('操作失败！');
+                die();
+            }
+
+            $sumPrice = 0;
+            for ($i = 0; $i < count($data); $i++) {
+                $count = $data[$i]['goodscount'];
+                $price = $data[$i]['goodsprice'];
+
+                $sumPrice += $price * $count;
+            }
+
+            $this->assign('data', $data);
+            $this->assign('sumPrice', $sumPrice);
+            $this->assign('noNavTab', 'true');
+            layout('Layout/layout');
+            $this->display('make_order');
+        } else {
+            $this->error('非法操作！', U('index'));
+        }
+    }
 }

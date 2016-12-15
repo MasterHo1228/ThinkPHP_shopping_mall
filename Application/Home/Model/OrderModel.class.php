@@ -87,4 +87,47 @@ class OrderModel
             return false;
         }
     }
+
+    public function placeUserOrder($userID, $orderSumPrice, $orderCName, $orderPhone, $orderAddress)
+    {
+        if (!empty($userID) && !empty($orderCName) && !empty($orderPhone) && !empty($orderAddress)) {
+            $orderID = generateOrderNum();
+            $data['orderID'] = $orderID;
+            $data['orderSumPrice'] = $orderSumPrice;
+            $data['orderCName'] = $orderCName;
+            $data['orderAddress'] = $orderAddress;
+            $data['orderPhone'] = $orderPhone;
+
+            if (M('OrderList')->add($data)) {
+                $userCart = M('UserCart');
+                $orderGoodsList = $userCart->where('userID=' . $userID)->field('goodsID,goodsCount')->select();
+
+                $orderListItem = M('OrderListItem');
+                $goods = M('goods');
+
+                foreach ($orderGoodsList as $item) {
+                    $itemData['orderID'] = $orderID;
+                    $itemData['orderGID'] = $item['goodsid'];
+                    $itemData['orderGCount'] = $item['goodscount'];
+
+                    if ($orderListItem->add($itemData)) {
+                        $userCart->where('userID=' . $userID . ' AND goodsID=' . $item['goodsid'])->delete();
+
+                        $thisGoodsCount = $goods->where('gID=' . $item['goodsid'])->getField('gCount');
+                        $goods->where('gID=' . $item['goodsid'])->setField('gCount', $thisGoodsCount - $item['goodscount']);
+                        $thisGoodsSoldNum = $goods->where('gID=' . $item['goodsid'])->getField('gSoldOutNum');
+                        $goods->where('gID=' . $item['goodsid'])->setField('gSoldOutNum', $thisGoodsSoldNum + $item['goodscount']);
+                    } else {
+                        break;
+                    }
+                }
+
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
