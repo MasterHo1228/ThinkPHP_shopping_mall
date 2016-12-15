@@ -58,4 +58,15 @@ class OrderModel
         }
     }
 
+    public function clearUserCart($userID)
+    {
+        if (!empty($userID)) {
+            $where['userID'] = $userID;
+
+            $model = M('UserCart');
+            return $model->where($where)->delete();
+        } else {
+            return false;
+        }
+    }
 }

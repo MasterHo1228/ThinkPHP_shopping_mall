@@ -37,10 +37,23 @@ class OrderController extends Controller
             $userID = getUserID();
             $goodsID = I('post.goodsID/d');
 
-            $data['goodsID'] = $goodsID;
-
             $model = new \Home\Model\OrderModel();
             if ($model->removeCartGoodsByGID($userID, $goodsID)) {
+                $data['response'] = 'success';
+            } else {
+                $data['response'] = 'failed';
+            }
+            $this->ajaxReturn($data);
+        }
+    }
+
+    public function clearCart()
+    {
+        if (isUserLogin() && IS_AJAX) {
+            $userID = getUserID();
+
+            $model = new \Home\Model\OrderModel();
+            if ($model->clearUserCart($userID)) {
                 $data['response'] = 'success';
             } else {
                 $data['response'] = 'failed';
