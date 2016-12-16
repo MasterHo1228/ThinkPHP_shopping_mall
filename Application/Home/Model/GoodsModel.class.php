@@ -38,7 +38,7 @@ class GoodsModel
             $where = 'gID=' . $id;
             $status = $table->where($where)->getField('gStatus');
             if ($status != '0') {
-                return $table->where($where)->field('gID,gName,goodsTypeName,gPrice,gOriginPrice,gCount,shopName,gPhoto,gDescription,gPubTime')->find();
+                return $table->where($where)->field('gID,gName,goodsTypeName,gPrice,gOriginPrice,gSoldOutNum,gCount,shopName,gPhoto,gDescription,gPubTime')->find();
             } else {
                 return false;
             }
