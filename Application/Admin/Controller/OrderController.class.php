@@ -76,6 +76,22 @@ class OrderController extends Controller
         }
     }
 
+    public function edit()
+    {
+        if (IS_AJAX && IS_POST && checkSalesUserLogin()) {
+            $orderID = I('post.orderID/s');
+            $data['orderCName'] = I('post.orderCName/s');
+            $data['orderAddress'] = I('post.orderAddress/s');
+            $data['orderPhone'] = I('post.orderPhone/s');
+
+            if (M('OrderList')->where("orderID='$orderID'")->save($data)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
+
     /**
      * 订单发货
      */

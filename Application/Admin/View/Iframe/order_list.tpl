@@ -81,6 +81,41 @@
 <!-- /.container -->
 
 <!-- 订单发货窗口 -->
+<div class="modal fade" id="editOrderWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel1">订单信息编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editOrderID">订单号</label>
+                    <input type="text" class="form-control" id="editOrderID" name="editOrderID" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editOrderCName">订单收货人</label>
+                    <input type="text" class="form-control" id="editOrderCName" name="editOrderCName">
+                </div>
+                <div class="form-group">
+                    <label for="editOrderAddress">收货地址</label>
+                    <input type="text" class="form-control" id="editOrderAddress" name="editOrderAddress">
+                </div>
+                <div class="form-group">
+                    <label for="editOrderPhone">联系电话</label>
+                    <input type="text" class="form-control" id="editOrderPhone" name="editOrderPhone">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnToEditOrder">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 订单发货窗口 -->
 <div class="modal fade" id="sendOrderWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -178,7 +213,7 @@
 <script src="__PUBLIC__/js/layer.js"></script>
 
 <script language="JavaScript">
-    var sendOrderID, cancelOrderID;
+    var editOrderID, sendOrderID, cancelOrderID;
     function refresh() {
         var table = $("#orderList");
         $("#orderListT").empty();
@@ -190,6 +225,7 @@
                 var PaidBy = '';
                 var orderStatus = item.orderstatus;
                 var statusW = '';
+                var editStyle = 'none';
                 var statusStyle = 'none';
                 var cancelStyle = 'block';
 
@@ -217,6 +253,7 @@
                     case '1':
                         statusW = '未发货';
                         if (isPaid == '1') {
+                            editStyle = 'block';
                             statusStyle = 'block';
                         }
                         break;
@@ -237,6 +274,7 @@
                     "<td>" + PaidBy + "</td>" +
                     "<td>" + statusW + "</td>" +
                     "<td>" +
+                    "<button class='btn btn-xs btn-primary btnEdit' style='display: " + editStyle + "' data-value='" + orderID + "'>编辑</a>" +
                     "<button class='btn btn-xs btn-success btnSend' style='display: " + statusStyle + "' data-value='" + orderID + "'>订单发货</a>" +
                     "<button class='btn btn-xs btn-danger btnCancel' style='display: " + cancelStyle + "' data-value='" + orderID + "' data-toggle='modal' data-target='#alertCancelOWindow'>取消订单</button>" +
                     "</td>" +
@@ -355,6 +393,27 @@
             });
         });
 
+        $("#orderListT").delegate('.btnEdit', 'click', function () {
+            editOrderID = $(this).attr('data-value');
+            $.ajax({
+                url: "{{U('backyard/Order/getCurrentSimpleInfo')}}",
+                type: 'post',
+                data: {
+                    orderID: editOrderID
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $("#editOrderID").val(sendOrderID);
+                    $("#editOrderCName").val(data.ordercname);
+                    $("#editOrderAddress").val(data.orderaddress);
+                    $("#editOrderPhone").val(data.orderphone);
+                },
+                complete: function () {
+                    $("#editOrderWindow").modal('show');
+                }
+            });
+        });
+
         $("#orderListT").delegate('.btnSend', 'click', function () {
             sendOrderID = $(this).attr('data-value');
             $.ajax({
@@ -374,6 +433,45 @@
                     $("#sendOrderWindow").modal('show');
                 }
             });
+        });
+
+        $("#btnToEditOrder").click(function () {
+            if (editOrderID != '') {
+                var orderCName = $("#editOrderCName").val();
+                var orderAddress = $("#editOrderAddress").val();
+                var orderPhone = $("#editOrderPhone").val();
+
+                if (orderCName != '' && orderAddress != '' && orderPhone != '') {
+                    $.ajax({
+                        url: "{{U('backyard/Order/edit')}}",
+                        type: 'post',
+                        data: {
+                            orderID: editOrderID,
+                            orderCName: orderCName,
+                            orderAddress: orderAddress,
+                            orderPhone: orderPhone
+                        },
+                        dataType: 'text',
+                        success: function (data) {
+                            if (data == 'true') {
+                                $("#btnReload").attr('value', 'refresh');
+                                $("#editOrderCName").val('');
+                                $("#editOrderAddress").val('');
+                                $("#editOrderPhone").val('');
+
+                                $("#alertHintContent").empty().append("已更新订单信息！");
+                            } else if (data == 'false') {
+                                $("#alertHintContent").empty().append("操作失败！");
+                            }
+                            $("#editOrderWindow").modal('hide');
+                            $("#alertHint").modal('show');
+                        }
+                    })
+                } else {
+                    $("#alertHintContent").empty().append("订单收货信息请填写完整！");
+                    $("#alertHint").modal('show');
+                }
+            }
         });
 
         $("#btnToSendOrder").click(function () {
