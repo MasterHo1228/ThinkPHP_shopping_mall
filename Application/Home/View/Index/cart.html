@@ -22,14 +22,14 @@
                 <div class="in-check">
                     <div class="header-bottom ">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered text-center">
                                 <thead>
                                 <tr>
-                                    <th>商品</th>
-                                    <th>名称</th>
-                                    <th>价格</th>
-                                    <th>数量</th>
-                                    <th>编辑</th>
+                                    <th style="width:20%">商品</th>
+                                    <th style="width:20%">名称</th>
+                                    <th style="width:20%">价格</th>
+                                    <th style="width:20%">数量</th>
+                                    <th style="width:20%">编辑</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,22 +44,24 @@
                                                 <div class="col-md-4"></div>
                                                 <a href="__CONTROLLER__/single.html?goodsID={$v.goodsid}"
                                                    target="_blank"
-                                                   class="thumbnail col-md-4"><img src="{$v.goodsphoto}"
-                                                                                   class="img-responsive" alt=""></a>
+                                                   class="thumbnail col-md-4" style="margin-top:30px;"><img
+                                                        src="{$v.goodsphoto}"
+                                                        class="img-responsive" alt=""></a>
                                                 <div class="col-md-4"></div>
                                             </td>
-                                            <td>{$v.goodsname}</td>
-                                            <td>￥ {$v.goodsprice}</td>
-                                            <td><input style="width:160px;" type="number"
-                                                       class="form-control goodsCount" name="goodsCount"
-                                                       placeholder="数量"
-                                                       value="{$v.goodscount}" data-value="{$v.goodsid}" min="1" max="5"
-                                                       required>
+                                            <td style="line-height:124px;">{$v.goodsname}</td>
+                                            <td style="line-height:124px;">￥ {$v.goodsprice}</td>
+                                            <td style="line-height:124px;">
+                                                <center><input style="width:160px; margin-top:50px;" type="number"
+                                                               class="form-control goodsCount" name="goodsCount"
+                                                               placeholder="数量"
+                                                               value="{$v.goodscount}" data-value="{$v.goodsid}" min="1" max="5"
+                                                               required></center>
                                                 <input type="hidden" class="currentGoodsCount" value="{$v.goodscount}"
                                                        data-value="{$v.goodsid}">
                                             </td>
                                             <td><input class="btnDelCartGoods" type="button" value="删除"
-                                                       data-value="{$v.goodsid}"/></td>
+                                                       data-value="{$v.goodsid}" style="margin-top:50px;"/></td>
                                         </tr>
                                     </foreach>
                                 </empty>

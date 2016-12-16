@@ -5,6 +5,11 @@ use Home\Model\GoodsModel;
 use Home\Model\OrderModel;
 use Think\Controller;
 
+/**
+ *
+ * Class IndexController
+ * @package Home\Controller
+ */
 class IndexController extends Controller
 {
     public function index()

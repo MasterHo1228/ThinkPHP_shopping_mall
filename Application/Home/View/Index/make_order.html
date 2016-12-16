@@ -17,10 +17,24 @@
         <div class="ckeck-top heading">
             <h2>确认订单信息</h2>
         </div>
-        <p>收货人姓名<input id="orderCName" placeholder="收货人姓名" type="text" required>
-        <p>联系电话<input id="orderPhone" placeholder="联系电话" type="text" required>
-        <p>收货地址<input id="orderAddress" placeholder="收货地址" type="text" tabindex="3" required style="width:40%;"></p>
-
+        <div class="container">
+            <div class="form-group form-inline">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="orderCName">收货人姓名：</label>
+                        <input type="text" class="form-control" id="orderCName" required/>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="orderPhone">联系人电话：</label>
+                        <input type="text" class="form-control" id="orderPhone" required/>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="orderAddress">收货人地址：</label>
+                        <input type="text" class="form-control" id="orderAddress" style="width:260px;" required/>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="ckeckout-top">
             <div class="cart-items">
@@ -31,30 +45,32 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>商品</th>
-                                    <th>名称</th>
-                                    <th>价格</th>
-                                    <th>数量</th>
+                                    <th style="width:25%">商品</th>
+                                    <th style="width:25%">名称</th>
+                                    <th style="width:25%">价格</th>
+                                    <th style="width:25%">数量</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <foreach name="data" item="v">
                                     <tr>
-                                        <td>
+                                        <td style="line-height:124px;">
                                             <div class="col-md-4"></div>
                                             <a href="__CONTROLLER__/single.html?goodsID={$v.goodsid}"
                                                target="_blank"
-                                               class="thumbnail col-md-4"><img src="{$v.goodsphoto}"
-                                                                               class="img-responsive" alt=""></a>
+                                               class="thumbnail col-md-4" style="margin-top:30px;"><img
+                                                    src="{$v.goodsphoto}"
+                                                    class="img-responsive" alt=""></a>
                                             <div class="col-md-4"></div>
                                         </td>
-                                        <td>{$v.goodsname}</td>
-                                        <td>￥ {$v.goodsprice}</td>
-                                        <td><input style="width:160px;" type="number"
-                                                   class="form-control"
-                                                   placeholder="数量"
-                                                   value="{$v.goodscount}"
-                                                   readonly>
+                                        <td style="line-height:124px;">{$v.goodsname}</td>
+                                        <td style="line-height:124px;">￥ {$v.goodsprice}</td>
+                                        <td>
+                                            <center><input style="width:160px; margin-top:50px;" type="number"
+                                                           class="form-control"
+                                                           placeholder="数量"
+                                                           value="{$v.goodscount}"
+                                                           readonly></center>
                                         </td>
                                     </tr>
                                 </foreach>
