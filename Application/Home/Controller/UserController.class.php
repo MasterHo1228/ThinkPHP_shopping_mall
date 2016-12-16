@@ -9,8 +9,16 @@
 namespace Home\Controller;
 use Think\Controller;
 
+/**
+ * 前台用户操作类
+ * Class UserController
+ * @package Home\Controller
+ */
 class UserController extends Controller
 {
+    /**
+     * 用户登录
+     */
     public function login()
     {
         if (session('?user')) {
@@ -30,6 +38,9 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 用户注册
+     */
     public function register()
     {
         if (IS_AJAX && IS_POST) {
@@ -47,18 +58,24 @@ class UserController extends Controller
                     if ($model->addUser($usrName, $usrPasswd, $usrGender, $usrEmail, $usrPhone)) {
                         $data['error'] = 'none';
                     } else {
+                        //操作失败
                         $data['error'] = 'failed';
                     }
                 } else {
+                    //密码不一致
                     $data['error'] = 'password';
                 }
             } else {
+                //用户名重复
                 $data['error'] = 'name';
             }
             $this->ajaxReturn($data);
         }
     }
 
+    /**
+     * 用户登出
+     */
     public function logout()
     {
         if (session('?user')) {

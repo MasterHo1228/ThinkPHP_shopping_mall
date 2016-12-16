@@ -55,12 +55,18 @@ function generatePasswordSalt()
     return $output;
 }
 
+/**
+ * 生成订单号
+ * @return string
+ */
 function generateOrderNum()
 {
+    //订单号前缀
     $prefix = "MG";
     $nowTime = date("YmdHis", time());
     $randNum = rand(100000, 999999);
 
+    //拼接字符串 输出订单号
     $orderNum = $prefix . $nowTime . $randNum;
     return $orderNum;
 }

@@ -11,8 +11,16 @@ namespace Home\Controller;
 use Home\Model\OrderModel;
 use Think\Controller;
 
+/**
+ * 前台订单操作类
+ * Class OrderController
+ * @package Home\Controller
+ */
 class OrderController extends Controller
 {
+    /**
+     * 商品添加到购物车
+     */
     public function addToCart()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
@@ -32,6 +40,9 @@ class OrderController extends Controller
         $this->ajaxReturn($data);
     }
 
+    /**
+     * 更改购物车中商品的数量
+     */
     public function changeGoodsCount()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
@@ -49,6 +60,9 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 删除购物车中的商品
+     */
     public function dropCartGoods()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
@@ -65,6 +79,9 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 清空购物车
+     */
     public function clearCart()
     {
         if (isUserLogin() && IS_AJAX) {
@@ -80,6 +97,9 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 获取用户订单的收货信息 并创建订单
+     */
     public function placeOrder()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
@@ -99,6 +119,9 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 订单支付
+     */
     public function payOrder()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
