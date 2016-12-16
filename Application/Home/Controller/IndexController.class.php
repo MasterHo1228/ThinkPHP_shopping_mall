@@ -61,11 +61,14 @@ class IndexController extends Controller
             $model = new GoodsModel();
             $list = $model->getListByGoodsType($goodsType);
 
-            $rowCount = count($list) / 4;
-            if ($rowCount < 1) {
-                $rowCount = 1;
+            if (count($list) == 0) {
+                $this->assign('emptyResult', 'true');
+            } else {
+                $rowCount = count($list) / 4;
+                if ($rowCount < 1) {
+                    $rowCount = 1;
+                }
             }
-
             $thisTypeName = M('goodstype')->where("tID='$goodsType'")->getField('tName');
 
             $this->assign('list', $list);
@@ -85,9 +88,13 @@ class IndexController extends Controller
 
         $model = new GoodsModel();
         $list = $model->getListBySearchKey($searchKey);
-        $rowCount = count($list) / 4;
-        if ($rowCount < 1) {
-            $rowCount = 1;
+        if (count($list) == 0) {
+            $this->assign('emptyResult', 'true');
+        } else {
+            $rowCount = count($list) / 4;
+            if ($rowCount < 1) {
+                $rowCount = 1;
+            }
         }
 
         $this->assign('list', $list);
