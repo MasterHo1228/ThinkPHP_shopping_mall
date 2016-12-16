@@ -94,6 +94,7 @@ class OrderModel
             $orderID = generateOrderNum();
             session('user.makeOrderID', $orderID);
             $data['orderID'] = $orderID;
+            $data['orderUserID'] = $userID;
             $data['orderSumPrice'] = $orderSumPrice;
             $data['orderCName'] = $orderCName;
             $data['orderAddress'] = $orderAddress;
@@ -129,6 +130,23 @@ class OrderModel
             }
         } else {
             return false;
+        }
+    }
+
+    public function payOrder($userID, $orderID, $payBy)
+    {
+        if (!empty($userID) && !empty($orderID) && ($payBy == 'alipay' || $payBy == 'wechat')) {
+            $orderList = M('OrderList');
+
+            $orderStatus = $orderList->where("orderID='$orderID' AND orderUserID=$userID")->getField('orderStatus');
+            $orderIsPaid = $orderList->where("orderID='$orderID' AND orderUserID=$userID")->getField('orderPaid');
+            if ($orderIsPaid == '0' && $orderStatus == '1') {
+                $data['orderPaid'] = '1';
+                $data['orderPaidBy'] = $payBy;
+                return $orderList->where("orderID='$orderID' AND orderUserID=$userID")->save($data);
+            } else {
+                return false;
+            }
         }
     }
 }

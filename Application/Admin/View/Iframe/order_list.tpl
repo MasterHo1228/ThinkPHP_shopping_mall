@@ -47,6 +47,7 @@
                         <thead>
                         <tr>
                             <th>订单号</th>
+                            <th>用户名</th>
                             <th>订单价格</th>
                             <th>是否已支付</th>
                             <th>支付方式</th>
@@ -60,6 +61,7 @@
                         <tfoot>
                         <tr>
                             <th>订单号</th>
+                            <th>用户名</th>
                             <th>订单价格</th>
                             <th>是否已支付</th>
                             <th>支付方式</th>
@@ -269,6 +271,7 @@
                 var tableRow =
                     "<tr>" +
                     "<td>" + "<a class='checkOrderInfo' title='查看订单详细信息' data-value='" + orderID + "'>" + orderID + "</a>" + "</td>" +
+                    "<td>" + item.orderusername + "</td>" +
                     "<td>" + item.ordersumprice + "</td>" +
                     "<td>" + isPaidW + "</td>" +
                     "<td>" + PaidBy + "</td>" +
@@ -360,6 +363,7 @@
 
                     var info =
                         "<p>" + "订单号：" + data.orderid + "</p>" +
+                        "<p>" + "用户名：" + data.orderusername + "</p>" +
                         "<p>" + "订单总价：￥" + data.ordersumprice + "</p>" +
                         "<p>" + "是否已付款：" + isPaidW + "</p>" +
                         "<p>" + "付款方式：" + PaidBy + "</p>" +

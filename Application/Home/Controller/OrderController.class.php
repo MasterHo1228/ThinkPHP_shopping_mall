@@ -98,4 +98,21 @@ class OrderController extends Controller
             $this->ajaxReturn($data);
         }
     }
+
+    public function payOrder()
+    {
+        if (isUserLogin() && IS_AJAX && IS_POST) {
+            $userID = getUserID();
+            $orderID = I('post.orderID/s');
+            $payBy = I('post.payBy/s');
+
+            $model = new OrderModel();
+            if ($model->payOrder($userID, $orderID, $payBy)) {
+                $data['response'] = 'success';
+            } else {
+                $data['response'] = 'failed';
+            }
+            $this->ajaxReturn($data);
+        }
+    }
 }

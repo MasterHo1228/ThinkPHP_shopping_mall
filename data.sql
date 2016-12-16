@@ -96,6 +96,7 @@ INSERT INTO express_list (eName) VALUES ('顺丰速运'), ('申通快递'), ('�
 
 CREATE TABLE IF NOT EXISTS order_list (
   orderID       VARCHAR(22)               NOT NULL UNIQUE,
+  orderUserID   BIGINT UNSIGNED           NOT NULL,
   orderSumPrice DECIMAL(10, 2)            NOT NULL,
   orderCName    VARCHAR(15)               NOT NULL,
   orderAddress  TEXT                      NOT NULL,
@@ -105,7 +106,8 @@ CREATE TABLE IF NOT EXISTS order_list (
   orderPaid     ENUM ('0', '1')           NOT NULL DEFAULT '0',
   orderPaidBy   ENUM ('alipay', 'wechat'),
   orderStatus   ENUM ('0', '1', '2', '3') NOT NULL DEFAULT '1',
-  CONSTRAINT FK_expressID FOREIGN KEY (expressID) REFERENCES express_list (eID)
+  CONSTRAINT FK_expressID FOREIGN KEY (expressID) REFERENCES express_list (eID),
+  CONSTRAINT FK_orderUserID FOREIGN KEY (orderUserID) REFERENCES users (uID)
 );
 
 CREATE TABLE IF NOT EXISTS order_list_item (
@@ -150,6 +152,8 @@ CREATE VIEW viewGoodsDetail AS
 CREATE VIEW viewOrderInfo AS
   SELECT
     orderID,
+    orderUserID,
+    users.uName        AS 'orderUserName',
     orderSumPrice,
     orderCName,
     orderAddress,
@@ -161,7 +165,8 @@ CREATE VIEW viewOrderInfo AS
     orderStatus
   FROM
     order_list
-    LEFT JOIN express_list ON order_list.expressID = express_list.eID;
+    LEFT JOIN express_list ON order_list.expressID = express_list.eID
+    LEFT JOIN users ON order_list.orderUserID = users.uID;
 
 CREATE VIEW viewOrderGoodsInfo AS
   SELECT

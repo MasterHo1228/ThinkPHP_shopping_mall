@@ -23,8 +23,8 @@ class OrderController extends Controller
     public function getList()
     {
         if (IS_AJAX && checkSalesUserLogin()) {
-            $order = M('OrderList');
-            $data = $order->field('orderID,orderSumPrice,orderPaid,orderPaidBy,orderStatus')->select();
+            $order = M('vieworderinfo');
+            $data = $order->field('orderID,orderUserName,orderSumPrice,orderPaid,orderPaidBy,orderStatus')->select();
             if ($data) {
                 $this->ajaxReturn($data);
             }
@@ -40,7 +40,7 @@ class OrderController extends Controller
             $orderID = I('post.orderID/s');
             $orderList = M('vieworderinfo');
 
-            $data = $orderList->where("orderID='$orderID'")->field('orderID,orderCName,orderAddress,orderPhone')->find();
+            $data = $orderList->where("orderID='$orderID'")->field('orderID,orderUserName,orderCName,orderAddress,orderPhone')->find();
             if ($data) {
                 $this->ajaxReturn($data);
             }
@@ -57,7 +57,7 @@ class OrderController extends Controller
             $orderList = M('vieworderinfo');
 
             //获取订单详细信息
-            $data1 = $orderList->where("orderID='$orderID'")->field('orderID,orderSumPrice,orderCName,orderAddress,orderPhone,expressName,expressNum,orderPaid,orderPaidBy,orderStatus')->find();
+            $data1 = $orderList->where("orderID='$orderID'")->field('orderID,orderUserName,orderSumPrice,orderCName,orderAddress,orderPhone,expressName,expressNum,orderPaid,orderPaidBy,orderStatus')->find();
             if ($data1) {
                 $output = $data1;
                 //获取订单商品信息
