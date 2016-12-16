@@ -92,6 +92,7 @@ class OrderModel
     {
         if (!empty($userID) && !empty($orderCName) && !empty($orderPhone) && !empty($orderAddress)) {
             $orderID = generateOrderNum();
+            session('user.makeOrderID', $orderID);
             $data['orderID'] = $orderID;
             $data['orderSumPrice'] = $orderSumPrice;
             $data['orderCName'] = $orderCName;

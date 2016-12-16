@@ -174,4 +174,11 @@ class IndexController extends Controller
             $this->error('非法操作！', U('index'));
         }
     }
+
+    public function payOrder()
+    {
+        $this->assign('noNavTab', 'true');
+        layout('Layout/layout');
+        $this->display('payment');
+    }
 }
