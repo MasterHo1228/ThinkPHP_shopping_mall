@@ -54,20 +54,6 @@ class GoodsModel extends Model
     }
 
     /**
-     * 根据商品ID获取商品详细信息
-     * @param int $id 商品ID
-     * @return bool|mixed
-     */
-    public function getCurrentDetailInfo($id)
-    {
-        if (!empty($id)) {
-            return $this->where('gID=' . $id)->field('gID,gName,gType,gPrice,gOriginPrice,gCount,gDescription')->find();
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * 根据商品ID更新商品信息
      * @param int $id 商品ID
      * @param string $name 商品名称

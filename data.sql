@@ -132,6 +132,7 @@ CREATE VIEW viewGoodsDetail AS
     b.tName AS 'goodsTypeName',
     a.gPrice,
     a.gOriginPrice,
+    a.gSoldOutNum,
     a.gCount,
     a.gSalesSUID,
     c.shopName,

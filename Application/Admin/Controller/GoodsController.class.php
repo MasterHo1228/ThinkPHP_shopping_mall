@@ -43,7 +43,7 @@ class GoodsController extends Controller
             $goodsID = I('get.goodsID/d');
             $model = M('viewgoodsdetail');
 
-            $this->ajaxReturn($model->where('gID=' . $goodsID)->field('gID,gName,gType,goodsTypeName,gPrice,gOriginPrice,gCount,gSalesSUID,shopName,gPhoto,gDescription,gPubTime,gStatus')->find());
+            $this->ajaxReturn($model->where('gID=' . $goodsID)->field('gID,gName,gType,goodsTypeName,gPrice,gOriginPrice,gSoldOutNum,gCount,gSalesSUID,shopName,gPhoto,gDescription,gPubTime,gStatus')->find());
         }
     }
 

@@ -328,6 +328,7 @@
                         "<p>" + "种类：" + data.goodstypename + "</p>" +
                         "<p>" + "价格：￥" + data.gprice + "</p>" +
                         "<p>" + "原价：￥" + data.goriginprice + "</p>" +
+                        "<p>" + "销量：" + data.gsoldoutnum + "</p>" +
                         "<p>" + "库存：" + data.gcount + "</p>" +
                         "<p>" + "销售商家：" + data.shopname + "</p>" +
                         "<p>" + "商品描述：" + data.gdescription + "</p>" +
