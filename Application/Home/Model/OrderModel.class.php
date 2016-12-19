@@ -206,6 +206,31 @@ class OrderModel
                 //否则终止操作
                 return false;
             }
+        } else {
+            return false;
+        }
+    }
+
+    public function showUserOrdersByUserID($id)
+    {
+        if (!empty($id)) {
+            $order = M('vieworderinfo');
+            $orderList = $order->where('orderUserID=' . $id)->field('orderID,orderSumPrice,orderPaid,orderPaidBy,orderStatus')->select();
+            if ($orderList) {
+                $orderGoods = M('viewordergoodsinfo');
+                for ($i = 0; $i < count($orderList); $i++) {
+                    $thisOrderID = $orderList[$i]['orderid'];
+                    $orderList[$i]['ordergoodsid'] = $orderGoods->where("orderID='$thisOrderID'")->getField('orderGID');
+                    $orderList[$i]['ordergoodsimg'] = $orderGoods->where("orderID='$thisOrderID'")->getField('goodsPhoto');
+                    $orderList[$i]['ordergoodsname'] = $orderGoods->where("orderID='$thisOrderID'")->getField('goodsName');
+                }
+
+                return $orderList;
+            } elseif ($orderList == null) {
+                return null;
+            } else {
+                return false;
+            }
         }
     }
 }

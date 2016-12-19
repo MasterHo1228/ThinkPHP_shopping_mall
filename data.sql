@@ -173,6 +173,7 @@ CREATE VIEW viewOrderGoodsInfo AS
     a.orderID,
     a.orderGID,
     b.gName       AS 'goodsName',
+    b.gPhoto      AS 'goodsPhoto',
     a.orderGCount AS 'goodsCount',
     b.gPrice      AS 'goodsPrice'
   FROM
