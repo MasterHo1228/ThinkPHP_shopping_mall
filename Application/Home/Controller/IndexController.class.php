@@ -208,4 +208,16 @@ class IndexController extends Controller
         layout('Layout/layout');
         $this->display('payment');
     }
+
+    public function user()
+    {
+        if (isUserLogin()) {
+            //屏蔽导航条
+            $this->assign('noNavTab', 'true');
+            layout('Layout/layout');
+            $this->display('user_info');
+        } else {
+            $this->error('非法操作！', U('index'));
+        }
+    }
 }
