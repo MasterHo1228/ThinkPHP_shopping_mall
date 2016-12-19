@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="thumbnail">
+                <img src="__PUBLIC__/images/201305131827473DZV.jpg">
+            </div>
+            <div class="span6">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="javascript:void(0)">订单信息</a></li>
+                    <li><a href="javascript:void(0)">
+                        <center>个人信息</center>
+                    </a></li>
+                    <li><a href="javascript:void(0)">
+                        <center>收货地址</center>
+                    </a></li>
+                    <li><a href="javascript:void(0)">
+                        <center>安全设置</center>
+                    </a></li>
+                    <li><a href="javascript:void(0)">
+                        <center>隐私设置</center>
+                    </a></li>
+                    <li><a href="javascript:void(0)">
+                        <center>绑定设置</center>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th style="width:20%">
+                            <center>商品</center>
+                        </th>
+                        <th style="width:20%">
+                            <center>名称</center>
+                        </th>
+                        <th style="width:20%">
+                            <center>价格</center>
+                        </th>
+                        <th style="width:20%">
+                            <center>数量</center>
+                        </th>
+                        <th style="width:20%">
+                            <center>编辑</center>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <empty name="data">
+                        <tr>
+                            <td colspan="5" style="text-align: center">噢......购物车空空如也~~</td>
+                        </tr>
+                        <else/>
+                        <foreach name="data" item="v">
+                            <tr>
+                                <td>
+                                    <div class="col-md-4"></div>
+                                    <a href="__CONTROLLER__/single.html?goodsID={$v.goodsid}" target="_blank"
+                                       class="thumbnail col-md-4" style="margin-top:30px;">
+                                        <img src="{$v.goodsphoto}" class="img-responsive" alt=""></a>
+                                    <div class="col-md-4"></div>
+                                </td>
+                                <td style="line-height:124px;">{$v.goodsname}</td>
+                                <td style="line-height:124px;">￥ {$v.goodsprice}</td>
+                                <td style="line-height:124px;">
+                                    <center>
+                                        <input style="width:160px; margin-top:50px;" type="number"
+                                               class="form-control goodsCount" name="goodsCount"
+                                               placeholder="数量"
+                                               value="{$v.goodscount}" data-value="{$v.goodsid}" min="1" max="5"
+                                               required>
+                                    </center>
+                                    <input type="hidden" class="currentGoodsCount" value="{$v.goodscount}"
+                                           data-value="{$v.goodsid}">
+                                </td>
+                                <td><input class="btnDelCartGoods" type="button" value="删除"
+                                           data-value="{$v.goodsid}" style="margin-top:50px;"/></td>
+                            </tr>
+                        </foreach>
+                    </empty>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
