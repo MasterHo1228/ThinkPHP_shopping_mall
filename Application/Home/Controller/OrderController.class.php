@@ -130,8 +130,11 @@ class OrderController extends Controller
             $payBy = I('post.payBy/s');
 
             $model = new OrderModel();
-            if ($model->payOrder($userID, $orderID, $payBy)) {
+            $result = $model->payOrder($userID, $orderID, $payBy);
+            if ($result) {
                 $data['response'] = 'success';
+            } else if ($result == 'paid') {
+                $data['response'] = 'paid';
             } else {
                 $data['response'] = 'failed';
             }

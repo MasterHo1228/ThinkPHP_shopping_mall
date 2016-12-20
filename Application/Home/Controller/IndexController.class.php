@@ -203,10 +203,31 @@ class IndexController extends Controller
 
     public function payOrder()
     {
-        //屏蔽导航条
-        $this->assign('noNavTab', 'true');
-        layout('Layout/layout');
-        $this->display('payment');
+        if (isUserLogin()) {
+            if (!empty(I('get.orderID'))) {
+                $orderID = I('get.orderID/s');
+                $this->assign('payType', 'after');
+            } else if (session('?user.makeOrderID')) {
+                $orderID = session('user.makeOrderID');
+                $this->assign('payType', 'now');
+            }
+
+            $model = new OrderModel();
+            $orderPaid = $model->checkOrderPaid($orderID);
+            $orderStatus = $model->checkOrderStatus($orderID);
+            if ($orderPaid == '0' && $orderStatus == '1') {
+                $this->assign('orderID', $orderID);
+
+                //屏蔽导航条
+                $this->assign('noNavTab', 'true');
+                layout('Layout/layout');
+                $this->display('payment');
+            } else if ($orderPaid == '1' && $orderStatus == '1') {
+                $this->redirect('Index/user', null, 5, '订单已支付，无需重复支付！');
+            } else if ($orderStatus == '0') {
+                $this->redirect('Index/user', null, 5, '订单已被取消！');
+            }
+        }
     }
 
     public function user()

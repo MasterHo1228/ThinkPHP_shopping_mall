@@ -48,9 +48,10 @@
                     </thead>
                     <tbody>
                     <foreach name="orderData" item="v">
+                        <assign name="orderID" value="$v.orderid"/>
                         <tr>
                             <td style="line-height:100px;">
-                                <center>{$v.orderid}</center>
+                                <center>{$orderID}</center>
                             </td>
                             <td>
                                 <center>
@@ -70,8 +71,9 @@
                                     <center><a href="javascript:void(0)" class="btn btn-sm btn-success"
                                                style="margin-top:15px;">确认收货</a></center>
                                     <elseif condition="($v.orderstatus eq 1) AND ($v.orderpaid eq 0)"/>
-                                    <center><a href="javascript:void(0)" class="btn btn-sm btn-warning"
-                                               style="margin-top:15px;">支付订单</a></center>
+                                    <center><a href="{:U('Index/payOrder',array('orderID'=>$orderID))}"
+                                               class="btn btn-sm btn-warning"
+                                               style="margin-top:15px;" target="_blank">支付订单</a></center>
                                 </if>
                                 <center><a href="javascript:void(0)" class="btn btn-sm btn-primary"
                                            style="margin-top:15px;">订单详情</a></center>

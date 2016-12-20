@@ -10,9 +10,15 @@
 </div>
 
 <div class="container">
-    <h3 class="page-header">订单已提交，点击下方按钮支付订单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <small>订单号：{$Think.session.user.makeOrderID}</small>
-    </h3>
+    <if condition="$payType eq 'now'">
+        <h3 class="page-header">订单已提交，点击下方按钮支付订单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <small>订单号：{$orderID}</small>
+        </h3>
+        <elseif condition="$payType eq 'after'"/>
+        <h3 class="page-header">点击下方按钮支付订单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <small>订单号：{$orderID}</small>
+        </h3>
+    </if>
 
     <div class="row">
         <div class="col-md-4" style="display: block"></div>
@@ -34,7 +40,7 @@
 <br/>
 <br/>
 
-<input type="hidden" id="orderID" value="{$Think.session.user.makeOrderID}">
+<input type="hidden" id="orderID" value="{$orderID}">
 
 <!-- 支付宝窗口 -->
 <div class="modal fade" id="alipayWindow">
@@ -124,6 +130,8 @@
                             $("#wechatWindow").modal('hide');
                             $("#btnReload").prop('value', 'home');
                             $("#alertDialogMain").empty().append("操作成功！");
+                        } else if (data.response == 'paid') {
+                            $("#alertDialogMain").empty().append("订单已成功支付！");
                         } else if (data.response == 'failed') {
                             $("#alertDialogMain").empty().append("操作失败！");
                         }
