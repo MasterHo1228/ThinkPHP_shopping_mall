@@ -196,8 +196,6 @@ class OrderModel
             $orderList = M('OrderList');
 
             //验证订单状态及订单支付状态
-//            $orderStatus = $orderList->where("orderID='$orderID' AND orderUserID=$userID")->getField('orderStatus');
-//            $orderIsPaid = $orderList->where("orderID='$orderID' AND orderUserID=$userID")->getField('orderPaid');
             $orderStatus = $this->checkOrderStatus($orderID);
             $orderIsPaid = $this->checkOrderPaid($orderID);
             if ($orderIsPaid == '1') {
@@ -254,6 +252,36 @@ class OrderModel
                 return $orderList;
             } elseif ($orderList == null) {
                 return null;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function cancelUserOrder($userID, $orderID)
+    {
+        if (!empty($userID) && !empty($orderID)) {
+            $orderStatus = $this->checkOrderStatus($orderID);
+            if ($orderStatus == '1') {
+                $orderList = M('OrderList');
+                return $orderList->where("orderID='$orderID' AND orderUserID=$userID")->setField('orderStatus', '0');
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function confirmUserOrder($userID, $orderID)
+    {
+        if (!empty($userID) && !empty($orderID)) {
+            $orderStatus = $this->checkOrderStatus($orderID);
+            if ($orderStatus == '2') {
+                $orderList = M('OrderList');
+                return $orderList->where("orderID='$orderID' AND orderUserID=$userID")->setField('orderStatus', '3');
             } else {
                 return false;
             }

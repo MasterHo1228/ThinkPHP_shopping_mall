@@ -141,4 +141,34 @@ class OrderController extends Controller
             $this->ajaxReturn($data);
         }
     }
+
+    public function cancelOrder()
+    {
+        if (isUserLogin() && IS_AJAX && IS_POST) {
+            $userID = getUserID();
+            $orderID = I('post.orderID/s');
+
+            $model = new OrderModel();
+            if ($model->cancelUserOrder($userID, $orderID)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
+
+    public function confirmOrder()
+    {
+        if (isUserLogin() && IS_AJAX && IS_POST) {
+            $userID = getUserID();
+            $orderID = I('post.orderID/s');
+
+            $model = new OrderModel();
+            if ($model->confirmUserOrder($userID, $orderID)) {
+                $this->ajaxReturn('true', 'EVAL');
+            } else {
+                $this->ajaxReturn('false', 'EVAL');
+            }
+        }
+    }
 }

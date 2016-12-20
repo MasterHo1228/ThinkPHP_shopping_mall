@@ -236,6 +236,26 @@ class IndexController extends Controller
             $userID = session('user.usrID');
             $model = new OrderModel();
             $data = $model->showUserOrdersByUserID($userID);
+            for ($i = 0; $i < count($data); $i++) {
+                switch ($data[$i]['orderstatus']) {
+                    case '0':
+                        $data[$i]['orderstatusW'] = '已取消';
+                        break;
+                    case '1':
+                        if ($data[$i]['orderpaid'] == '1') {
+                            $data[$i]['orderstatusW'] = '已付款';
+                        } else if ($data[$i]['orderpaid'] == '0') {
+                            $data[$i]['orderstatusW'] = '未付款';
+                        }
+                        break;
+                    case '2':
+                        $data[$i]['orderstatusW'] = '已发货';
+                        break;
+                    case '3':
+                        $data[$i]['orderstatusW'] = '已收货';
+                        break;
+                }
+            }
             $this->assign('orderData', $data);
 
             //屏蔽导航条

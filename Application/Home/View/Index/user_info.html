@@ -38,8 +38,11 @@
                         <th style="width:20%">
                             <center>名称</center>
                         </th>
-                        <th style="width:20%">
+                        <th style="width:10%">
                             <center>价格</center>
+                        </th>
+                        <th style="width:10%">
+                            <center>状态</center>
                         </th>
                         <th style="width:20%">
                             <center>操作</center>
@@ -66,14 +69,25 @@
                             <td style="line-height:100px;">
                                 <center>￥ {$v.ordersumprice}</center>
                             </td>
+                            <td style="line-height:100px;">
+                                <center>{$v.orderstatusW}</center>
+                            </td>
                             <td>
                                 <if condition="$v.orderstatus eq 2 ">
-                                    <center><a href="javascript:void(0)" class="btn btn-sm btn-success"
-                                               style="margin-top:15px;">确认收货</a></center>
+                                    <center>
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-success btnConfirm"
+                                           style="margin-top:10px;" data-value="{$orderID}" data-toggle="modal"
+                                           data-target="#confirmOrderDialog">确认收货</a>
+                                        <!--<a href="javascript:void(0)" class="btn btn-sm btn-danger"
+                                           style="margin-top:10px;">退款/换货</a>-->
+                                    </center>
                                     <elseif condition="($v.orderstatus eq 1) AND ($v.orderpaid eq 0)"/>
                                     <center><a href="{:U('Index/payOrder',array('orderID'=>$orderID))}"
                                                class="btn btn-sm btn-warning"
-                                               style="margin-top:15px;" target="_blank">支付订单</a></center>
+                                               style="margin-top:10px;" target="_blank">支付订单</a></center>
+                                    <center><a href="javascript:void(0)" class="btn btn-sm btn-danger btnCancel"
+                                               style="margin-top:10px;" data-value="{$orderID}" data-toggle="modal"
+                                               data-target="#cancelOrderDialog">取消订单</a></center>
                                 </if>
                                 <center><a href="javascript:void(0)" class="btn btn-sm btn-primary"
                                            style="margin-top:15px;">订单详情</a></center>
@@ -89,3 +103,94 @@
 <br>
 <br>
 <br>
+
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="cancelOrderDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">取消订单</h4>
+            </div>
+            <div class="modal-body">确定要取消订单了吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnToCancel">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="confirmOrderDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认收货</h4>
+            </div>
+            <div class="modal-body">确定已经收到货了吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnToConfirm">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script language="JavaScript">
+    var cancelOrderID, confirmOrderID;
+    $(function () {
+        $(".btnCancel").click(function () {
+            cancelOrderID = $(this).attr('data-value');
+        });
+        $(".btnConfirm").click(function () {
+            confirmOrderID = $(this).attr('data-value');
+        });
+
+        $("#btnToCancel").click(function () {
+            if (cancelOrderID != '') {
+                $.ajax({
+                    url: "{:U('Order/cancelOrder')}",
+                    type: 'post',
+                    data: {
+                        orderID: cancelOrderID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        $("#cancelOrderDialog").modal('hide');
+                        if (data == 'true') {
+                            $("#alertDialogMain").empty().append("操作成功！");
+                        } else if (data == 'false') {
+                            $("#alertDialogMain").empty().append("操作失败！");
+                        }
+                        $("#btnReload").prop('value', 'reload');
+                        $("#alertDialog").modal('show');
+                    }
+                })
+            }
+        });
+
+        $("#btnToConfirm").click(function () {
+            if (confirmOrderID != '') {
+                $.ajax({
+                    url: "{:U('Order/confirmOrder')}",
+                    type: 'post',
+                    data: {
+                        orderID: confirmOrderID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        $("#confirmOrderDialog").modal('hide');
+                        if (data == 'true') {
+                            $("#alertDialogMain").empty().append("操作成功！");
+                        } else if (data == 'false') {
+                            $("#alertDialogMain").empty().append("操作失败！");
+                        }
+                        $("#btnReload").prop('value', 'reload');
+                        $("#alertDialog").modal('show');
+                    }
+                })
+            }
+        });
+    })
+</script>
