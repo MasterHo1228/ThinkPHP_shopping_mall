@@ -42,77 +42,42 @@
                             <center>价格</center>
                         </th>
                         <th style="width:20%">
-                            <center>编辑</center>
+                            <center>操作</center>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td style="line-height:100px;">
-                            <center>123456</center>
-                        </td>
-                        <td>
-                            <center>
-                                <div class="thumbnail" style="width:100px;margin-top:10px;">
-                                    <img src="__PUBLIC__/images/abt-1.jpg">
-                                </div>
-                            </center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>名称</center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>价格</center>
-                        </td>
-                        <td>
-                            <center><input class="btnDelCartGoods" type="button" value="删除" data-value="{$v.goodsid}"
-                                           style="margin-top:30px;"/></center>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="line-height:100px;">
-                            <center>123456</center>
-                        </td>
-                        <td>
-                            <center>
-                                <div class="thumbnail" style="width:100px;margin-top:10px;">
-                                    <img src="__PUBLIC__/images/abt-1.jpg">
-                                </div>
-                            </center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>名称</center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>价格</center>
-                        </td>
-                        <td>
-                            <center><input class="btnDelCartGoods" type="button" value="删除" data-value="{$v.goodsid}"
-                                           style="margin-top:30px;"/></center>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="line-height:100px;">
-                            <center>123456</center>
-                        </td>
-                        <td>
-                            <center>
-                                <div class="thumbnail" style="width:100px;margin-top:10px;">
-                                    <img src="__PUBLIC__/images/abt-1.jpg">
-                                </div>
-                            </center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>名称</center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>价格</center>
-                        </td>
-                        <td>
-                            <center><input class="btnDelCartGoods" type="button" value="删除" data-value="{$v.goodsid}"
-                                           style="margin-top:30px;"/></center>
-                        </td>
-                    </tr>
+                    <foreach name="orderData" item="v">
+                        <tr>
+                            <td style="line-height:100px;">
+                                <center>{$v.orderid}</center>
+                            </td>
+                            <td>
+                                <center>
+                                    <div class="thumbnail" style="width:100px;margin-top:10px;">
+                                        <img src="{$v.ordergoodsimg}">
+                                    </div>
+                                </center>
+                            </td>
+                            <td style="line-height:100px;">
+                                <center>{$v.ordergoodsname}</center>
+                            </td>
+                            <td style="line-height:100px;">
+                                <center>￥ {$v.ordersumprice}</center>
+                            </td>
+                            <td>
+                                <if condition="$v.orderstatus eq 2 ">
+                                    <center><a href="javascript:void(0)" class="btn btn-sm btn-success"
+                                               style="margin-top:15px;">确认收货</a></center>
+                                    <elseif condition="($v.orderstatus eq 1) AND ($v.orderpaid eq 0)"/>
+                                    <center><a href="javascript:void(0)" class="btn btn-sm btn-warning"
+                                               style="margin-top:15px;">支付订单</a></center>
+                                </if>
+                                <center><a href="javascript:void(0)" class="btn btn-sm btn-primary"
+                                           style="margin-top:15px;">订单详情</a></center>
+                            </td>
+                        </tr>
+                    </foreach>
                     </tbody>
                 </table>
             </div>

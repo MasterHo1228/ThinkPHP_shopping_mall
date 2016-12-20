@@ -212,6 +212,11 @@ class IndexController extends Controller
     public function user()
     {
         if (isUserLogin()) {
+            $userID = session('user.usrID');
+            $model = new OrderModel();
+            $data = $model->showUserOrdersByUserID($userID);
+            $this->assign('orderData', $data);
+
             //屏蔽导航条
             $this->assign('noNavTab', 'true');
             layout('Layout/layout');

@@ -231,6 +231,8 @@ class OrderModel
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 }
