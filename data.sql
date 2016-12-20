@@ -83,7 +83,8 @@ CREATE TABLE IF NOT EXISTS goods (
   gPubTime     DATETIME                    NOT NULL,
   gStatus      ENUM ('0', '1', '2')        NOT NULL DEFAULT '1',
   CONSTRAINT FK_goodsType FOREIGN KEY (gType) REFERENCES goodsType (tID),
-  CONSTRAINT FK_goodsSUID FOREIGN KEY (gSalesSUID) REFERENCES sale_users (sID)
+  CONSTRAINT FK_goodsSUID FOREIGN KEY (gSalesSUID) REFERENCES sale_users (sID),
+  INDEX Index_GoodsName (gName)
 );
 
 CREATE TABLE IF NOT EXISTS express_list (
