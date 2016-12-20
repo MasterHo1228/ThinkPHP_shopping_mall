@@ -23,7 +23,7 @@ class GoodsModel
     {
         $table = M('viewgoodsdetail');
         $where = "gStatus<>'0'";
-        return $table->where($where)->order('gStatus DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->limit(30)->select();
+        return $table->cache(true)->where($where)->order('gStatus DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->limit(30)->select();
     }
 
     /**
@@ -34,7 +34,7 @@ class GoodsModel
     {
         $table = M('viewgoodsdetail');
         $where = "gStatus<>'0'";
-        return $table->where($where)->order('gPubTime DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->limit(30)->select();
+        return $table->cache(true)->where($where)->order('gPubTime DESC')->field('gID,gName,gPrice,gPhoto,gStatus')->limit(30)->select();
     }
 
     /**
@@ -44,7 +44,7 @@ class GoodsModel
     public function getTop3Goods()
     {
         $table = M('viewgoodsdetail');
-        $data = $table->where("gStatus='2'")->field('gID,gName,gPrice,gPhoto,gDescription')->limit(3)->select();
+        $data = $table->cache(true)->where("gStatus='2'")->field('gID,gName,gPrice,gPhoto,gDescription')->limit(3)->select();
         return $data;
     }
 
@@ -60,7 +60,7 @@ class GoodsModel
             $where = 'gID=' . $id;
             $status = $table->where($where)->getField('gStatus');
             if ($status != '0') {//若商品非已下架 则照常返回数据
-                return $table->where($where)->field('gID,gName,goodsTypeName,gPrice,gOriginPrice,gSoldOutNum,gCount,shopName,gPhoto,gDescription,gPubTime')->find();
+                return $table->cache(true)->where($where)->field('gID,gName,goodsTypeName,gPrice,gOriginPrice,gSoldOutNum,gCount,shopName,gPhoto,gDescription,gPubTime')->find();
             } else {
                 //商品若已下架 则直接false
                 return false;
@@ -71,7 +71,7 @@ class GoodsModel
     }
 
     /**
-     * 根据商品种类生产商品列表
+     * 根据商品种类生成商品列表
      * @param int $type 商品种类编号
      * @return bool
      */

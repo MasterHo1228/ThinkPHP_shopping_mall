@@ -21,5 +21,7 @@ return array(
     'DB_PREFIX' => '', // 数据库表前缀
     'DB_CHARSET' => 'utf8mb4', // 数据库编码默认采用utf8mb4
 
-    'URL_MODEL' => 2, // URL访问模式
+    'URL_MODEL' => 2, // URL访问模式,
+
+    'DATA_CACHE_TIME' => 30,      // 数据缓存有效期 0表示永久缓存
 );
