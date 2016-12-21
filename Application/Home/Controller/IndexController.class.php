@@ -266,4 +266,11 @@ class IndexController extends Controller
             $this->error('非法操作！', U('index'));
         }
     }
+
+    public function orderDetail()
+    {
+        $this->assign('noNavTab', 'true');
+        layout('Layout/layout');
+        $this->display('order_detail');
+    }
 }
