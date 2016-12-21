@@ -269,8 +269,25 @@ class IndexController extends Controller
 
     public function orderDetail()
     {
-        $this->assign('noNavTab', 'true');
-        layout('Layout/layout');
-        $this->display('order_detail');
+        if (isUserLogin() && IS_GET && !empty(I('get.orderID'))) {
+            $orderID = I('get.orderID/s');
+            $userID = getUserID();
+
+            $model = new OrderModel();
+            $data = $model->getOrderMainInfo($userID, $orderID);
+            if ($data) {
+                $this->assign('data', $data);
+
+                $goodsList = $model->getOrderGoodsList($orderID);
+                $this->assign('goodsList', $goodsList);
+                $this->assign('noNavTab', 'true');
+                layout('Layout/layout');
+                $this->display('order_detail');
+            } else {
+                $this->error('抱歉，暂时无法查询该订单的详细数据！', U('index'));
+            }
+        } else {
+            $this->error('非法操作！', U('index'));
+        }
     }
 }

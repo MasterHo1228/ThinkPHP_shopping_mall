@@ -1,5 +1,3 @@
-<link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet">
-
 <div class="breadcrumbs">
     <div class="container">
         <div class="breadcrumbs-main">
@@ -24,18 +22,29 @@
                     <thead>
                     <tr>
                         <th colspan="5">
-                            订单号：XXXXXXX
-                            <a href="#" class="btn btn-sm btn-warning pull-right">付款</a>
-                            <button class="btn btn-sm btn-success pull-right" style="margin-right: 5px !important;">
-                                确认收货
-                            </button>
-                            <button class="btn btn-sm btn-primary pull-right" style="margin-right: 5px !important;">
+                            订单号：{$data.orderid}
+                            <if condition="$data['orderstatus'] eq '0'">
+                                &nbsp;&nbsp;&nbsp;<span style="color: red;font-weight: bold">订单已被取消</span>
+                                <elseif condition="($data['orderstatus'] eq '1') AND ($data['orderpaid'] eq '0')"/>
+                                <button class="btn btn-sm btn-danger pull-right" data-toggle="modal"
+                                        data-target="#cancelOrderDialog" style="margin-right: 5px !important;">取消订单
+                                </button>
+                                <a href="{:U('Index/payOrder',array('orderID'=>$orderID))}"
+                                   class="btn btn-sm btn-warning pull-right"
+                                   style="margin-right: 5px !important;">付款</a>
+                                <elseif condition="$data['orderstatus'] eq '2'"/>
+                                <button class="btn btn-sm btn-success pull-right" style="margin-right: 5px !important;"
+                                        data-toggle="modal" data-target="#confirmOrderDialog">确认收货
+                                </button>
+                            </if>
+                            <button class="btn btn-sm btn-primary pull-right" style="margin-right: 5px !important;"
+                                    data-toggle="modal" data-target="#expressInfoDialog">
                                 物流信息
                             </button>
                         </th>
                     </tr>
                     <tr>
-                        <th colspan="5" style="text-align: center">订单状态</th>
+                        <th colspan="4" style="text-align: center">订单状态</th>
                     </tr>
                     <tr>
                         <th style="width:20%">
@@ -48,9 +57,6 @@
                             <center>已发货</center>
                         </th>
                         <th style="width:20%">
-                            <center>已签收</center>
-                        </th>
-                        <th style="width:20%">
                             <center>已确认</center>
                         </th>
                     </tr>
@@ -59,8 +65,28 @@
                     <tr>
                         <td colspan="5">
                             <div class="progress" style="margin-top:20px;">
-                                <div class="progress-bar progress-bar" role="progressbar" aria-valuenow="60"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:80%;"></div>
+                                <eq name="data['orderstatus']" value="3">
+                                    <div class="progress-bar progress-bar-success" role="progressbar"
+                                         aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:100%;"></div>
+                                </eq>
+                                <eq name="data['orderstatus']" value="2">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="75"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:75%;"></div>
+                                </eq>
+                                <eq name="data['orderstatus']" value="1">
+                                    <if condition="$data['orderpaid'] eq '1'">
+                                        <div class="progress-bar progress-bar-info" role="progressbar"
+                                             aria-valuenow="50"
+                                             aria-valuemin="0" aria-valuemax="100" style="width:50%;"></div>
+                                        <elseif condition="$data['orderpaid'] eq '0'"/>
+                                        <div class="progress-bar progress-bar-warning" role="progressbar"
+                                             aria-valuenow="25"
+                                             aria-valuemin="0" aria-valuemax="100" style="width:25%;"></div>
+                                    </if>
+
+                                </eq>
+
                             </div>
                         </td>
                     </tr>
@@ -87,22 +113,30 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <foreach name="goodsList" item="item">
+                        <tr>
+                            <td>
+                                <center>
+                                    <div class="thumbnail" style="width:100px;margin-top:10px;">
+                                        <a href="__CONTROLLER__/single.html?goodsID={$item.ordergid}"
+                                           target="_blank"><img src="{$item.goodsphoto}"></a>
+                                    </div>
+                                </center>
+                            </td>
+                            <td style="line-height:100px;">
+                                <center>{$item.goodsname}</center>
+                            </td>
+                            <td style="line-height:100px;">
+                                <center>￥ {$item.goodsprice}</center>
+                            </td>
+                            <td style="line-height:100px;">
+                                <center>{$item.goodscount}</center>
+                            </td>
+                        </tr>
+                    </foreach>
                     <tr>
-                        <td>
-                            <center>
-                                <div class="thumbnail" style="width:100px;margin-top:10px;">
-                                    <img src="__PUBLIC__/images/abt-1.jpg">
-                                </div>
-                            </center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>名称</center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>价格</center>
-                        </td>
-                        <td style="line-height:100px;">
-                            <center>数量</center>
+                        <td colspan="4" style="text-align: right !important; font-weight: bold;">总价：￥
+                            {$data.ordersumprice}
                         </td>
                     </tr>
                     </tbody>
@@ -116,3 +150,113 @@
 <br>
 <br>
 <br>
+
+<input type="hidden" id="orderID" value="{$data.orderid}">
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="expressInfoDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">物流信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>收货人：{$data.ordercname}</p>
+                <p>收货地址：{$data.orderaddress}</p>
+                <p>联系电话：{$data.orderphone}</p>
+                <br/><br/>
+                <notempty name="data['expressnum']">
+                    <p>物流公司：{$data.expressname}</p>
+                    <p>运单号：{$data.expressnum}</p>
+                </notempty>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="cancelOrderDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">取消订单</h4>
+            </div>
+            <div class="modal-body">确定要取消订单了吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnToCancel">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 自定义modal提示框 -->
+<div class="modal fade" id="confirmOrderDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认收货</h4>
+            </div>
+            <div class="modal-body">确定已经收到货了吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnToConfirm">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="__PUBLIC__/js/jquery.min.js"></script>
+<script language="JavaScript">
+    $(function () {
+        $("#btnToCancel").click(function () {
+            var cancelOrderID = $("#orderID").val();
+            if (cancelOrderID != '') {
+                $.ajax({
+                    url: "{:U('Order/cancelOrder')}",
+                    type: 'post',
+                    data: {
+                        orderID: cancelOrderID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        $("#cancelOrderDialog").modal('hide');
+                        if (data == 'true') {
+                            $("#btnReload").prop('value', 'user');
+                            $("#alertDialogMain").empty().append("操作成功！");
+                        } else if (data == 'false') {
+                            $("#alertDialogMain").empty().append("操作失败！");
+                        }
+                        $("#alertDialog").modal('show');
+                    }
+                })
+            }
+        });
+
+        $("#btnToConfirm").click(function () {
+            var confirmOrderID = $("#orderID").val();
+            if (confirmOrderID != '') {
+                $.ajax({
+                    url: "{:U('Order/confirmOrder')}",
+                    type: 'post',
+                    data: {
+                        orderID: confirmOrderID
+                    },
+                    dataType: 'text',
+                    success: function (data) {
+                        $("#confirmOrderDialog").modal('hide');
+                        if (data == 'true') {
+                            $("#alertDialogMain").empty().append("操作成功！");
+                        } else if (data == 'false') {
+                            $("#alertDialogMain").empty().append("操作失败！");
+                        }
+                        $("#btnReload").prop('value', 'reload');
+                        $("#alertDialog").modal('show');
+                    }
+                })
+            }
+        });
+    })
+</script>

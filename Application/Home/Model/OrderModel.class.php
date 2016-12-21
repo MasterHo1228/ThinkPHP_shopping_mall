@@ -266,7 +266,30 @@ class OrderModel
             $orderStatus = $this->checkOrderStatus($orderID);
             if ($orderStatus == '1') {
                 $orderList = M('OrderList');
-                return $orderList->where("orderID='$orderID' AND orderUserID=$userID")->setField('orderStatus', '0');
+                $result = $orderList->where("orderID='$orderID' AND orderUserID=$userID")->setField('orderStatus', '0');
+                if ($result) {
+                    $orderListItem = M('OrderListItem');
+                    $orderGoodsList = $orderListItem->where("orderID='$orderID'")->field('orderGID,orderGCount')->select();
+                    if (!empty($orderGoodsList)) {
+                        $goods = M('goods');
+                        foreach ($orderGoodsList as $item) {
+                            $itemData['orderID'] = $orderID;
+                            $itemData['orderGID'] = $item['goodsid'];
+                            $itemData['orderGCount'] = $item['goodscount'];
+
+                            //更新商品库存量及销量
+                            $thisGoodsCount = $goods->where('gID=' . $item['ordergid'])->getField('gCount');
+                            $goods->where('gID=' . $item['ordergid'])->setField('gCount', $thisGoodsCount + $item['goodscount']);
+                            $thisGoodsSoldNum = $goods->where('gID=' . $item['ordergid'])->getField('gSoldOutNum');
+                            $goods->where('gID=' . $item['ordergid'])->setField('gSoldOutNum', $thisGoodsSoldNum - $item['goodscount']);
+                        }
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -285,6 +308,26 @@ class OrderModel
             } else {
                 return false;
             }
+        } else {
+            return false;
+        }
+    }
+
+    public function getOrderMainInfo($userID, $orderID)
+    {
+        if (!empty($userID) && !empty($orderID)) {
+            $model = M('vieworderinfo');
+            return $model->where("orderID='$orderID' AND orderUserID=$userID")->field('orderID,orderSumPrice,orderCName,orderAddress,orderPhone,orderPaid,orderPaidBy,orderStatus,expressName,expressNum')->find();
+        } else {
+            return false;
+        }
+    }
+
+    public function getOrderGoodsList($orderID)
+    {
+        if (!empty($orderID)) {
+            $model = M('viewordergoodsinfo');
+            return $model->where("orderID='$orderID'")->field('orderGID,goodsName,goodsPhoto,goodsCount,goodsPrice')->select();
         } else {
             return false;
         }

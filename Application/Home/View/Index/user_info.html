@@ -86,12 +86,16 @@
                                     <center><a href="{:U('Index/payOrder',array('orderID'=>$orderID))}"
                                                class="btn btn-sm btn-warning"
                                                style="margin-top:10px;" target="_blank">支付订单</a></center>
-                                    <center><a href="javascript:void(0)" class="btn btn-sm btn-danger btnCancel"
-                                               style="margin-top:10px;" data-value="{$orderID}" data-toggle="modal"
-                                               data-target="#cancelOrderDialog">取消订单</a></center>
+                                    <center>
+                                        <button class="btn btn-sm btn-danger btnCancel"
+                                                style="margin-top:10px;" data-value="{$orderID}" data-toggle="modal"
+                                                data-target="#cancelOrderDialog">取消订单
+                                        </button>
+                                    </center>
                                 </if>
-                                <center><a href="javascript:void(0)" class="btn btn-sm btn-primary"
-                                           style="margin-top:15px;">订单详情</a></center>
+                                <center><a href="__CONTROLLER__/orderDetail.html?orderID={$orderID}"
+                                           class="btn btn-sm btn-primary"
+                                           style="margin-top:15px;" target="_blank">订单详情</a></center>
                             </td>
                         </tr>
                     </foreach>
