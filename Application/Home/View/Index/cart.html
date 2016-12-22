@@ -137,6 +137,8 @@
 
 <!-- jQuery -->
 <script src="__PUBLIC__/js/jquery.min.js"></script>
+
+<script src="__PUBLIC__/js/platform.js"></script>
 <script language="JavaScript">
     var goodsID;
     $(function () {
@@ -180,11 +182,10 @@
                         $("#delCartGoodsDialog").modal('hide');
                         switch (data.response) {
                             case 'success':
-                                $("#btnReload").prop('value', 'reload');
-                                $("#alertDialogMain").empty().append("删除成功！");
+                                showAlertDialog('删除成功', 'reload');
                                 break;
                             case 'failed':
-                                $("#alertDialogMain").empty().append("抱歉，操作失败！");
+                                showAlertDialog('抱歉，操作失败！', 'reload');
                                 break;
                         }
 
@@ -202,11 +203,10 @@
                     $("#clearCartDialog").modal('hide');
                     switch (data.response) {
                         case 'success':
-                            $("#btnReload").prop('value', 'reload');
-                            $("#alertDialogMain").empty().append("清空成功！");
+                            showAlertDialog('清空成功', 'reload');
                             break;
                         case 'failed':
-                            $("#alertDialogMain").empty().append("抱歉，操作失败！");
+                            showAlertDialog('抱歉，操作失败！', 'reload');
                             break;
                     }
 

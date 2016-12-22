@@ -147,6 +147,8 @@
 <script src="__PUBLIC__/js/imagezoom.js"></script>
 <script defer src="__PUBLIC__/js/jquery.flexslider.js"></script>
 
+<script defer src="__PUBLIC__/js/platform.js"></script>
+
 <script>
     // Can also be used with $(document).ready()
     $(function () {
@@ -171,18 +173,15 @@
                     success: function (data) {
                         switch (data.response) {
                             case 'success':
-                                $("#alertDialogMain").empty().append("商品已成功添加到购物车！");
+                                showAlertDialog('商品已成功添加到购物车！');
                                 break;
                             case 'failed':
-                                $("#alertDialogMain").empty().append("抱歉，操作失败！");
+                                showAlertDialog('抱歉，操作失败！');
                                 break;
                             case 'noLogin':
-                                $("#btnReload").prop('value', 'login');
-                                $("#alertDialogMain").empty().append("您尚未登录，快去登录吧！");
+                                showAlertDialog('您尚未登录，快去登录吧！', 'login');
                                 break;
                         }
-
-                        $("#alertDialog").modal('show');
                     }
                 });
             }

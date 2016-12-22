@@ -199,6 +199,8 @@
 <!--dropdown-->
 <script src="__PUBLIC__/js/jquery.easydropdown.js"></script>
 
+<script src="__PUBLIC__/js/platform.js"></script>
+
 <script>
     addEventListener("load", function () {
         setTimeout(hideURLbar, 0);
@@ -239,25 +241,21 @@
                     success: function (data) {
                         if (data == 'true') {
                             $("#loginDialog").modal('hide');
-                            $("#alertDialogMain").empty().append("登录成功！");
-                            $("#btnReload").prop('value', 'reload');
+                            showAlertDialog('登录成功', 'reload');
                         } else {
-                            $("#alertDialogMain").empty().append("用户名或密码错误！");
+                            showAlertDialog('用户名或密码错误');
                         }
                     }
                 });
             } else {
-                $("#alertDialogMain").empty().append("请输入用户名和密码！");
+                showAlertDialog('请输入用户名和密码');
             }
-            $("#alertDialog").modal('show');
         });
 
         $("#btnLogout").click(function () {
             $.getJSON("{:U('User/logout')}", function (data) {
                 if (data.resopnse == 'true') {
-                    $("#alertDialogMain").empty().append("登出成功！");
-                    $("#btnReload").prop('value', 'home');
-                    $("#alertDialog").modal('show')
+                    showAlertDialog('登出成功', 'home');
                 }
             });
         });

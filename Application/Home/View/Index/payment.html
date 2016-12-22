@@ -87,6 +87,8 @@
 
 <!--footer-end-->
 <script src="__PUBLIC__/js/jquery.min.js"></script>
+
+<script src="__PUBLIC__/js/platform.js"></script>
 <script language="JavaScript">
     var orderID = $("#orderID").val();
     $(function () {
@@ -103,10 +105,9 @@
                     success: function (data) {
                         if (data.response == 'success') {
                             $("#alipayWindow").modal('hide');
-                            $("#btnReload").prop('value', 'home');
-                            $("#alertDialogMain").empty().append("操作成功！");
+                            showAlertDialog('操作成功！', 'home');
                         } else if (data.response == 'failed') {
-                            $("#alertDialogMain").empty().append("操作失败！");
+                            showAlertDialog('操作成功！');
                         }
 
                         $("#alertDialog").modal('show');
@@ -126,17 +127,18 @@
                     },
                     dataType: 'json',
                     success: function (data) {
-                        if (data.response == 'success') {
-                            $("#wechatWindow").modal('hide');
-                            $("#btnReload").prop('value', 'home');
-                            $("#alertDialogMain").empty().append("操作成功！");
-                        } else if (data.response == 'paid') {
-                            $("#alertDialogMain").empty().append("订单已成功支付！");
-                        } else if (data.response == 'failed') {
-                            $("#alertDialogMain").empty().append("操作失败！");
+                        switch (data.response) {
+                            case 'success':
+                                $("#wechatWindow").modal('hide');
+                                showAlertDialog('操作成功！', 'home');
+                                break;
+                            case 'paid':
+                                showAlertDialog('订单已成功支付！', 'home');
+                                break;
+                            case 'failed':
+                                showAlertDialog('操作失败！', 'home');
+                                break;
                         }
-
-                        $("#alertDialog").modal('show');
                     }
                 })
             }

@@ -209,6 +209,8 @@
 </div>
 
 <script src="__PUBLIC__/js/jquery.min.js"></script>
+
+<script src="__PUBLIC__/js/platform.js"></script>
 <script language="JavaScript">
     $(function () {
         $("#btnToCancel").click(function () {
@@ -224,12 +226,10 @@
                     success: function (data) {
                         $("#cancelOrderDialog").modal('hide');
                         if (data == 'true') {
-                            $("#btnReload").prop('value', 'user');
-                            $("#alertDialogMain").empty().append("操作成功！");
+                            showAlertDialog("操作成功！", 'user');
                         } else if (data == 'false') {
-                            $("#alertDialogMain").empty().append("操作失败！");
+                            showAlertDialog("操作失败！");
                         }
-                        $("#alertDialog").modal('show');
                     }
                 })
             }
@@ -248,12 +248,10 @@
                     success: function (data) {
                         $("#confirmOrderDialog").modal('hide');
                         if (data == 'true') {
-                            $("#alertDialogMain").empty().append("操作成功！");
+                            showAlertDialog("操作成功！", 'reload');
                         } else if (data == 'false') {
-                            $("#alertDialogMain").empty().append("操作失败！");
+                            showAlertDialog("操作失败！", 'reload');
                         }
-                        $("#btnReload").prop('value', 'reload');
-                        $("#alertDialog").modal('show');
                     }
                 })
             }

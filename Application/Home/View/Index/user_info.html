@@ -95,7 +95,7 @@
                                 </if>
                                 <center><a href="__CONTROLLER__/orderDetail.html?orderID={$orderID}"
                                            class="btn btn-sm btn-primary"
-                                           style="margin-top:15px;" target="_blank">订单详情</a></center>
+                                           style="margin-top:15px;">订单详情</a></center>
                             </td>
                         </tr>
                     </foreach>
@@ -142,6 +142,8 @@
 </div>
 
 <script src="__PUBLIC__/js/jquery.min.js"></script>
+
+<script src="__PUBLIC__/js/platform.js"></script>
 <script language="JavaScript">
     var cancelOrderID, confirmOrderID;
     $(function () {
@@ -164,12 +166,10 @@
                     success: function (data) {
                         $("#cancelOrderDialog").modal('hide');
                         if (data == 'true') {
-                            $("#alertDialogMain").empty().append("操作成功！");
+                            showAlertDialog('操作成功', 'reload');
                         } else if (data == 'false') {
-                            $("#alertDialogMain").empty().append("操作失败！");
+                            showAlertDialog('操作失败', 'reload');
                         }
-                        $("#btnReload").prop('value', 'reload');
-                        $("#alertDialog").modal('show');
                     }
                 })
             }
@@ -187,12 +187,10 @@
                     success: function (data) {
                         $("#confirmOrderDialog").modal('hide');
                         if (data == 'true') {
-                            $("#alertDialogMain").empty().append("操作成功！");
+                            showAlertDialog('操作成功', 'reload');
                         } else if (data == 'false') {
-                            $("#alertDialogMain").empty().append("操作失败！");
+                            showAlertDialog('操作失败', 'reload');
                         }
-                        $("#btnReload").prop('value', 'reload');
-                        $("#alertDialog").modal('show');
                     }
                 })
             }

@@ -105,6 +105,8 @@
 <input type="hidden" id="orderRealSumPrice" value="{$sumPrice}">
 <script src="__PUBLIC__/js/jquery.min.js"></script>
 <script src="__PUBLIC__/js/layer.js"></script>
+
+<script src="__PUBLIC__/js/platform.js"></script>
 <script language="JavaScript">
     $(function () {
         $("#btnToMakeOrder").click(function () {
@@ -134,15 +136,13 @@
                                 window.location.href = "{:U('payOrder')}";
                                 break;
                             case 'failed':
-                                $("#alertDialogMain").empty().append("抱歉，操作失败！");
-                                $("#alertDialog").modal('show');
+                                showAlertDialog('抱歉，操作失败！');
                                 break;
                         }
                     }
                 })
             } else {
-                $("#alertDialogMain").empty().append("订单收货信息请填写完整！");
-                $("#alertDialog").modal('show');
+                showAlertDialog('订单收货信息请填写完整！');
             }
         })
     })
