@@ -5,7 +5,7 @@ USE dbMall;
 CREATE TABLE IF NOT EXISTS admin (
   aID       INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   aName     VARCHAR(20)              NOT NULL UNIQUE,
-  aPassword VARCHAR(32)              NOT NULL,
+  aPassword CHAR(32)              NOT NULL,
   aSalt     CHAR(4)                  NOT NULL
 );
 
@@ -34,7 +34,7 @@ CREATE VIEW viewAdminLog AS
 CREATE TABLE IF NOT EXISTS sale_users (
   sID       INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   sName     VARCHAR(20)              NOT NULL UNIQUE,
-  sPassword VARCHAR(32)              NOT NULL,
+  sPassword CHAR(32)              NOT NULL,
   sSalt     CHAR(4)                  NOT NULL,
   shopName  VARCHAR(25)              NOT NULL
 );
@@ -47,7 +47,7 @@ SET sID = 2, sName = 'Demo1', shopName = '测试店铺账号1', sPassword = MD5(
 CREATE TABLE IF NOT EXISTS users (
   uID       BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
   uName     VARCHAR(25)                 NOT NULL UNIQUE,
-  uPassword VARCHAR(32)                 NOT NULL,
+  uPassword CHAR(32)                 NOT NULL,
   uSalt     CHAR(4)                     NOT NULL,
   uGender   ENUM ('male', 'female')              DEFAULT 'male',
   uEmail    VARCHAR(30),
