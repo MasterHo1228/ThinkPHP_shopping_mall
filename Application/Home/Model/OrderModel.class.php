@@ -271,17 +271,13 @@ class OrderModel
                     $orderListItem = M('OrderListItem');
                     $orderGoodsList = $orderListItem->where("orderID='$orderID'")->field('orderGID,orderGCount')->select();
                     if (!empty($orderGoodsList)) {
-                        $goods = M('goods');
+                        $goods = M('Goods');
                         foreach ($orderGoodsList as $item) {
-                            $itemData['orderID'] = $orderID;
-                            $itemData['orderGID'] = $item['goodsid'];
-                            $itemData['orderGCount'] = $item['goodscount'];
-
                             //更新商品库存量及销量
                             $thisGoodsCount = $goods->where('gID=' . $item['ordergid'])->getField('gCount');
-                            $goods->where('gID=' . $item['ordergid'])->setField('gCount', $thisGoodsCount + $item['goodscount']);
+                            $goods->where('gID=' . $item['ordergid'])->setField('gCount', $thisGoodsCount + $item['ordergcount']);
                             $thisGoodsSoldNum = $goods->where('gID=' . $item['ordergid'])->getField('gSoldOutNum');
-                            $goods->where('gID=' . $item['ordergid'])->setField('gSoldOutNum', $thisGoodsSoldNum - $item['goodscount']);
+                            $goods->where('gID=' . $item['ordergid'])->setField('gSoldOutNum', $thisGoodsSoldNum - $item['ordergcount']);
                         }
                         return true;
                     } else {
