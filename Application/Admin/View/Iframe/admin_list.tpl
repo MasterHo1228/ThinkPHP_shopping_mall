@@ -301,7 +301,6 @@
             }
         });
 
-
         $("#btnReload").click(function () {
             $("#alertDialog").modal('hide');
 

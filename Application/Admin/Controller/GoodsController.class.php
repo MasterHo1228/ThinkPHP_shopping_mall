@@ -106,23 +106,6 @@ class GoodsController extends Controller
     }
 
     /**
-     * 删除商品
-     */
-    public function delete()
-    {
-        if (IS_POST && IS_AJAX && checkSalesUserLogin()) {
-            $goodsID = I('post.goodsID/d');
-            $model = D('goods');
-
-            if ($model->deleteGoods($goodsID)) {
-                $this->ajaxReturn('true', 'EVAL');
-            } else {
-                $this->ajaxReturn('false', 'EVAL');
-            }
-        }
-    }
-
-    /**
      * 下架商品
      */
     public function shutdown()

@@ -351,29 +351,6 @@
             downGID = $(this).attr('data-value');
         });
 
-        /*$("#btnToDelG").click(function () {
-            if (delGID != '') {
-                $.ajax({
-                    url: "{{U('backyard/Goods/delete')}}",
-                    type: 'post',
-                    data: {
-                        goodsID: delGID
-                    },
-                    dataType: 'text',
-                    success: function (data) {
-         $("#alertDelGWindow").modal('hide');
-                        if (data == 'true') {
-         //                            $("#alertHintContent").empty().append("删除成功！");
-         showAlertDialog('删除成功！','refresh');
-                        } else if (data == 'false') {
-         //                            $("#alertHintContent").empty().append("删除失败！");
-         showAlertDialog('删除失败！','refresh');
-                        }
-                    }
-                });
-            }
-         });*/
-
         $("#btnToShut").click(function () {
             if (shutGID != '') {
                 $.ajax({

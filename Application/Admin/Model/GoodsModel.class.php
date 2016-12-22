@@ -96,20 +96,6 @@ class GoodsModel extends Model
     }
 
     /**
-     * 根据商品ID删除对应商品
-     * @param int $id 商品ID
-     * @return bool|mixed
-     */
-    public function deleteGoods($id)
-    {
-        if (!empty($id)) {
-            return $this->where('gID=' . $id)->delete();
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * 根据商品ID下架对应商品
      * @param int $id 商品ID
      * @return bool
