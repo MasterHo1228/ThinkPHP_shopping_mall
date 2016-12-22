@@ -79,13 +79,12 @@
 <!-- /.container -->
 
 <!-- 添加商铺提示 -->
-<div class="modal fade" id="addShopWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="addShopWindow" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel1">添加商铺</h4>
+                <h4 class="modal-title">添加商铺</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -113,13 +112,12 @@
 </div>
 
 <!-- 编辑商铺提示 -->
-<div class="modal fade" id="editShopWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="editShopWindow" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel1">编辑商铺信息</h4>
+                <h4 class="modal-title">编辑商铺信息</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -147,13 +145,12 @@
 </div>
 
 <!-- 删除商铺提示 -->
-<div class="modal fade" id="alertDelSUWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="alertDelSUWindow" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel1">删除商铺</h4>
+                <h4 class="modal-title">删除商铺</h4>
             </div>
             <div class="modal-body">确定要删除该商铺吗？</div>
             <div class="modal-footer">
@@ -165,12 +162,11 @@
 </div>
 
 <!-- 自定义提示 -->
-<div class="modal fade" id="alertHint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="alertDialog" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel1">提示</h4>
+                <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body" id="alertHintContent"></div>
             <div class="modal-footer">
@@ -190,10 +186,11 @@
 <script src="__PUBLIC__/js/dataTables.bootstrap.min.js"></script>
 <script src="__PUBLIC__/js/dataTables.responsive.min.js"></script>
 
+<script src="__PUBLIC__/js/platform.js"></script>
+
 <script language="JavaScript">
     var editSUID, delSUID;
     function refresh() {
-        var table = $("#shopList");
         $("#shopListT").empty();
         $.getJSON("{{U('backyard/SaleUsers/getList')}}", function (data) {
             $.each(data, function (i, item) {
@@ -209,7 +206,7 @@
 
                 $("#shopListT").append(tableRow);
             });
-            table.dataTable({
+            $("#shopList").dataTable({
                 retrieve: true,
                 responsive: true,
                 sPaginationType: "full_numbers",
@@ -254,22 +251,20 @@
                     },
                     dadaType: 'text',
                     success: function (data) {
+                        $("#addShopWindow").modal('hide');
                         if (data == 'true') {
-                            $("#btnReload").attr('value', 'refresh');
-                            $("#alertHintContent").empty().append("商铺添加成功！");
                             $("#addSULoginName").val('');
                             $("#addSUPassword").val('');
                             $("#addSUName").val('');
+
+                            showAlertDialog('商铺添加成功！', 'refresh');
                         } else if (data == 'false') {
-                            $("#alertHintContent").empty().append("商铺添加失败！");
+                            showAlertDialog('商铺添加失败！', 'refresh');
                         }
-                        $("#addShopWindow").modal('hide');
-                        $("#alertHint").modal('show');
                     }
                 })
             } else {
-                $("#alertHintContent").empty().append("商铺信息请填写完整！");
-                $("#alertHint").modal('show');
+                showAlertDialog('商铺信息请填写完整！');
             }
         });
 
@@ -321,19 +316,16 @@
                         data: data,
                         dadaType: 'text',
                         success: function (data) {
-                            if (data == 'true') {
-                                $("#btnReload").attr('value', 'refresh');
-                                $("#alertHintContent").empty().append("用户信息更新成功！");
-                            } else if (data == 'false') {
-                                $("#alertHintContent").empty().append("用户信息更新失败！");
-                            }
                             $("#editShopWindow").modal('hide');
-                            $("#alertHint").modal('show');
+                            if (data == 'true') {
+                                showAlertDialog('用户信息更新成功！', 'refresh');
+                            } else if (data == 'false') {
+                                showAlertDialog('用户信息更新失败！', 'refresh');
+                            }
                         }
                     })
                 } else {
-                    $("#alertHintContent").empty().append("请输入用户名！");
-                    $("#alertHint").modal('show');
+                    showAlertDialog('请输入用户名！');
                 }
             }
         });
@@ -352,21 +344,21 @@
                     },
                     dataType: 'text',
                     success: function (data) {
+                        $("#alertDelSUWindow").modal('hide');
                         if (data == 'true') {
                             $("#alertHintContent").empty().append("删除成功！");
+                            showAlertDialog('删除成功！', 'refresh');
                         } else if (data == 'false') {
                             $("#alertHintContent").empty().append("删除失败！");
+                            showAlertDialog('删除失败！', 'refresh');
                         }
-                        $("#alertDelSUWindow").modal('hide');
-                        $("#btnReload").attr('value', 'refresh');
-                        $("#alertHint").modal('show');
                     }
                 });
             }
         });
 
         $("#btnReload").click(function () {
-            $("#alertHint").modal('hide');
+            $("#alertDialog").modal('hide');
 
             switch ($(this).attr('value')) {
                 case 'refresh':

@@ -140,14 +140,13 @@
 </div>
 
 <!-- 自定义提示 -->
-<div class="modal fade" id="alertHint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="alertDialog" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel1">提示</h4>
+                <h4 class="modal-title">提示</h4>
             </div>
-            <div class="modal-body" id="alertHintContent"></div>
+            <div class="modal-body" id="alertDialogMain"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnReload">确定</button>
             </div>
@@ -160,6 +159,8 @@
 <script src="__PUBLIC__/js/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+
+<script src="__PUBLIC__/js/platform.js"></script>
 
 <script language="JavaScript">
     var editAdminID, delAdminID;
@@ -192,38 +193,38 @@
 
         $("#btnToAdd").click(function () {
             if ($("#addAdminName").val() != '') {
-                if ($("#addAdminPasswd").val() == $("#addAdminPasswdT").val()) {
-                    var adminName = $("#addAdminName").val();
-                    var password = $("#addAdminPasswd").val();
-                    $.ajax({
-                        url: "{{U('backyard/Admin/add')}}",
-                        type: 'post',
-                        data: {
-                            adminName: adminName,
-                            password: password
-                        },
-                        dataType: 'text',
-                        success: function (data) {
-                            if (data == 'true') {
-                                $("#alertHintContent").empty().append("添加成功！");
-                                $("#addAdminName").val('');
-                                $("#adminPasswd").val('');
-                                $("#adminPasswdT").val('');
-                            } else if (data == 'false') {
-                                $("#alertHintContent").empty().append("添加失败！");
-                            }
-                            $("#addAdminWindow").modal('hide');
-                            $("#btnReload").attr('value', 'refresh');
-                            $("#alertHint").modal('show');
-                        }
-                    });
+                if ($("#addAdminPasswd").val() == '' || $("#addAdminPasswdT").val() == '') {
+                    showAlertDialog('请输入密码！');
                 } else {
-                    $("#alertHintContent").empty().append("两次输入的密码不一致！");
-                    $("#alertHint").modal('show');
+                    if ($("#addAdminPasswd").val() == $("#addAdminPasswdT").val()) {
+                        var adminName = $("#addAdminName").val();
+                        var password = $("#addAdminPasswd").val();
+                        $.ajax({
+                            url: "{{U('backyard/Admin/add')}}",
+                            type: 'post',
+                            data: {
+                                adminName: adminName,
+                                password: password
+                            },
+                            dataType: 'text',
+                            success: function (data) {
+                                $("#addAdminWindow").modal('hide');
+                                if (data == 'true') {
+                                    $("#addAdminName").val('');
+                                    $("#adminPasswd").val('');
+                                    $("#adminPasswdT").val('');
+                                    showAlertDialog('添加成功！', 'refresh');
+                                } else if (data == 'false') {
+                                    showAlertDialog('添加成功！');
+                                }
+                            }
+                        });
+                    } else {
+                        showAlertDialog('两次输入的密码不一致！');
+                    }
                 }
             } else {
-                $("#alertHintContent").empty().append("请输入用户名！");
-                $("#alertHint").modal('show');
+                showAlertDialog('请输入用户名！');
             }
         });
 
@@ -259,21 +260,19 @@
                         },
                         dataType: 'text',
                         success: function (data) {
+                            $("#editAdminWindow").modal('hide');
                             if (data == 'true') {
-                                $("#alertHintContent").empty().append("修改成功！");
                                 $("#editAdminPasswd").val('');
                                 $("#editAdminPasswdT").val('');
+                                showAlertDialog('修改成功！', 'refresh');
                             } else if (data == 'false') {
-                                $("#alertHintContent").empty().append("修改失败！");
+                                showAlertDialog('修改失败！', 'refresh');
                             }
-                            $("#editAdminWindow").modal('hide');
-                            $("#btnReload").attr('value', 'refresh');
                         }
                     });
                 } else {
-                    $("#alertHintContent").empty().append("两次输入的密码不一致！");
+                    showAlertDialog('两次输入的密码不一致！');
                 }
-                $("#alertHint").modal('show');
             }
         });
 
@@ -291,14 +290,12 @@
                     },
                     dataType: 'text',
                     success: function (data) {
-                        if (data == 'true') {
-                            $("#alertHintContent").empty().append("删除成功！");
-                        } else if (data == 'false') {
-                            $("#alertHintContent").empty().append("删除失败！");
-                        }
                         $("#alertDelAdminWindow").modal('hide');
-                        $("#btnReload").attr('value', 'refresh');
-                        $("#alertHint").modal('show');
+                        if (data == 'true') {
+                            showAlertDialog('删除成功！', 'refresh');
+                        } else if (data == 'false') {
+                            showAlertDialog('删除成功！', 'refresh');
+                        }
                     }
                 });
             }
@@ -306,7 +303,7 @@
 
 
         $("#btnReload").click(function () {
-            $("#alertHint").modal('hide');
+            $("#alertDialog").modal('hide');
 
             switch ($(this).attr('value')) {
                 case 'refresh':

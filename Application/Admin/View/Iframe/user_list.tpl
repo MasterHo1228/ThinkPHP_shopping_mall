@@ -75,13 +75,12 @@
 <!-- /.container -->
 
 <!-- 编辑用户提示 -->
-<div class="modal fade" id="editUserWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="editUserWindow" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel1">编辑用户</h4>
+                <h4 class="modal-title">编辑用户</h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -119,13 +118,12 @@
 </div>
 
 <!-- 删除用户提示 -->
-<div class="modal fade" id="alertDelUWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="alertDelUWindow" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel1">删除用户</h4>
+                <h4 class="modal-title">删除用户</h4>
             </div>
             <div class="modal-body">确定要删除该用户吗？</div>
             <div class="modal-footer">
@@ -137,12 +135,11 @@
 </div>
 
 <!-- 自定义提示 -->
-<div class="modal fade" id="alertHint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="alertDialog" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel1">提示</h4>
+                <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body" id="alertHintContent"></div>
             <div class="modal-footer">
@@ -164,10 +161,11 @@
 
 <script src="__PUBLIC__/js/layer.js"></script>
 
+<script src="__PUBLIC__/js/platform.js"></script>
+
 <script language="JavaScript">
     var editUID, delUID;
     function refresh() {
-        var table = $("#userList");
         $("#userListT").empty();
         $.getJSON("{{U('backyard/User/getList')}}", function (data) {
             $.each(data, function (i, item) {
@@ -183,7 +181,7 @@
 
                 $("#userListT").append(tableRow);
             });
-            table.dataTable({
+            $("#userList").dataTable({
                 retrieve: true,
                 responsive: true,
                 sPaginationType: "full_numbers",
@@ -303,19 +301,17 @@
                         data: data,
                         dadaType: 'text',
                         success: function (data) {
-                            if (data == 'true') {
-                                $("#btnReload").attr('value', 'refresh');
-                                $("#alertHintContent").empty().append("用户信息更新成功！");
-                            } else if (data == 'false') {
-                                $("#alertHintContent").empty().append("用户信息更新失败！");
-                            }
                             $("#editUserWindow").modal('hide');
-                            $("#alertHint").modal('show');
+                            if (data == 'true') {
+                                showAlertDialog('用户信息更新成功！', 'refresh');
+                            } else if (data == 'false') {
+                                showAlertDialog('用户信息更新失败！', 'refresh');
+                            }
+
                         }
                     })
                 } else {
-                    $("#alertHintContent").empty().append("请输入用户名！");
-                    $("#alertHint").modal('show');
+                    showAlertDialog('请输入用户名！');
                 }
             }
         });
@@ -334,21 +330,19 @@
                     },
                     dataType: 'text',
                     success: function (data) {
-                        if (data == 'true') {
-                            $("#alertHintContent").empty().append("删除成功！");
-                        } else if (data == 'false') {
-                            $("#alertHintContent").empty().append("删除失败！");
-                        }
                         $("#alertDelUWindow").modal('hide');
-                        $("#btnReload").attr('value', 'refresh');
-                        $("#alertHint").modal('show');
+                        if (data == 'true') {
+                            showAlertDialog('删除成功！', 'refresh');
+                        } else if (data == 'false') {
+                            showAlertDialog('删除失败！', 'refresh');
+                        }
                     }
                 });
             }
         });
 
         $("#btnReload").click(function () {
-            $("#alertHint").modal('hide');
+            $("#alertDialog").modal('hide');
 
             switch ($(this).attr('value')) {
                 case 'refresh':

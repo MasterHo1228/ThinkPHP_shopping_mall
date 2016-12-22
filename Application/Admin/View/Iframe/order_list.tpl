@@ -187,12 +187,11 @@
 </div>
 
 <!-- 自定义提示 -->
-<div class="modal fade" id="alertHint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="alertDialog" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel1">提示</h4>
+                <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body" id="alertHintContent"></div>
             <div class="modal-footer">
@@ -214,10 +213,11 @@
 
 <script src="__PUBLIC__/js/layer.js"></script>
 
+<script src="__PUBLIC__/js/platform.js"></script>
+
 <script language="JavaScript">
     var editOrderID, sendOrderID, cancelOrderID;
     function refresh() {
-        var table = $("#orderList");
         $("#orderListT").empty();
         $.getJSON("{{U('backyard/Order/getList')}}", function (data) {
             $.each(data, function (i, item) {
@@ -285,7 +285,7 @@
 
                 $("#orderListT").append(tableRow);
             });
-            table.dataTable({
+            $("#orderList").dataTable({
                 retrieve: true,
                 responsive: true,
                 sPaginationType: "full_numbers",
@@ -391,8 +391,7 @@
                     });
                 },
                 error: function () {
-                    $("#alertHintContent").empty().append("无法查询订单信息！");
-                    $("#alertHint").modal('show');
+                    showAlertDialog('无法查询订单信息！')
                 }
             });
         });
@@ -457,23 +456,20 @@
                         },
                         dataType: 'text',
                         success: function (data) {
+                            $("#editOrderWindow").modal('hide');
                             if (data == 'true') {
-                                $("#btnReload").attr('value', 'refresh');
                                 $("#editOrderCName").val('');
                                 $("#editOrderAddress").val('');
                                 $("#editOrderPhone").val('');
 
-                                $("#alertHintContent").empty().append("已更新订单信息！");
+                                showAlertDialog('已更新订单信息！', 'refresh');
                             } else if (data == 'false') {
-                                $("#alertHintContent").empty().append("操作失败！");
+                                showAlertDialog('操作失败！', 'refresh');
                             }
-                            $("#editOrderWindow").modal('hide');
-                            $("#alertHint").modal('show');
                         }
                     })
                 } else {
-                    $("#alertHintContent").empty().append("订单收货信息请填写完整！");
-                    $("#alertHint").modal('show');
+                    showAlertDialog('订单收货信息请填写完整！');
                 }
             }
         });
@@ -493,21 +489,18 @@
                         },
                         dadaType: 'text',
                         success: function (data) {
+                            $("#sendOrderWindow").modal('hide');
                             if (data == 'true') {
-                                $("#btnReload").attr('value', 'refresh');
                                 $("#sendOrderExpress").val('');
                                 $("#sendOrderEID").val('');
-                                $("#alertHintContent").empty().append("已更新订单物流信息，发货成功！");
+                                showAlertDialog('已更新订单物流信息，发货成功！', 'refresh');
                             } else if (data == 'false') {
-                                $("#alertHintContent").empty().append("操作失败！");
+                                showAlertDialog('操作失败！', 'refresh');
                             }
-                            $("#sendOrderWindow").modal('hide');
-                            $("#alertHint").modal('show');
                         }
                     })
                 } else {
-                    $("#alertHintContent").empty().append("快递信息请填写完整！");
-                    $("#alertHint").modal('show');
+                    showAlertDialog('快递信息请填写完整！');
                 }
             }
         });
@@ -526,25 +519,22 @@
                     },
                     dataType: 'text',
                     success: function (data) {
-                        if (data == 'true') {
-                            $("#alertHintContent").empty().append("取消成功！");
-                        } else if (data == 'false') {
-                            $("#alertHintContent").empty().append("操作失败！");
-                        }
                         $("#alertCancelOWindow").modal('hide');
-                        $("#btnReload").attr('value', 'refresh');
-                        $("#alertHint").modal('show');
+                        if (data == 'true') {
+                            showAlertDialog('取消成功！', 'refresh');
+                        } else if (data == 'false') {
+                            showAlertDialog('操作失败！', 'refresh');
+                        }
                     },
                     error: function () {
-                        $("#alertHintContent").empty().append("操作失败！");
-                        $("#alertHint").modal('show');
+                        showAlertDialog('操作失败！', 'refresh');
                     }
                 });
             }
         });
 
         $("#btnReload").click(function () {
-            $("#alertHint").modal('hide');
+            $("#alertDialog").modal('hide');
 
             switch ($(this).attr('value')) {
                 case 'refresh':
