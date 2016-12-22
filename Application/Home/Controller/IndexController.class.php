@@ -40,6 +40,9 @@ class IndexController extends Controller
         $this->display();
     }
 
+    /**
+     * 商城用户账号登录页
+     */
     public function login()
     {
         if (isUserLogin()) {
@@ -53,6 +56,9 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 商城用户账号注册页
+     */
     public function register()
     {
         if (isUserLogin()) {
@@ -66,6 +72,9 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 商品种类页
+     */
     public function products()
     {
         if (IS_GET && I('get.type') != null) {
@@ -97,6 +106,9 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 商品搜索页
+     */
     public function search()
     {
         $searchKey = I('get.searchKey/s');
@@ -120,6 +132,9 @@ class IndexController extends Controller
         $this->display();
     }
 
+    /**
+     * 商品详情页
+     */
     public function single()
     {
         $goodsID = I('get.goodsID/d');
@@ -146,6 +161,9 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 购物车
+     */
     public function cart()
     {
         if (isUserLogin()) {
@@ -167,6 +185,9 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 结算订单
+     */
     public function makeOrder()
     {
         if (isUserLogin()) {
@@ -201,6 +222,9 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 订单付款
+     */
     public function payOrder()
     {
         if (isUserLogin()) {
@@ -230,13 +254,18 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 用户个人页
+     */
     public function user()
     {
         if (isUserLogin()) {
             $userID = session('user.usrID');
             $model = new OrderModel();
+            //获取用户订单列表
             $data = $model->showUserOrdersByUserID($userID);
             for ($i = 0; $i < count($data); $i++) {
+                //匹配文字
                 switch ($data[$i]['orderstatus']) {
                     case '0':
                         $data[$i]['orderstatusW'] = '已取消';
@@ -267,6 +296,9 @@ class IndexController extends Controller
         }
     }
 
+    /**
+     * 订单详情页
+     */
     public function orderDetail()
     {
         if (isUserLogin() && IS_GET && !empty(I('get.orderID'))) {
@@ -274,12 +306,15 @@ class IndexController extends Controller
             $userID = getUserID();
 
             $model = new OrderModel();
+            //获取订单详细信息
             $data = $model->getOrderMainInfo($userID, $orderID);
             if ($data) {
                 $this->assign('data', $data);
 
+                //获取订单商品列表
                 $goodsList = $model->getOrderGoodsList($orderID);
                 $this->assign('goodsList', $goodsList);
+                //屏蔽导航条
                 $this->assign('noNavTab', 'true');
                 layout('Layout/layout');
                 $this->display('order_detail');

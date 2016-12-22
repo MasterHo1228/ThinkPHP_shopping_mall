@@ -213,6 +213,11 @@ class OrderModel
         }
     }
 
+    /**
+     * 查询订单状态
+     * @param string $orderID 订单号
+     * @return bool|mixed
+     */
     public function checkOrderStatus($orderID)
     {
         if (!empty($orderID)) {
@@ -224,6 +229,11 @@ class OrderModel
         }
     }
 
+    /**
+     * 查询订单是否已支付
+     * @param string $orderID 订单号
+     * @return bool|mixed
+     */
     public function checkOrderPaid($orderID)
     {
         if (!empty($orderID)) {
@@ -235,6 +245,11 @@ class OrderModel
         }
     }
 
+    /**
+     * 获取用户订单列表
+     * @param int $id 用户ID
+     * @return bool|mixed|null
+     */
     public function showUserOrdersByUserID($id)
     {
         if (!empty($id)) {
@@ -244,6 +259,7 @@ class OrderModel
                 $orderGoods = M('viewordergoodsinfo');
                 for ($i = 0; $i < count($orderList); $i++) {
                     $thisOrderID = $orderList[$i]['orderid'];
+                    //获取订单对应商品信息
                     $orderList[$i]['ordergoodsid'] = $orderGoods->where("orderID='$thisOrderID'")->getField('orderGID');
                     $orderList[$i]['ordergoodsimg'] = $orderGoods->where("orderID='$thisOrderID'")->getField('goodsPhoto');
                     $orderList[$i]['ordergoodsname'] = $orderGoods->where("orderID='$thisOrderID'")->getField('goodsName');
@@ -260,20 +276,29 @@ class OrderModel
         }
     }
 
+    /**
+     * 取消用户订单
+     * @param int $userID 用户ID
+     * @param string $orderID 订单号
+     * @return bool
+     */
     public function cancelUserOrder($userID, $orderID)
     {
         if (!empty($userID) && !empty($orderID)) {
+            //先查询订单现时状态
             $orderStatus = $this->checkOrderStatus($orderID);
-            if ($orderStatus == '1') {
+            if ($orderStatus == '1') {//若是刚下单的订单，执行以下操作
                 $orderList = M('OrderList');
+                //改变订单状态
                 $result = $orderList->where("orderID='$orderID' AND orderUserID=$userID")->setField('orderStatus', '0');
-                if ($result) {
+                if ($result) {//上方的操作成功后，执行以下操作
                     $orderListItem = M('OrderListItem');
+                    //获取订单商品列表
                     $orderGoodsList = $orderListItem->where("orderID='$orderID'")->field('orderGID,orderGCount')->select();
                     if (!empty($orderGoodsList)) {
                         $goods = M('Goods');
                         foreach ($orderGoodsList as $item) {
-                            //更新商品库存量及销量
+                            //更新商品库存量及销量（恢复）
                             $thisGoodsCount = $goods->where('gID=' . $item['ordergid'])->getField('gCount');
                             $goods->where('gID=' . $item['ordergid'])->setField('gCount', $thisGoodsCount + $item['ordergcount']);
                             $thisGoodsSoldNum = $goods->where('gID=' . $item['ordergid'])->getField('gSoldOutNum');
@@ -294,12 +319,20 @@ class OrderModel
         }
     }
 
+    /**
+     * 用户订单确认收货
+     * @param int $userID 用户ID
+     * @param string $orderID 订单号
+     * @return bool
+     */
     public function confirmUserOrder($userID, $orderID)
     {
         if (!empty($userID) && !empty($orderID)) {
+            //先查询订单现时状态
             $orderStatus = $this->checkOrderStatus($orderID);
-            if ($orderStatus == '2') {
+            if ($orderStatus == '2') {//若订单已正常发货，则执行以下操作
                 $orderList = M('OrderList');
+                //更新订单状态
                 return $orderList->where("orderID='$orderID' AND orderUserID=$userID")->setField('orderStatus', '3');
             } else {
                 return false;
@@ -309,6 +342,12 @@ class OrderModel
         }
     }
 
+    /**
+     * 获取订单主要信息
+     * @param int $userID 用户ID
+     * @param string $orderID 订单号
+     * @return bool|mixed
+     */
     public function getOrderMainInfo($userID, $orderID)
     {
         if (!empty($userID) && !empty($orderID)) {
@@ -319,6 +358,11 @@ class OrderModel
         }
     }
 
+    /**
+     * 获取订单商品列表
+     * @param string $orderID 订单号
+     * @return bool|mixed
+     */
     public function getOrderGoodsList($orderID)
     {
         if (!empty($orderID)) {

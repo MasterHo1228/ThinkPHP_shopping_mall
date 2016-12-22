@@ -142,6 +142,9 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 取消订单
+     */
     public function cancelOrder()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
@@ -157,6 +160,9 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * 订单确认收货
+     */
     public function confirmOrder()
     {
         if (isUserLogin() && IS_AJAX && IS_POST) {
