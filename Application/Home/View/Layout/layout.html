@@ -7,11 +7,11 @@
           content="Luxury Watches Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
     <title>迷之魔法书店</title>
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
-    <!--Custom-Theme-files-->
     <!--theme-style-->
     <link href="__PUBLIC__/css/homeStyle.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="__PUBLIC__/css/memenu.css" rel="stylesheet" type="text/css" media="all"/>
 
+    <link href="__PUBLIC__/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
 
 </head>
 
@@ -29,16 +29,20 @@
     <ul class="nav navbar-nav navbar-right">
         <notpresent name="Think.session.user">
             <notpresent name="isAccountPage">
-                <li><a class="navbar-link glyphicon glyphicon-user" href="__CONTROLLER__/register.html">&nbsp;注册</a>
+                <li><a class="navbar-link" href="__CONTROLLER__/register.html"><i class="fa fa-plus fa-fw"></i>&nbsp;注册&nbsp;
+                </a>
                 </li>
-                <li><a class="navbar-link glyphicon glyphicon-log-in" href="#" data-toggle="modal"
-                       data-target="#loginDialog">&nbsp;登录&nbsp;</a></li>
+                <li><a class="navbar-link" href="#" data-toggle="modal"
+                       data-target="#loginDialog"><i class="fa fa-sign-in fa-fw"></i>&nbsp;登录&nbsp;</a></li>
             </notpresent>
             <else/>
-            <li><a class="navbar-link glyphicon glyphicon-cart" href="__CONTROLLER__/cart.html">&nbsp;购物车</a></li>
-            <li><a class="navbar-link glyphicon glyphicon-user" href="__CONTROLLER__/user.html">&nbsp;{$Think.session.user.usrName}</a>
+            <li><a class="navbar-link" href="__CONTROLLER__/cart.html"><i class="fa fa-shopping-cart fa-fw"></i>&nbsp;购物车&nbsp;
+            </a></li>
+            <li><a class="navbar-link" href="__CONTROLLER__/user.html"><i class="fa fa-user-o fa-fw"></i>&nbsp;{$Think.session.user.usrName}&nbsp;
+            </a>
             </li>
-            <li><a class="navbar-link glyphicon glyphicon-log-out" href="#" id="btnLogout">&nbsp;登出&nbsp;</a></li>
+            <li><a class="navbar-link" href="#" id="btnLogout"><i class="fa fa-sign-out fa-fw"></i>&nbsp;登出&nbsp;</a>
+            </li>
         </notpresent>
     </ul>
 </div>
