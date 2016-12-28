@@ -24,3 +24,6 @@ A web shopping mall powered by ThinkPHP.
 若在使用过程中发现问题，可以直接在repo中报issue，Thanks~~!
 
 _(:з」∠)_
+
+###特别鸣谢
+Design:JC Wang
