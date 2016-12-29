@@ -82,7 +82,7 @@
 </div>
 <!-- /.container -->
 
-<!-- 订单发货窗口 -->
+<!-- 订单信息编辑窗口 -->
 <div class="modal fade" id="editOrderWindow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -193,7 +193,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">提示</h4>
             </div>
-            <div class="modal-body" id="alertHintContent"></div>
+            <div class="modal-body" id="alertDialogMain"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnReload">确定</button>
             </div>
@@ -406,7 +406,7 @@
                 },
                 dataType: 'json',
                 success: function (data) {
-                    $("#editOrderID").val(sendOrderID);
+                    $("#editOrderID").val(editOrderID);
                     $("#editOrderCName").val(data.ordercname);
                     $("#editOrderAddress").val(data.orderaddress);
                     $("#editOrderPhone").val(data.orderphone);

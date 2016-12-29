@@ -141,7 +141,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">提示</h4>
             </div>
-            <div class="modal-body" id="alertHintContent"></div>
+            <div class="modal-body" id="alertDialogMain"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnReload">确定</button>
             </div>
