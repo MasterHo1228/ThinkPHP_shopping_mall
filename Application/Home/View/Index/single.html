@@ -80,19 +80,15 @@
                 </div>
                 <div class="tabs">
                     <ul class="menu_drop">
-                        <li class="item1"><a><img src="__PUBLIC__/images/arrow.png" alt="">商品详情</a>
-                            <ul>
-                                <li class="subitem1">
-                                    <a>{$data['gdescription']}</a>
-                                </li>
-                            </ul>
+                        <li class="item1">
+                            <a><img src="__PUBLIC__/images/arrow.png" alt="">商品详情</a>
+                            <br/>
+                            {$data['gdescription']}
                         </li>
-                        <li class="item2"><a><img src="__PUBLIC__/images/arrow.png" alt="">其他信息</a>
-                            <ul>
-                                <li class="subitem2"><a>商品上架时间：{$data['gpubtime']}</a></li>
-                                <li class="subitem3"><a>商家：{$data['shopname']}</a>
-                                </li>
-                            </ul>
+                        <li class="item2">
+                            <a><img src="__PUBLIC__/images/arrow.png" alt="">其他信息</a><br/>
+                            <p>商品上架时间：{$data['gpubtime']}</p>
+                            <p>商家：{$data['shopname']}</p>
                         </li>
                     </ul>
                 </div>

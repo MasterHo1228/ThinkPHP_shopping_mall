@@ -2074,15 +2074,9 @@ ul {
     text-decoration: none;
 }
 
-.menu_drop ul li a {
-    background: #fff;
-    width: 100%;
-    height: 5em;
-    line-height: 1.8em;
-    display: block;
-    position: relative;
+.menu_drop p {
     font-size: 13px;
-    color: #878d95;
+    color: #fff;
 }
 
 .menu_drop ul li a:hover {
