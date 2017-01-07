@@ -14,6 +14,8 @@ A web shopping mall powered by ThinkPHP.
  //定义商品图绝对路径前缀
  define('DEFAULT_HEADER_PIC_PATH', URL . UPLOAD_PATH . 'header/');
  
+3.启用服务器端Apache的rewrite模块（详细操作方法请使用搜索引擎查找），并且确认网站根目录是否有.htaccess文件，若均具备以上条件，则跳过此步；若使用nginx，请在nginx中的网站配置文件添加rewrite方法（详情看ThinkPHP官网的完全开发手册）
+
 ##后台系统访问
 在浏览器地址栏中输入：http://sample.app/backyard 即可访问后台系统（sample.app替换为实际的域名或IP）
 
